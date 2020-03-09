@@ -131,6 +131,10 @@ class RequestConverter implements ParamConverterInterface
     private function getFromConverters(ConfigurationInterface $configuration, Request $request)
     {
         foreach ($configuration->getOptions() as $alias => $option) {
+            if ($option === "expr") {
+                continue;
+            }
+
             $request->attributes->set($option, $this->camelCaseConverter->convert($option));
         }
 
