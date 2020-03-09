@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service
+                id="Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager"
+                alias="sensio_framework_extra.converter.manager"
+                public="false"
+        />
+        <service
+                id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractorInterface"
+                class="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractor"
+                public="false"
+        />
+        <service
+                id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContextInterface"
+                class="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContext"
+                public="false"
+        />
+        <service
+                id="LSBProject\RequestBundle\Util\CamelCaseConverterInterface"
+                class="LSBProject\RequestBundle\Util\CamelCaseConverter"
+                public="false"
+        />
+        <service
+                id="LSBProject\RequestBundle\Util\Factory\ParamConverterFactoryInterface"
+                class="LSBProject\RequestBundle\Util\Factory\ParamConverterFactory"
+                public="false"
+        />
+        <service
+                id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContextInterface"
+                class="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContext"
+                public="false"
+        />
+        <service
+                id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractorInterface"
+                class="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractor"
+                public="false"
+        >
+            <argument type="service" id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContextInterface" />
+            <argument type="service" id="Doctrine\Common\Annotations\Reader" />
+        </service>
+        <service
+                id="lsbproject.request.param_converter.request_converter"
+                class="LSBProject\RequestBundle\Request\ParamConverter\RequestConverter"
+        >
+            <tag name="request.param_converter" converter="lsbproject_request_converter" />
+            <argument type="service" id="LSBProject\RequestBundle\Util\CamelCaseConverterInterface"  />
+            <argument type="service" id="Symfony\Component\Validator\Validator\ValidatorInterface" />
+            <argument type="service" id="Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager" />
+            <argument type="service" id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractorInterface" />
+            <argument type="service" id="LSBProject\RequestBundle\Util\Factory\ParamConverterFactoryInterface" />
+        </service>
+    </services>
+</container>
