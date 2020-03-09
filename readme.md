@@ -29,7 +29,7 @@ return [
 ## Usage
 
 Create a request class and extend AbstractRequest:
-```
+```php
 <?php declare(strict_types=1);
 
 namespace App\DTO;
@@ -98,7 +98,7 @@ class TestRequest extends AbstractRequest
 ```
 
 Then use it in controller:
-```
+```php
 <?php declare(strict_types=1);
 
 namespace App\Controller;
