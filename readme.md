@@ -1,6 +1,6 @@
 # LSBProjectRequestBundle
 
-Request bundle created to handle all request related things in a separate module. Highlt inspired from Laravel
+Request bundle created to handle all request related things in a separate module. Highly inspired by Laravel
 
 ## Installation
 
