@@ -133,7 +133,7 @@ class RequestConverter implements ParamConverterInterface
     private function getFromConverters(ConfigurationInterface $configuration, Request $request)
     {
         $options = $configuration->getOptions();
-        $id = isset($options['id']) ? $options['id'] : null;
+        $id = isset($options['id']) ? $options['id'] : $request->get('id');
 
         if ($id) {
             $request->attributes->set($id, $request->get($this->camelCaseConverter->convert($id)));
