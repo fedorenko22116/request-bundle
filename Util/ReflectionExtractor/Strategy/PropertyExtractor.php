@@ -21,8 +21,7 @@ class PropertyExtractor implements ReflectorExtractorInterface
     }
 
     /**
-     * @param ReflectionProperty|Reflector $reflector
-     * @return PropConverter
+     * {@inheritDoc}
      * @throws Exception
      */
     public function extract(Reflector $reflector)

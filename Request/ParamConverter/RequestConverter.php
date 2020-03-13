@@ -96,11 +96,14 @@ class RequestConverter implements ParamConverterInterface
 
     /**
      * {@inheritDoc}
-     * @throws ReflectionException
      */
     public function supports(ParamConverter $configuration)
     {
-        return (new ReflectionClass($configuration->getClass()))->isSubclassOf(AbstractRequest::class);
+        try {
+            return (new ReflectionClass($configuration->getClass()))->isSubclassOf(AbstractRequest::class);
+        } catch (ReflectionException $exception) {
+            return false;
+        }
     }
 
     /**
@@ -113,8 +116,7 @@ class RequestConverter implements ParamConverterInterface
         $props = array_filter(
             $meta->getProperties(),
             function (ReflectionProperty $prop) use ($request, $meta) {
-                return null !== $request->get($this->camelCaseConverter->convert($prop->getName())) &&
-                    ($prop->isPublic() || $meta->hasMethod('set' . ucfirst($prop)));
+                return $prop->isPublic() || $meta->hasMethod('set' . ucfirst($prop));
             }
         );
 
@@ -130,12 +132,27 @@ class RequestConverter implements ParamConverterInterface
      */
     private function getFromConverters(ConfigurationInterface $configuration, Request $request)
     {
-        foreach ($configuration->getOptions() as $alias => $option) {
+        $options = $configuration->getOptions();
+        $id = isset($options['id']) ? $options['id'] : null;
+
+        if ($id) {
+            $request->attributes->set($id, $request->get($this->camelCaseConverter->convert($id)));
+        }
+
+        /** @var array<string, string> $mapping */
+        $mapping = isset($options['mapping']) ? $options['mapping'] : [];
+        $meta = isset($options['meta']) ? $options['meta'] : [];
+
+        unset($options['meta']);
+
+        $mapping = array_merge($mapping, $meta);
+
+        foreach ($mapping as $alias => $option) {
             if ($option === "expr") {
                 continue;
             }
 
-            $request->attributes->set($option, $this->camelCaseConverter->convert($option));
+            $request->attributes->set($alias, $request->get($this->camelCaseConverter->convert($alias)));
         }
 
         $paramConfig = $this->paramConverterFactory->create($configuration);
@@ -143,8 +160,12 @@ class RequestConverter implements ParamConverterInterface
         $var = $request->attributes->get($configuration->getName());
         $request->attributes->remove($configuration->getName());
 
-        foreach ($configuration->getOptions() as $alias => $option) {
-            $request->attributes->remove($option);
+        if ($id) {
+            $request->attributes->remove($id);
+        }
+
+        foreach ($mapping as $alias => $option) {
+            $request->attributes->remove($alias);
         }
 
         return $var;

@@ -92,10 +92,8 @@ Be free to modify any of parameters, as they are working in the same way as in t
 ```php
 class TestRequest extends AbstractRequest
 {
-    public $userId;
-
     /**
-     * @PropConverter("App\Model\SomeAwesomeClass", converter="awesome_converter", options={"userId": "id"})
+     * @PropConverter("App\Model\SomeAwesomeClass", converter="awesome_converter", options={"mapping": {"user_id": "id"}})
      */
     public $fooBarBaz;
 }
@@ -166,13 +164,20 @@ use LSBProject\RequestBundle\Configuration\Entity;
 class TestRequest extends AbstractRequest
 {
     /**
-     * @Entity("App\Entity\User", expr="repository.find(user_id)", options={"user_id" = "id"})
+     * @Entity("App\Entity\User", expr="repository.find(id)", mapping={"user_id": "id"})
      */
-    public $user;
+    public $userA;
+    
+    // or
+
+    /**
+     * @Entity("App\Entity\User", options={"id"="user_id"})
+     */
+    public $userB;
 }
 ```
 
-Use options to point aliases from the request to the original parameters names.
+Use `mapping` property to point aliases from the request to the original parameters names.
 
 ## TODO
 

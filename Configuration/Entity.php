@@ -13,6 +13,11 @@ class Entity extends PropConverter
     private $expr;
 
     /**
+     * @var array<string, string>
+     */
+    private $mapping;
+
+    /**
      * @return string
      */
     public function getExpr()
@@ -26,5 +31,13 @@ class Entity extends PropConverter
     public function setExpr(string $expr)
     {
         $this->expr = $expr;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getMapping()
+    {
+        return $this->mapping;
     }
 }
