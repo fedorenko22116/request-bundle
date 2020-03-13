@@ -143,7 +143,7 @@ To specify property you also can use setters instead of `public` properties to a
 ```php
 class TestRequest extends AbstractRequest
 {
-    private int $comment;
+    private string $comment;
 
     public function setComment(string $comment): void
     {
@@ -173,3 +173,4 @@ Use options to point aliases from the request to the original parameters names.
 1) Validation group configuration
 2) Possibility to specify where the data storage is (body, request, attributes)
 3) Add translation support for `getErrorMessage`
+4) Custom naming strategy
