@@ -17,7 +17,7 @@ This command requires you to have Composer installed globally, as explained in t
 ### Step 2: Enable the Bundle
 Then, enable the bundle by adding it to the list of registered bundles in the config/bundles.php file of your project:
 
-```
+```php
 // config/bundles.php
 
 return [
@@ -31,6 +31,8 @@ return [
 Create a request class and extend AbstractRequest:
 
 ```php
+use LSBProject\RequestBundle\Request\AbstractRequest;
+
 class TestRequest extends AbstractRequest
 {
     public $fooBar;
@@ -63,6 +65,8 @@ class TestRequest extends AbstractRequest
 If you are not using PHP 7.4, you can point the class with annotations `@var` or `@PropConverter`
 
 ```php
+use LSBProject\RequestBundle\Configuration\PropConverter;
+
 class TestRequest extends AbstractRequest
 {
     /**
@@ -157,6 +161,8 @@ class TestRequest extends AbstractRequest
 There is an annotation `@Entity` which is almost equal to the sensio annotation.
 
 ```php
+use LSBProject\RequestBundle\Configuration\Entity;
+
 class TestRequest extends AbstractRequest
 {
     /**
