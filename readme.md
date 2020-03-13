@@ -29,94 +29,147 @@ return [
 ## Usage
 
 Create a request class and extend AbstractRequest:
+
 ```php
-<?php declare(strict_types=1);
+class TestRequest extends AbstractRequest
+{
+    public $fooBar;
+}
+```
 
-namespace App\DTO;
+That's all. This will require `foo_bar` parameter to be present in request, query or attributes. \
+Then use it in controller:
+```php
+    /**
+     * @Route("/test")
+     */
+    public function test(TestRequest $testRequest): Response
+    {
+        return new Response($testRequest->fooBar);
+    }
+```
 
-use App\DTO\TestDTO;
-use LSBProject\RequestBundle\Configuration\Entity;
-use LSBProject\RequestBundle\Configuration\PropConverter;
-use LSBProject\RequestBundle\Request\AbstractRequest;
-use Symfony\Component\Validator\Constraints as Assert;
+### Using objects
 
+Also this bundle supports loading objects like you usually do with `@ParamConverter`. All ParamConverts will be performed to the property.
+
+```php
+class TestRequest extends AbstractRequest
+{
+    public SomeAwesomeClass $fooBar;
+}
+```
+
+If you are not using PHP 7.4, you can point the class with annotations `@var` or `@PropConverter`
+
+```php
+class TestRequest extends AbstractRequest
+{
+    /**
+     * @var App\Model\SomeAwesomeClass
+     */
+    public $fooBar;
+    
+    // or
+    
+    /**
+     * @PropConverter("App\Model\SomeAwesomeClass")
+     */
+    public $fooBarBaz;
+}
+```
+(Be aware that you need to specify full classname with a namespace)
+
+### Configuring property
+
+As you could notice there is a useful annotation `@PropConverter` which is in fact is an adapter to `@ParamConverter` of sensio-framework-bundle. 
+Be free to modify any of parameters, as they are working in the same way as in the original one.
+
+```php
+class TestRequest extends AbstractRequest
+{
+    public $userId;
+
+    /**
+     * @PropConverter("App\Model\SomeAwesomeClass", converter="awesome_converter", options={"userId": "id"})
+     */
+    public $fooBarBaz;
+}
+```
+
+### Validation
+
+You can use symfony/validation to validate parameters in request.
+
+```php
 class TestRequest extends AbstractRequest
 {
     /**
      * @Assert\NotBlank()
      */
-    public string $fooBar;  // This will require `foo_bar` parameter to be present in request, query or attribute
+    public int $userId;
+}
+```
 
-    public TestDTO $foo;    // This will emit ParamConvert-ers to `$service` property
+For a complex request validation there are an optional methods `validate`, `getErrorMessage`.
+
+```php
+class TestRequest extends AbstractRequest
+{
+    private const ADMIN = 0;
 
     /**
-     * @var App\DTO\TestDTO
+     * @Assert\NotBlank()
      */
-    public $bar;            // This will lead to the same result as in a previous property
+    public int $userId;
+    public ?string $comment;
 
-    /**
-     * @PropConverter("App\DTO\TestDTO", converter="exact.converter")
-     */
-    public $baz;            // Another way of declaring the property type. Additional parameters can be put here
+    public function validate(): bool
+    {
+        return $this->userId === self::ADMIN || ($this->comment && preg_match('/super/', $this->comment));
+    }
 
+    public function getErrorMessage(): string
+    {
+        return 'Only admin can use "super" word in a comment text';
+    }
+}
+```
+
+### Additional setting logic
+
+To specify property you also can use setters instead of `public` properties to add some additional logic.
+
+```php
+class TestRequest extends AbstractRequest
+{
+    private int $comment;
+
+    public function setComment(string $comment): void
+    {
+        $this->comment = trim($comment);
+    }
+}
+```
+
+### Working with entities
+
+There is an annotation `@Entity` which is almost equal to the sensio annotation.
+
+```php
+class TestRequest extends AbstractRequest
+{
     /**
      * @Entity("App\Entity\User", expr="repository.find(user_id)", options={"user_id" = "id"})
      */
-    public $user;           // Used to get entity from repository. `user_id` is an alias to `id` parameter from request
-
-    private int $qux;       // Setters can be used to specify value
-
-    public function setQux(int $qux): void
-    {
-        $this->qux = $qux;
-    }
-
-    public function getQux(): int
-    {
-        return $this->qux;
-    }
-
-    /**
-     * Optional method
-     * Sometimes complex validator is needed, such logic can be put here
-     */
-    public function validate()
-    {
-        return $this->qux > 10;
-    }
-
-    /**
-     * Optional method
-     * Used to specify exact message from validator
-     */
-    public function getErrorMessage()
-    {
-        return 'Qux must be greater than 10';
-    }
+    public $user;
 }
-
 ```
 
-Then use it in controller:
-```php
-<?php declare(strict_types=1);
+Use options to point aliases from the request to the original parameters names.
 
-namespace App\Controller;
+## TODO
 
-use App\DTO\TestRequest;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-
-class DefaultController extends AbstractController
-{
-    /**
-     * @Route("/")
-     */
-    public function test(TestRequest $testRequest): Response
-    {
-        return new Response($testRequest->user->getId());
-    }
-}
-
-```
+1) Validation group configuration
+2) Possibility to specify where the data storage is (body, request, attributes)
+3) Add translation support for `getErrorMessage`
