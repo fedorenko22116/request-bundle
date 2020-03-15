@@ -1,5 +1,5 @@
 # LSBProjectRequestBundle
-
+[![SymfonyInsight](https://insight.symfony.com/projects/0e64da25-252b-4d3f-9752-9ed18f93c9f1/mini.svg)](https://insight.symfony.com/projects/0e64da25-252b-4d3f-9752-9ed18f93c9f1) \
 Request bundle created to handle all request related things in a separate module. Highly inspired by Laravel
 
 ## Installation
