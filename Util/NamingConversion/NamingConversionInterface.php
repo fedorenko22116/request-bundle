@@ -1,8 +1,8 @@
 <?php
 
-namespace LSBProject\RequestBundle\Util;
+namespace LSBProject\RequestBundle\Util\NamingConversion;
 
-interface CamelCaseConverterInterface
+interface NamingConversionInterface
 {
     /**
      * @param string $value

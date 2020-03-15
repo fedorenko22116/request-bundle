@@ -1,8 +1,8 @@
 <?php
 
-namespace LSBProject\RequestBundle\Util;
+namespace LSBProject\RequestBundle\Util\NamingConversion;
 
-class CamelCaseConverter implements CamelCaseConverterInterface
+class SnakeConversion implements NamingConversionInterface
 {
     /**
      * {@inheritDoc}

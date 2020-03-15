@@ -2,14 +2,14 @@
 
 namespace LSBProject\RequestBundle\Util\Factory;
 
-use LSBProject\RequestBundle\Configuration\ConfigurationInterface;
+use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 interface ParamConverterFactoryInterface
 {
     /**
-     * @param ConfigurationInterface $configuration
+     * @param PropConfigurationInterface $configuration
      * @return ParamConverter
      */
-    public function create(ConfigurationInterface $configuration);
+    public function create(PropConfigurationInterface $configuration);
 }

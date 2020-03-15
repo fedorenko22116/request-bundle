@@ -3,6 +3,7 @@
 namespace LSBProject\RequestBundle\Util\ReflectionExtractor;
 
 use Doctrine\Common\Annotations\Reader;
+use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy\PropertyExtractor;
 use ReflectionClass;
 use ReflectionProperty;
@@ -20,6 +21,10 @@ class ReflectionExtractor implements ReflectionExtractorInterface
      */
     private $reader;
 
+    /**
+     * @param ReflectorContextInterface $context
+     * @param Reader $reader
+     */
     public function __construct(ReflectorContextInterface $context, Reader $reader)
     {
         $this->context = $context;
@@ -33,6 +38,9 @@ class ReflectionExtractor implements ReflectionExtractorInterface
     {
         $reflectors = [];
 
+        /** @var RequestStorage|null $requestStorage */
+        $requestStorage = $this->reader->getClassAnnotation($class, RequestStorage::class);
+
         /** @var Reflector $reflector */
         foreach (array_merge($class->getMethods(), $class->getProperties()) as $reflector) {
             if ($props && !in_array($reflector->getName(), $props)) {
@@ -42,7 +50,7 @@ class ReflectionExtractor implements ReflectionExtractorInterface
             if ($reflector instanceof ReflectionProperty) {
                 $reflectors[] = $this->context
                     ->setExtractor(new PropertyExtractor($this->reader))
-                    ->extract($reflector);
+                    ->extract($reflector, $requestStorage);
             }
         }
 

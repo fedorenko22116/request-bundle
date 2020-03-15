@@ -99,6 +99,32 @@ class TestRequest extends AbstractRequest
 }
 ```
 
+### Request storage
+
+By default all parameters from body, request or path attributes will be used. \
+To restrict parameter to be located in exact place you can use `@RequestStorage` annotation
+
+```php
+use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Configuration\RequestStorage;
+
+/**
+ * @RequestStorage({"request", "attributes"})
+ */
+class TestRequest extends AbstractRequest
+{
+    public $fooBaz;
+
+    /**
+     * @RequestStorage({"request"})
+     */
+    public $fooBar;
+}
+```
+
+From example above you will get `foo_baz` parameter from request body or path, and `foo_bar` parameter exactly from request body. \
+There are 3 types of storage to be set: `query`, `request`, `attributes`.
+
 ### Validation
 
 You can use symfony/validation to validate parameters in request.
@@ -179,9 +205,9 @@ class TestRequest extends AbstractRequest
 
 Use `mapping` property to point aliases from the request to the original parameters names.
 
+
 ## TODO
 
 1) Validation group configuration
-2) Possibility to specify where the data storage is (body, request, attributes)
-3) Add translation support for `getErrorMessage`
-4) Custom naming strategy
+2) Add translation support for `getErrorMessage`
+3) Custom naming strategy

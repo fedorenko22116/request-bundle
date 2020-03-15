@@ -2,7 +2,7 @@
 
 namespace LSBProject\RequestBundle\Util\ReflectionExtractor;
 
-use LSBProject\RequestBundle\Configuration\ConfigurationInterface;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use ReflectionClass;
 
 interface ReflectionExtractorInterface
@@ -10,7 +10,7 @@ interface ReflectionExtractorInterface
     /**
      * @param ReflectionClass $reflector
      * @param string[] $props
-     * @return ConfigurationInterface[]
+     * @return ExtractDTO[]
      */
     public function extract(ReflectionClass $reflector, array $props = []);
 }

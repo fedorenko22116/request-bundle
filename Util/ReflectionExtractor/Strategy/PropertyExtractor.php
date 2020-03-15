@@ -4,7 +4,10 @@ namespace LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy;
 
 use Doctrine\Common\Annotations\Reader;
 use Exception;
+use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConverter;
+use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use ReflectionProperty;
 use Reflector;
 
@@ -15,6 +18,9 @@ class PropertyExtractor implements ReflectorExtractorInterface
      */
     private $reader;
 
+    /**
+     * @param Reader $reader
+     */
     public function __construct(Reader $reader)
     {
         $this->reader = $reader;
@@ -24,18 +30,17 @@ class PropertyExtractor implements ReflectorExtractorInterface
      * {@inheritDoc}
      * @throws Exception
      */
-    public function extract(Reflector $reflector)
+    public function extract(Reflector $reflector, RequestStorage $storage = null)
     {
         if (!$reflector instanceof ReflectionProperty) {
             throw new Exception('Unsupported extractor type');
         }
 
-        $annotations = $this->reader->getPropertyAnnotations($reflector);
+        $storage = $this->reader->getPropertyAnnotation($reflector, RequestStorage::class) ?: $storage;
 
-        /** @var PropConverter|false $config */
-        $config = current(array_filter($annotations, function ($object) {
-            return $object instanceof PropConverter;
-        }));
+        /** @var PropConverter|null $config */
+        $config = $this->reader->getPropertyAnnotation($reflector, PropConverter::class);
+        $config = $config ?: $this->reader->getPropertyAnnotation($reflector, Entity::class);
         $config = $config ?: new PropConverter([]);
         $config->setName($reflector->getName());
 
@@ -47,7 +52,7 @@ class PropertyExtractor implements ReflectorExtractorInterface
             }
         }
 
-        return $config;
+        return new ExtractDTO($config, $storage);
     }
 
     /**

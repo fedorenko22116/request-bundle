@@ -5,7 +5,7 @@ namespace LSBProject\RequestBundle\Configuration;
 /**
  * @Annotation
  */
-class PropConverter extends AbstractConfiguration
+class PropConverter extends AbstractPropConfiguration
 {
     /**
      * @var string|null
@@ -30,7 +30,7 @@ class PropConverter extends AbstractConfiguration
     /**
      * @param string $value
      */
-    public function setValue(string $value)
+    public function setValue($value)
     {
         $this->type = $value;
     }
@@ -38,7 +38,7 @@ class PropConverter extends AbstractConfiguration
     /**
      * {@inheritDoc}
      */
-    public function setName(string $name)
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -62,7 +62,7 @@ class PropConverter extends AbstractConfiguration
     /**
      * {@inheritDoc}
      */
-    public function setConverter(string $converter)
+    public function setConverter($converter)
     {
         $this->converter = $converter;
     }

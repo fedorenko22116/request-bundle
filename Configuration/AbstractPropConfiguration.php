@@ -4,7 +4,7 @@ namespace LSBProject\RequestBundle\Configuration;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 
-abstract class AbstractConfiguration extends ConfigurationAnnotation implements ConfigurationInterface
+abstract class AbstractPropConfiguration extends ConfigurationAnnotation implements PropConfigurationInterface
 {
     const BUILTIN_TYPES = [null, "string", "int", "float", "bool", "array"];
 

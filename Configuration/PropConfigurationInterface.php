@@ -2,12 +2,12 @@
 
 namespace LSBProject\RequestBundle\Configuration;
 
-interface ConfigurationInterface
+interface PropConfigurationInterface
 {
     /**
      * @param string $name
      */
-    public function setName(string $name);
+    public function setName($name);
 
     /**
      * @param string|null $type
@@ -22,7 +22,7 @@ interface ConfigurationInterface
     /**
      * @param string $converter
      */
-    public function setConverter(string $converter);
+    public function setConverter($converter);
 
     /**
      * @return string
