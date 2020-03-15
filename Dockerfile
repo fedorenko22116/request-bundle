@@ -13,6 +13,6 @@ COPY . /var/www/bundle
 WORKDIR /var/www/bundle
 
 RUN composer validate
-RUN composer install
+RUN composer install --no-dev
 
-RUN if [ "$RUN_TESTS" = "0" ] ; then echo 'Tests are skiped'; else composer phpcs && composer phpstan ; fi
+RUN if [ "$RUN_TESTS" = "0" ] ; then echo 'Tests are skiped'; else composer install && composer phpcs && composer phpstan ; fi
