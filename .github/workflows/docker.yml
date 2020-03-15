@@ -9,7 +9,7 @@ jobs:
       - name: Test build PHP 5.6
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
-          PHP_VERSION: 5.6
+          PHP_VERSION: '5.6'
         with:
           name: 22116/request-bundle-ci
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -19,8 +19,8 @@ jobs:
       - name: Test build PHP 7.4
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
-          PHP_VERSION: 7.4
-          RUN_TESTS: 1
+          PHP_VERSION: '7.4'
+          RUN_TESTS: '1'
         with:
           name: 22116/request-bundle-ci
           username: ${{ secrets.DOCKER_USERNAME }}
