@@ -1,9 +1,7 @@
-ARG PHP_VERSION='5.6'
-ARG RUN_TESTS=0
+ENV PHP_VERSION='5.6'
+ENV RUN_TESTS=0
 
 FROM php:${PHP_VERSION}-cli
-
-RUN echo "$RUN_TESTS"
 
 RUN apt-get update && apt-get install -y zip libzip-dev
 RUN docker-php-ext-configure zip --with-libzip && docker-php-ext-install zip || docker-php-ext-install zip
