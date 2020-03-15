@@ -6,24 +6,28 @@ interface PropConfigurationInterface
 {
     /**
      * @param string $name
+     *
      * @return void
      */
     public function setName($name);
 
     /**
      * @param string|null $type
+     *
      * @return void
      */
     public function setType($type);
 
     /**
      * @param mixed[] $options
+     *
      * @return void
      */
     public function setOptions(array $options);
 
     /**
      * @param string $converter
+     *
      * @return void
      */
     public function setConverter($converter);

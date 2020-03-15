@@ -28,7 +28,9 @@ class RequestStorage extends ConfigurationAnnotation
 
     /**
      * @param string[] $value
+     *
      * @return void
+     *
      * @throws Exception
      */
     public function setValue($value)
@@ -38,7 +40,9 @@ class RequestStorage extends ConfigurationAnnotation
 
     /**
      * @param string[] $sources
+     *
      * @return void
+     *
      * @throws Exception
      */
     public function setSource($sources)
@@ -46,7 +50,7 @@ class RequestStorage extends ConfigurationAnnotation
         foreach ($sources as $source) {
             if (!in_array($source, self::TYPES)) {
                 throw new ConfigurationException(
-                    'Unknown storage type. Available types: ' . implode(',', self::TYPES)
+                    sprintf('Unknown storage type. Available types: %s', implode(',', self::TYPES))
                 );
             }
         }

@@ -29,6 +29,7 @@ class PropConverter extends AbstractPropConfiguration
 
     /**
      * @param string $value
+     *
      * @return void
      */
     public function setValue($value)

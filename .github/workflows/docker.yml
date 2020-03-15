@@ -44,4 +44,4 @@ jobs:
           name: 22116/request-bundle-ci
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          buildargs: PHP_VERSION=7.4
+          buildargs: PHP_VERSION=7.4,RUN_TESTS=1

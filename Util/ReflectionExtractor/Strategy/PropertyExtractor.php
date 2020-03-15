@@ -29,8 +29,10 @@ class PropertyExtractor implements ReflectorExtractorInterface
     /**
      *
      * @param ReflectionProperty|Reflector $reflector
-     * @param RequestStorage|null $storage
+     * @param RequestStorage|null          $storage
+     *
      * @return ExtractDTO
+     *
      * @throws Exception
      */
     public function extract(Reflector $reflector, RequestStorage $storage = null)
@@ -50,7 +52,7 @@ class PropertyExtractor implements ReflectorExtractorInterface
         if (!$config->getType()) {
             if ($type = $this->extractType($reflector)) {
                 $config->setType($this->extractType($reflector));
-            } else if (method_exists($reflector, 'getType') && $type = $reflector->getType()) {
+            } elseif (method_exists($reflector, 'getType') && $type = $reflector->getType()) {
                 $config->setType($type->getName());
             }
         }
@@ -60,6 +62,7 @@ class PropertyExtractor implements ReflectorExtractorInterface
 
     /**
      * @param ReflectionProperty $property
+     *
      * @return string|null
      */
     private function extractType(ReflectionProperty $property)

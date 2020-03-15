@@ -9,8 +9,9 @@ use Reflector;
 interface ReflectorExtractorInterface
 {
     /**
-     * @param Reflector $reflector
+     * @param Reflector           $reflector
      * @param RequestStorage|null $storage
+     *
      * @return ExtractDTO
      */
     public function extract(Reflector $reflector, RequestStorage $storage = null);

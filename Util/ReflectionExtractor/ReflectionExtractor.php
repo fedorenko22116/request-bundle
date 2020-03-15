@@ -24,7 +24,7 @@ class ReflectionExtractor implements ReflectionExtractorInterface
 
     /**
      * @param ReflectorContextInterface $context
-     * @param Reader $reader
+     * @param Reader                    $reader
      */
     public function __construct(ReflectorContextInterface $context, Reader $reader)
     {

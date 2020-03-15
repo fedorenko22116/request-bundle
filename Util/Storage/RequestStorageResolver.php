@@ -47,6 +47,7 @@ class RequestStorageResolver implements StorageInterface
     /**
      * @param string $source
      * @param string $param
+     *
      * @return mixed|null
      */
     private function getFromStorage($source, $param)

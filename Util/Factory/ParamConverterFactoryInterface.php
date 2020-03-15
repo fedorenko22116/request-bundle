@@ -9,6 +9,7 @@ interface ParamConverterFactoryInterface
 {
     /**
      * @param PropConfigurationInterface $configuration
+     *
      * @return ParamConverter
      */
     public function create(PropConfigurationInterface $configuration);

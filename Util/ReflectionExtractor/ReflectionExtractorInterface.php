@@ -10,7 +10,8 @@ interface ReflectionExtractorInterface
 {
     /**
      * @param ReflectionClass<AbstractRequest> $reflector
-     * @param string[] $props
+     * @param string[]                         $props
+     *
      * @return array<int, ExtractDTO>
      */
     public function extract(ReflectionClass $reflector, array $props = []);

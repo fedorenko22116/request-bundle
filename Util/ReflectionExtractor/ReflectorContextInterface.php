@@ -10,14 +10,16 @@ use Reflector;
 interface ReflectorContextInterface
 {
     /**
-     * @param Reflector $reflector
+     * @param Reflector           $reflector
      * @param RequestStorage|null $requestStorage
+     *
      * @return ExtractDTO
      */
     public function extract(Reflector $reflector, RequestStorage $requestStorage = null);
 
     /**
      * @param ReflectorExtractorInterface $extractor
+     *
      * @return self
      */
     public function setExtractor(ReflectorExtractorInterface $extractor);

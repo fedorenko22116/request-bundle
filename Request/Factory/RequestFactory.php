@@ -22,7 +22,7 @@ class RequestFactory implements RequestFactoryInterface
 
     /**
      * @param ReflectionExtractorInterface $reflectionExtractor
-     * @param RequestManagerInterface $requestManager
+     * @param RequestManagerInterface      $requestManager
      */
     public function __construct(
         ReflectionExtractorInterface $reflectionExtractor,
@@ -62,6 +62,7 @@ class RequestFactory implements RequestFactoryInterface
 
     /**
      * @param ReflectionClass<AbstractRequest> $meta
+     *
      * @return string[]
      */
     private function filterProps(ReflectionClass $meta)

@@ -25,7 +25,7 @@ class RequestConverter implements ParamConverterInterface
     private $requestFactory;
 
     /**
-     * @param ValidatorInterface $validator
+     * @param ValidatorInterface      $validator
      * @param RequestFactoryInterface $requestFactory
      */
     public function __construct(
@@ -67,6 +67,7 @@ class RequestConverter implements ParamConverterInterface
         try {
             /**
              * @template T of object
+             *
              * @var class-string<T> $class
              */
             $class = $configuration->getClass();

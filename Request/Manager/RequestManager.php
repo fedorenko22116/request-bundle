@@ -38,11 +38,11 @@ class RequestManager implements RequestManagerInterface
     private $storage;
 
     /**
-     * @param NamingConversionInterface $namingConversion
+     * @param NamingConversionInterface      $namingConversion
      * @param ParamConverterFactoryInterface $paramConverterFactory
-     * @param ParamConverterManager $converterManager
-     * @param StorageInterface $storage
-     * @param RequestStack $requestStack
+     * @param ParamConverterManager          $converterManager
+     * @param StorageInterface               $storage
+     * @param RequestStack                   $requestStack
      */
     public function __construct(
         NamingConversionInterface $namingConversion,
@@ -95,7 +95,7 @@ class RequestManager implements RequestManagerInterface
         $mapping = array_merge($mapping, $meta);
 
         foreach ($mapping as $alias => $option) {
-            if ($option === "expr") {
+            if ("expr" === $option) {
                 continue;
             }
 

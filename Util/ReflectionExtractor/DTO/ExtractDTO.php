@@ -19,7 +19,7 @@ class ExtractDTO
 
     /**
      * @param PropConfigurationInterface $configuration
-     * @param RequestStorage|null $requestStorage
+     * @param RequestStorage|null        $requestStorage
      */
     public function __construct(PropConfigurationInterface $configuration, $requestStorage)
     {

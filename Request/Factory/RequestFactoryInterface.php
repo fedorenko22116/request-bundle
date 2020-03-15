@@ -8,6 +8,7 @@ interface RequestFactoryInterface
 {
     /**
      * @param class-string<AbstractRequest> $class
+     *
      * @return AbstractRequest
      */
     public function create($class);
