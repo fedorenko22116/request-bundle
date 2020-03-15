@@ -12,16 +12,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
+      - name: Test build PHP 5.6
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          buildargs: PHP_VERSION=5.6
+      - name: Test build PHP 7.1
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          buildargs: PHP_VERSION=7.1
+      - name: Test build PHP 7.2
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          buildargs: PHP_VERSION=7.2
+      - name: Test build PHP 7.3
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          buildargs: PHP_VERSION=7.3
+      - name: Test build PHP 7.4
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          buildargs: PHP_VERSION=7.4
