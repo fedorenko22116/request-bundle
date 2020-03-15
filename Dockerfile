@@ -13,6 +13,5 @@ COPY . /var/www/bundle
 WORKDIR /var/www/bundle
 
 RUN composer validate
-RUN if [ "$RUN_TESTS" = "1" ] ; then echo 'Skipping..' ; else composer remove phpstan/phpstan ; fi
-RUN composer install
+RUN composer install --ignore-platform-reqs --no-dev
 RUN if [ "$RUN_TESTS" = "1" ] ; then composer install && composer phpcs && composer phpstan; else echo 'Tests are skiped' ; fi
