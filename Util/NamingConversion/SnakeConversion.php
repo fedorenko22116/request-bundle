@@ -9,6 +9,6 @@ class SnakeConversion implements NamingConversionInterface
      */
     public function convert($value)
     {
-        return strtolower(preg_replace('/[A-Z]/', '_\\0', lcfirst($value)));
+        return strtolower(preg_replace('/[A-Z]/', '_\\0', lcfirst($value)) ?: '');
     }
 }

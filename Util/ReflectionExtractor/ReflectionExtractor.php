@@ -6,6 +6,7 @@ use Doctrine\Common\Annotations\Reader;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy\PropertyExtractor;
 use ReflectionClass;
+use ReflectionMethod;
 use ReflectionProperty;
 use Reflector;
 
@@ -41,7 +42,7 @@ class ReflectionExtractor implements ReflectionExtractorInterface
         /** @var RequestStorage|null $requestStorage */
         $requestStorage = $this->reader->getClassAnnotation($class, RequestStorage::class);
 
-        /** @var Reflector $reflector */
+        /** @var ReflectionProperty|ReflectionMethod $reflector */
         foreach (array_merge($class->getMethods(), $class->getProperties()) as $reflector) {
             if ($props && !in_array($reflector->getName(), $props)) {
                 continue;

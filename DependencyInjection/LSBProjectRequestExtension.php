@@ -10,7 +10,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class LSBProjectRequestExtension extends Extension
 {
     /**
-     * {@inheritdoc}
+     * @param mixed[] $configs
+     * @param ContainerBuilder $container
+     * @return void
      * @throws \Exception
      */
     public function load(array $configs, ContainerBuilder $container)

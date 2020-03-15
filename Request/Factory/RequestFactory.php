@@ -61,7 +61,7 @@ class RequestFactory implements RequestFactoryInterface
 
 
     /**
-     * @param ReflectionClass $meta
+     * @param ReflectionClass<AbstractRequest> $meta
      * @return string[]
      */
     private function filterProps(ReflectionClass $meta)

@@ -13,7 +13,7 @@ class ExtractDTO
     private $configuration;
 
     /**
-     * @var RequestStorage
+     * @var RequestStorage|null
      */
     private $requestStorage;
 

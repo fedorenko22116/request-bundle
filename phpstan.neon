@@ -1,0 +1,12 @@
+parameters:
+    paths:
+        - "%rootDir%/../../.."
+
+    level: 8
+
+    tmpDir: "%rootDir%/../../../phpstan"
+
+    excludes_analyse:
+        - "%rootDir%/../../../vendor"
+        - "%rootDir%/../../../phpstan"
+        - "%rootDir%/../../../Util/ReflectionExtractor/Strategy/PropertyExtractor.php"

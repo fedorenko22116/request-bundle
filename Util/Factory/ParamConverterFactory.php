@@ -18,12 +18,16 @@ class ParamConverterFactory implements ParamConverterFactoryInterface
         $paramConverter->setOptions($configuration->getOptions());
         $paramConverter->setIsOptional(false);
 
-        if ($configuration->getType()) {
-            $paramConverter->setClass($configuration->getType());
+        $type = $configuration->getType();
+
+        if ($type) {
+            $paramConverter->setClass($type);
         }
 
-        if ($configuration->getConverter()) {
-            $paramConverter->setConverter($configuration->getConverter());
+        $converter = $configuration->getConverter();
+
+        if ($converter) {
+            $paramConverter->setConverter($converter);
         }
 
         return $paramConverter;

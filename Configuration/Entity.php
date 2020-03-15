@@ -27,8 +27,9 @@ class Entity extends PropConverter
 
     /**
      * @param string $expr
+     * @return void
      */
-    public function setExpr(string $expr)
+    public function setExpr($expr)
     {
         $this->expr = $expr;
     }

@@ -3,6 +3,7 @@
 namespace LSBProject\RequestBundle\Util\Storage;
 
 use LSBProject\RequestBundle\Configuration\RequestStorage;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestStorageResolver implements StorageInterface
@@ -25,8 +26,11 @@ class RequestStorageResolver implements StorageInterface
      */
     public function get($param, $paramConfiguration = null)
     {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
         if (!$paramConfiguration) {
-            return $this->requestStack->getCurrentRequest()->get($param);
+            return $request->get($param);
         }
 
         foreach ($paramConfiguration->getSource() as $source) {
@@ -47,23 +51,26 @@ class RequestStorageResolver implements StorageInterface
      */
     private function getFromStorage($source, $param)
     {
+        /** @var Request $request */
+        $request = $this->requestStack->getCurrentRequest();
+
         switch ($source) {
             case RequestStorage::QUERY:
-                $result = $this->requestStack->getCurrentRequest()->query->get($param);
+                $result = $request->query->get($param);
 
                 if ($result) {
                     return $result;
                 }
                 break;
             case RequestStorage::BODY:
-                $result = $this->requestStack->getCurrentRequest()->request->get($param);
+                $result = $request->request->get($param);
 
                 if ($result) {
                     return $result;
                 }
                 break;
             case RequestStorage::ATTR:
-                $result = $this->requestStack->getCurrentRequest()->attributes->get($param);
+                $result = $request->attributes->get($param);
 
                 if ($result) {
                     return $result;

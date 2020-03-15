@@ -13,7 +13,7 @@ class PropConverter extends AbstractPropConfiguration
     private $type;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     private $options = [];
 
@@ -29,6 +29,7 @@ class PropConverter extends AbstractPropConfiguration
 
     /**
      * @param string $value
+     * @return void
      */
     public function setValue($value)
     {

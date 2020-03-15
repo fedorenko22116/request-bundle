@@ -10,7 +10,7 @@ use Reflector;
 class ReflectorContext implements ReflectorContextInterface
 {
     /**
-     * @var ReflectorExtractorInterface
+     * @var ReflectorExtractorInterface|null
      */
     private $extractor;
 

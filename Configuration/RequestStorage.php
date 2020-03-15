@@ -27,7 +27,8 @@ class RequestStorage extends ConfigurationAnnotation
     private $sources = [];
 
     /**
-     * @param $value
+     * @param string[] $value
+     * @return void
      * @throws Exception
      */
     public function setValue($value)
@@ -37,6 +38,7 @@ class RequestStorage extends ConfigurationAnnotation
 
     /**
      * @param string[] $sources
+     * @return void
      * @throws Exception
      */
     public function setSource($sources)

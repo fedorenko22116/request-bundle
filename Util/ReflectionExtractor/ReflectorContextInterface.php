@@ -2,8 +2,8 @@
 
 namespace LSBProject\RequestBundle\Util\ReflectionExtractor;
 
-use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy\ReflectorExtractorInterface;
 use Reflector;
 
@@ -12,7 +12,7 @@ interface ReflectorContextInterface
     /**
      * @param Reflector $reflector
      * @param RequestStorage|null $requestStorage
-     * @return PropConfigurationInterface
+     * @return ExtractDTO
      */
     public function extract(Reflector $reflector, RequestStorage $requestStorage = null);
 

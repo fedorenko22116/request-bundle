@@ -27,7 +27,10 @@ class PropertyExtractor implements ReflectorExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     *
+     * @param ReflectionProperty|Reflector $reflector
+     * @param RequestStorage|null $storage
+     * @return ExtractDTO
      * @throws Exception
      */
     public function extract(Reflector $reflector, RequestStorage $storage = null)

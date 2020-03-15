@@ -42,10 +42,12 @@ class RequestConverter implements ParamConverterInterface
      */
     public function apply(Request $request, ParamConverter $configuration)
     {
-        $object = $this->requestFactory->create($configuration->getClass());
+        /** @var class-string<AbstractRequest> $class */
+        $class = $configuration->getClass();
+        $object = $this->requestFactory->create($class);
 
         if (($result = $this->validator->validate($object))->count()) {
-            throw new ValidationException($result->get(0)->getMessage());
+            throw new ValidationException((string) $result->get(0)->getMessage());
         }
 
         if (!$object->validate()) {
@@ -53,6 +55,8 @@ class RequestConverter implements ParamConverterInterface
         }
 
         $request->attributes->add([$configuration->getName() => $object]);
+
+        return true;
     }
 
     /**
@@ -61,7 +65,13 @@ class RequestConverter implements ParamConverterInterface
     public function supports(ParamConverter $configuration)
     {
         try {
-            return (new ReflectionClass($configuration->getClass()))->isSubclassOf(AbstractRequest::class);
+            /**
+             * @template T of object
+             * @var class-string<T> $class
+             */
+            $class = $configuration->getClass();
+
+            return (new ReflectionClass($class))->isSubclassOf(AbstractRequest::class);
         } catch (ReflectionException $exception) {
             return false;
         }

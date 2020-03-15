@@ -13,3 +13,4 @@ WORKDIR /var/www/bundle
 
 RUN composer validate
 RUN composer install
+RUN composer phpstan

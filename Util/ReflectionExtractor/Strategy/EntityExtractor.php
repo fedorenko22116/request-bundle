@@ -2,6 +2,7 @@
 
 namespace LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy;
 
+use LSBProject\RequestBundle\Configuration\RequestStorage;
 use Reflector;
 
 class EntityExtractor extends PropertyExtractor
@@ -9,12 +10,13 @@ class EntityExtractor extends PropertyExtractor
     /**
      * {@inheritDoc}
      */
-    public function extract(Reflector $reflector)
+    public function extract(Reflector $reflector, RequestStorage $storage = null)
     {
         $reflector = parent::extract($reflector);
-        $reflector->setOptions(array_merge($reflector->getOptions(), [
-            'expr' => isset($reflector->getOptions()['expr']) ? $reflector->getOptions()['expr'] : '',
-            'meta' => isset($reflector->getOptions()['mapping']) ? $reflector->getOptions()['mapping'] : [],
+        $configuration = $reflector->getConfiguration();
+        $configuration->setOptions(array_merge($configuration->getOptions(), [
+            'expr' => isset($configuration->getOptions()['expr']) ? $configuration->getOptions()['expr'] : '',
+            'meta' => isset($configuration->getOptions()['mapping']) ? $configuration->getOptions()['mapping'] : [],
         ]));
 
         return $reflector;

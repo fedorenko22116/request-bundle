@@ -7,6 +7,7 @@ use LSBProject\RequestBundle\Util\NamingConversion\NamingConversionInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use LSBProject\RequestBundle\Util\Storage\StorageInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestManager implements RequestManagerInterface
@@ -73,6 +74,7 @@ class RequestManager implements RequestManagerInterface
      */
     public function getFromParamConverters(ExtractDTO $param)
     {
+        /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
         $options = $param->getConfiguration()->getOptions();
         $id = isset($options['id']) ? $options['id'] : $this->storage->get('id', $param->getRequestStorage());
