@@ -1,5 +1,5 @@
-ARG PHP_VERSION
-ARG RUN_TESTS
+ARG PHP_VERSION='5.6'
+ARG RUN_TESTS=0
 
 FROM php:${PHP_VERSION}-cli
 
@@ -15,4 +15,4 @@ WORKDIR /var/www/bundle
 RUN composer validate
 RUN composer install
 
-RUN if [ "x$RUN_TESTS" = "x" ] ; then echo 'Tests are skiped'; else composer phpcs && composer phpstan ; fi
+RUN if [ "$RUN_TESTS" = "0" ] ; then echo 'Tests are skiped'; else composer phpcs && composer phpstan ; fi
