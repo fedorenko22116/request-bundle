@@ -15,4 +15,4 @@ WORKDIR /var/www/bundle
 
 RUN composer validate
 RUN composer install --ignore-platform-reqs --no-dev
-RUN if [ '${***}' = "7.4" ]; then composer install && composer phpcs && composer phpstan; else echo 'Tests are skiped'; fi
+RUN if [ '${PHP_VERSION}' = '${***}' ]; then composer install && composer phpcs && composer phpstan; else echo 'Tests are skiped'; fi
