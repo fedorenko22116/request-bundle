@@ -13,5 +13,6 @@ WORKDIR /var/www/bundle
 
 RUN composer validate
 RUN composer install
-RUN composer phpcs -n
+RUN composer phpcs --config-set show_warnings 0
+RUN composer phpcs
 RUN composer phpstan
