@@ -9,7 +9,7 @@
     <rule ref="PSR1" />
     <rule ref="vendor/escapestudios/symfony2-coding-standard">
         <exclude name="Symfony.Commenting.ClassComment.Missing" />
-        <exclude name="Symfony.Commenting.License.Missing" />
+        <exclude name="Symfony.Commenting.License.Warning" />
         <exclude name="Symfony.Commenting.FunctionComment.MissingParamComment" />
         <exclude name="Symfony.Functions.Arguments.Invalid" />
     </rule>
