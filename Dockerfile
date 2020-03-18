@@ -1,4 +1,4 @@
-ARG PHP_VERSION='5.6'
+ARG PHP_VERSION='7.4'
 
 FROM php:${PHP_VERSION}-cli
 
@@ -12,5 +12,6 @@ COPY . /var/www/bundle
 WORKDIR /var/www/bundle
 
 RUN composer validate
-RUN composer install --ignore-platform-reqs --no-dev
-RUN if [ "${RUN_TESTS}" = '' ]; then echo 'Tests are skiped'; else composer install && composer phpcs && composer phpstan; fi
+RUN composer install
+RUN composer phpcs
+RUN composer phpstan
