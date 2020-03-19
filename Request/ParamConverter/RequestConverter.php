@@ -83,6 +83,7 @@ class RequestConverter implements ParamConverterInterface
 
     /**
      * @param Request $request
+     * @return void
      */
     private function convertRequestContextIfEmpty(Request $request)
     {
