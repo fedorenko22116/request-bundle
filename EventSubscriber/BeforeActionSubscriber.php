@@ -11,6 +11,7 @@ class BeforeActionSubscriber implements EventSubscriberInterface
 {
     /**
      * @inheritDoc
+     * @return array<string, string>
      */
     public static function getSubscribedEvents()
     {
@@ -21,6 +22,7 @@ class BeforeActionSubscriber implements EventSubscriberInterface
 
     /**
      * @param ControllerEvent $event
+     * @return void
      */
     public function convertJsonStringToArray(ControllerEvent $event)
     {
