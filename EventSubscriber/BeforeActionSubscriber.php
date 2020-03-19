@@ -10,7 +10,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class BeforeActionSubscriber implements EventSubscriberInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @return array<string, string>
      */
     public static function getSubscribedEvents()
@@ -22,6 +23,7 @@ class BeforeActionSubscriber implements EventSubscriberInterface
 
     /**
      * @param ControllerEvent $event
+     *
      * @return void
      */
     public function convertJsonStringToArray(ControllerEvent $event)
