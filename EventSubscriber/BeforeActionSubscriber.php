@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace LSBProject\RequestBundle\EventSubscriber;
 
@@ -12,14 +12,17 @@ class BeforeActionSubscriber implements EventSubscriberInterface
     /**
      * @inheritDoc
      */
-    public static function getSubscribedEvents(): array
+    public static function getSubscribedEvents()
     {
         return [
             KernelEvents::CONTROLLER => 'convertJsonStringToArray',
         ];
     }
 
-    public function convertJsonStringToArray(ControllerEvent $event): void
+    /**
+     * @param ControllerEvent $event
+     */
+    public function convertJsonStringToArray(ControllerEvent $event)
     {
         $request = $event->getRequest();
 
@@ -30,10 +33,9 @@ class BeforeActionSubscriber implements EventSubscriberInterface
         $data = json_decode($request->getContent(), true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new BadRequestHttpException('invalid json body: ' . json_last_error_msg());
+            throw new BadRequestHttpException(sprintf('Invalid json body: %s', json_last_error_msg()));
         }
 
         $request->request->replace(is_array($data) ? $data : []);
     }
-
 }
