@@ -2,7 +2,6 @@
 
 namespace LSBProject\RequestBundle\Request\ParamConverter;
 
-use LSBProject\RequestBundle\Exception\ValidationException;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use ReflectionClass;
@@ -10,6 +9,7 @@ use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RequestConverter implements ParamConverterInterface
@@ -38,7 +38,7 @@ class RequestConverter implements ParamConverterInterface
 
     /**
      * {@inheritDoc}
-     * @throws ValidationException
+     * @throws UnprocessableEntityHttpException
      */
     public function apply(Request $request, ParamConverter $configuration)
     {
@@ -47,11 +47,11 @@ class RequestConverter implements ParamConverterInterface
         $object = $this->requestFactory->create($class);
 
         if (($result = $this->validator->validate($object))->count()) {
-            throw new ValidationException((string) $result->get(0)->getMessage());
+            throw new UnprocessableEntityHttpException((string) $result->get(0)->getMessage());
         }
 
         if (!$object->validate()) {
-            throw new ValidationException($object->getErrorMessage());
+            throw new UnprocessableEntityHttpException($object->getErrorMessage());
         }
 
         $request->attributes->add([$configuration->getName() => $object]);
