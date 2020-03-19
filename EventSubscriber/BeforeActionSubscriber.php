@@ -10,8 +10,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class BeforeActionSubscriber implements EventSubscriberInterface
 {
     /**
-     * {@inheritDoc}
-     *
      * @return array<string, string>
      */
     public static function getSubscribedEvents()
@@ -34,7 +32,7 @@ class BeforeActionSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode((string) $request->getContent(), true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new BadRequestHttpException(sprintf('Invalid json body: %s', json_last_error_msg()));
