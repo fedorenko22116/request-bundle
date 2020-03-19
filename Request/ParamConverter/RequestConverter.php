@@ -9,6 +9,7 @@ use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -42,6 +43,8 @@ class RequestConverter implements ParamConverterInterface
      */
     public function apply(Request $request, ParamConverter $configuration)
     {
+        $this->convertRequestContextIfEmpty($request);
+
         /** @var class-string<AbstractRequest> $class */
         $class = $configuration->getClass();
         $object = $this->requestFactory->create($class);
@@ -76,5 +79,23 @@ class RequestConverter implements ParamConverterInterface
         } catch (ReflectionException $exception) {
             return false;
         }
+    }
+
+    /**
+     * @param Request $request
+     */
+    private function convertRequestContextIfEmpty(Request $request)
+    {
+        if ($request->getContentType() !== 'json' || !$request->getContent()) {
+            return;
+        }
+
+        $data = json_decode($request->getContent(), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new BadRequestHttpException(sprintf('Invalid json body: %s', json_last_error_msg()));
+        }
+
+        $request->request->replace(is_array($data) ? $data : []);
     }
 }

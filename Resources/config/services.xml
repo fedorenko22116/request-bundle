@@ -66,11 +66,5 @@
             <argument type="service" id="Symfony\Component\Validator\Validator\ValidatorInterface" />
             <argument type="service" id="LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface" />
         </service>
-        <service
-                id="lsbproject.request.json.subscriber"
-                class="LSBProject\RequestBundle\EventSubscriber\BeforeActionSubscriber"
-        >
-            <tag name="kernel.event_subscriber" />
-        </service>
     </services>
 </container>
