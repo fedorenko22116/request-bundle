@@ -92,7 +92,7 @@ class RequestConverter implements ParamConverterInterface
             return;
         }
 
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode((string) $request->getContent(false), true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new BadRequestHttpException(sprintf('Invalid json body: %s', json_last_error_msg()));
