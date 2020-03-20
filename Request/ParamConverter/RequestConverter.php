@@ -4,6 +4,7 @@ namespace LSBProject\RequestBundle\Request\ParamConverter;
 
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
+use LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface;
 use ReflectionClass;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -11,30 +12,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInte
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RequestConverter implements ParamConverterInterface
 {
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
     /**
      * @var RequestFactoryInterface
      */
     private $requestFactory;
 
     /**
-     * @param ValidatorInterface      $validator
-     * @param RequestFactoryInterface $requestFactory
+     * @var RequestValidatorInterface
+     */
+    private $validator;
+
+    /**
+     * @param RequestFactoryInterface   $requestFactory
+     * @param RequestValidatorInterface $validator
      */
     public function __construct(
-        ValidatorInterface $validator,
-        RequestFactoryInterface $requestFactory
+        RequestFactoryInterface $requestFactory,
+        RequestValidatorInterface $validator
     ) {
-        $this->validator = $validator;
         $this->requestFactory = $requestFactory;
+        $this->validator = $validator;
     }
 
     /**
@@ -49,12 +49,8 @@ class RequestConverter implements ParamConverterInterface
         $class = $configuration->getClass();
         $object = $this->requestFactory->create($class);
 
-        if (($result = $this->validator->validate($object))->count()) {
-            throw new UnprocessableEntityHttpException((string) $result->get(0)->getMessage());
-        }
-
-        if (!$object->validate()) {
-            throw new UnprocessableEntityHttpException($object->getErrorMessage());
+        if (!$this->validator->validate($object)) {
+            throw new UnprocessableEntityHttpException($this->validator->getError());
         }
 
         $request->attributes->add([$configuration->getName() => $object]);

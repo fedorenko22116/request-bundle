@@ -8,6 +8,11 @@ use LSBProject\RequestBundle\Configuration\RequestStorage;
 class ExtractDTO
 {
     /**
+     * @var string
+     */
+    private $name;
+
+    /**
      * @var PropConfigurationInterface
      */
     private $configuration;
@@ -18,13 +23,23 @@ class ExtractDTO
     private $requestStorage;
 
     /**
+     * @param string                     $name
      * @param PropConfigurationInterface $configuration
      * @param RequestStorage|null        $requestStorage
      */
-    public function __construct(PropConfigurationInterface $configuration, $requestStorage)
+    public function __construct($name, PropConfigurationInterface $configuration, $requestStorage)
     {
+        $this->name = $name;
         $this->configuration = $configuration;
         $this->requestStorage = $requestStorage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

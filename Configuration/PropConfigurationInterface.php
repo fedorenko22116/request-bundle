@@ -33,7 +33,7 @@ interface PropConfigurationInterface
     public function setConverter($converter);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getName();
 

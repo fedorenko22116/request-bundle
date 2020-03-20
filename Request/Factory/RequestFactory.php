@@ -49,10 +49,10 @@ class RequestFactory implements RequestFactoryInterface
                 $this->requestManager->get($prop) :
                 $this->requestManager->getFromParamConverters($prop);
 
-            if ($meta->hasMethod($method = 'set' . ucfirst($prop->getConfiguration()->getName()))) {
+            if ($meta->hasMethod($method = 'set' . ucfirst($prop->getName()))) {
                 $object->$method($var);
             } else {
-                $object->{$prop->getConfiguration()->getName()} = $var;
+                $object->{$prop->getName()} = $var;
             }
         }
 

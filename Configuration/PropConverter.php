@@ -8,21 +8,31 @@ namespace LSBProject\RequestBundle\Configuration;
 class PropConverter extends AbstractPropConfiguration
 {
     /**
+     * Property type to be used for converters
+     *
      * @var string|null
      */
     private $type;
 
     /**
+     * Mapping to ParamConverter::options
+     *
      * @var mixed[]
      */
     private $options = [];
 
     /**
+     * Mapping to ParamConverter::converter
+     *
      * @var string|null
      */
     private $converter;
 
     /**
+     * By default snake_case naming conversion is used
+     * for property name. This property can be used to
+     * point exact name for parameter from request
+     *
      * @var string
      */
     private $name;

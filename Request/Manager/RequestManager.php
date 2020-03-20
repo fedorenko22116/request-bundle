@@ -64,7 +64,7 @@ class RequestManager implements RequestManagerInterface
     public function get(ExtractDTO $param)
     {
         return $this->storage->get(
-            $this->namingConversion->convert($param->getConfiguration()->getName()),
+            $param->getConfiguration()->getName() ?: $this->namingConversion->convert($param->getName()),
             $param->getRequestStorage()
         );
     }
@@ -82,7 +82,10 @@ class RequestManager implements RequestManagerInterface
         if ($id) {
             $request->attributes->set(
                 $id,
-                $this->storage->get($this->namingConversion->convert($id), $param->getRequestStorage())
+                $this->storage->get(
+                    $param->getConfiguration()->getName() ?: $this->namingConversion->convert($id),
+                    $param->getRequestStorage()
+                )
             );
         }
 
@@ -101,14 +104,17 @@ class RequestManager implements RequestManagerInterface
 
             $request->attributes->set(
                 $alias,
-                $this->storage->get($this->namingConversion->convert($alias), $param->getRequestStorage())
+                $this->storage->get(
+                    $param->getConfiguration()->getName() ?: $this->namingConversion->convert($alias),
+                    $param->getRequestStorage()
+                )
             );
         }
 
-        $paramConfig = $this->paramConverterFactory->create($param->getConfiguration());
+        $paramConfig = $this->paramConverterFactory->create($param->getName(), $param->getConfiguration());
         $this->converterManager->apply($request, $paramConfig);
-        $var = $request->attributes->get($param->getConfiguration()->getName());
-        $request->attributes->remove($param->getConfiguration()->getName());
+        $var = $request->attributes->get($param->getName());
+        $request->attributes->remove($param->getName());
 
         if ($id) {
             $request->attributes->remove($id);

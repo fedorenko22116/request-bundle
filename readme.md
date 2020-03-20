@@ -127,7 +127,8 @@ There are 3 types of storage to be set: `query`, `request`, `attributes`.
 
 ### Validation
 
-You can use symfony/validation to validate parameters in request.
+You can use `symfony/validation` to validate parameters in request.
+Install component and use it as usual
 
 ```php
 class TestRequest extends AbstractRequest
@@ -163,6 +164,8 @@ class TestRequest extends AbstractRequest
     }
 }
 ```
+
+If translation component is installed, it will be performed to the message
 
 ### Additional setting logic
 
@@ -208,6 +211,5 @@ Use `mapping` property to point aliases from the request to the original paramet
 
 ## TODO
 
-1) Validation group configuration
-2) Add translation support for `getErrorMessage`
-3) Custom naming strategy
+- Validation group configuration
+- Testing

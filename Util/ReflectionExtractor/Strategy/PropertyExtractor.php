@@ -47,7 +47,6 @@ class PropertyExtractor implements ReflectorExtractorInterface
         $config = $this->reader->getPropertyAnnotation($reflector, PropConverter::class);
         $config = $config ?: $this->reader->getPropertyAnnotation($reflector, Entity::class);
         $config = $config ?: new PropConverter([]);
-        $config->setName($reflector->getName());
 
         if (!$config->getType()) {
             if ($type = $this->extractType($reflector)) {
@@ -57,7 +56,7 @@ class PropertyExtractor implements ReflectorExtractorInterface
             }
         }
 
-        return new ExtractDTO($config, $storage);
+        return new ExtractDTO($reflector->getName(), $config, $storage);
     }
 
     /**

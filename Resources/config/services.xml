@@ -43,6 +43,13 @@
                 public="false"
         />
         <service
+                id="LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface"
+                class="LSBProject\RequestBundle\Request\Validator\RequestValidator"
+                public="false"
+        >
+            <argument type="service" id="service_container" />
+        </service>
+        <service
                 id="LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface"
                 class="LSBProject\RequestBundle\Request\Factory\RequestFactory"
                 public="false"
@@ -63,8 +70,8 @@
                 class="LSBProject\RequestBundle\Request\ParamConverter\RequestConverter"
         >
             <tag name="request.param_converter" converter="lsbproject_request_converter" />
-            <argument type="service" id="Symfony\Component\Validator\Validator\ValidatorInterface" />
             <argument type="service" id="LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface" />
+            <argument type="service" id="LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface" />
         </service>
     </services>
 </container>

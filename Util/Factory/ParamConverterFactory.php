@@ -8,14 +8,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class ParamConverterFactory implements ParamConverterFactoryInterface
 {
     /**
-     * @param PropConfigurationInterface $configuration
-     *
-     * @return ParamConverter
+     * {@inheritDoc}
      */
-    public function create(PropConfigurationInterface $configuration)
+    public function create($name, PropConfigurationInterface $configuration)
     {
         $paramConverter = new ParamConverter([]);
-        $paramConverter->setName($configuration->getName());
+        $paramConverter->setName($name);
         $paramConverter->setOptions($configuration->getOptions());
         $paramConverter->setIsOptional(false);
 

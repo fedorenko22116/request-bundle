@@ -8,9 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 interface ParamConverterFactoryInterface
 {
     /**
+     * @param string                     $name
      * @param PropConfigurationInterface $configuration
      *
      * @return ParamConverter
      */
-    public function create(PropConfigurationInterface $configuration);
+    public function create($name, PropConfigurationInterface $configuration);
 }
