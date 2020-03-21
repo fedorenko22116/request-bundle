@@ -1,0 +1,23 @@
+version: "3.4"
+services:
+  app:
+    build: .
+    volumes:
+      - root:/var/www/app
+  db:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: default
+      MYSQL_ROOT_PASSWORD: root
+  nginx:
+    image: nginx
+    ports:
+      - 8000:80
+    depends_on:
+      - app
+      - db
+    volumes:
+      - root:/var/www/app
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+volumes:
+  root: ~
