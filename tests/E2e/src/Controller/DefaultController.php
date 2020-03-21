@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Request\TestAttributesRequest;
+use App\Request\TestBodyRequest;
 use App\Request\TestQueryRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,6 +20,29 @@ class DefaultController extends AbstractController
             'foo' => $request->foo,
             'barBaz' => $request->barBaz,
             'dto' => $request->dto->getFoo()
+        ]);
+    }
+
+    /**
+     * @Route("/body", methods={"POST"})
+     */
+    public function testBodyRequest(TestBodyRequest $request): JsonResponse
+    {
+        return new JsonResponse([
+            'foo' => $request->foo,
+            'barBaz' => $request->barBaz,
+            'dto' => $request->dto->getFoo()
+        ]);
+    }
+
+    /**
+     * @Route("/attributes/{foo_attr}")
+     */
+    public function testAttributesRequest(TestAttributesRequest $request): JsonResponse
+    {
+        return new JsonResponse([
+            'foo' => $request->fooAttr,
+            'bar' => $request->bar
         ]);
     }
 }
