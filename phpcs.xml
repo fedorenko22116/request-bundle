@@ -4,7 +4,7 @@
 
     <exclude-pattern>/vendor</exclude-pattern>
     <exclude-pattern>/phpstan</exclude-pattern>
-    <exclude-pattern>/Tests/E2e</exclude-pattern>
+    <exclude-pattern>/tests/E2e</exclude-pattern>
 
     <rule ref="PSR2" />
     <rule ref="PSR1" />

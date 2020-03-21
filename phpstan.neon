@@ -7,7 +7,7 @@ parameters:
     tmpDir: "%rootDir%/../../../phpstan"
 
     excludes_analyse:
-        - "%rootDir%/../../../Tests/E2e"
+        - "%rootDir%/../../../tests/E2e"
         - "%rootDir%/../../../vendor"
         - "%rootDir%/../../../phpstan"
         - "%rootDir%/../../../Util/ReflectionExtractor/Strategy/PropertyExtractor.php"
