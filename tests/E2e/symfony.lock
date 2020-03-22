@@ -99,9 +99,6 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.1"
     },
-    "lsbproject/request-bundle": {
-        "version": "v1.0.0"
-    },
     "ocramius/package-versions": {
         "version": "1.7.0"
     },
