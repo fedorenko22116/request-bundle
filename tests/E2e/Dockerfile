@@ -18,4 +18,6 @@ COPY docker-entrypoint.sh /usr/local/bin/app-docker-entrypoint.sh
 
 RUN chmod 755 /usr/local/bin/app-docker-entrypoint.sh
 
+WORKDIR /var/www/app/tests/E2e
+
 ENTRYPOINT ["app-docker-entrypoint.sh"]
