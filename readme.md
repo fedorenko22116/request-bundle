@@ -210,7 +210,7 @@ class TestRequest extends AbstractRequest
     /**
      * @Entity(options={"mapping": {"user_id": "id"}})
      */
-    public User $userB;    
+    public User $userC;    
 }
 ```
 
@@ -220,4 +220,4 @@ Use `mapping` property to point aliases from the request to the original paramet
 ## TODO
 
 - Validation group configuration
-- Testing
+- Unit testing
