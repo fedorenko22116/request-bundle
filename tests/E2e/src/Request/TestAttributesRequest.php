@@ -4,9 +4,9 @@ namespace App\Request;
 
 use App\Entity\TestEntity;
 use LSBProject\RequestBundle\Configuration\Entity;
+use LSBProject\RequestBundle\Configuration\PropConverter;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Request\AbstractRequest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @RequestStorage({"attributes"})
@@ -27,7 +27,7 @@ class TestAttributesRequest extends AbstractRequest
 
     /**
      * @RequestStorage({"query"})
-     * @ParamConverter(name="bar_baz")
+     * @PropConverter(name="bar_baz")
      */
     public string $baz;
 
