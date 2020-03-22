@@ -2,6 +2,9 @@
 
 namespace LSBProject\RequestBundle\Request\Manager;
 
+use LSBProject\RequestBundle\Configuration\Entity;
+use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
+use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Util\Factory\ParamConverterFactoryInterface;
 use LSBProject\RequestBundle\Util\NamingConversion\NamingConversionInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
@@ -76,54 +79,109 @@ class RequestManager implements RequestManagerInterface
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
-        $options = $param->getConfiguration()->getOptions();
-        $id = isset($options['id']) ? $options['id'] : $this->storage->get('id', $param->getRequestStorage());
+        $config  = $param->getConfiguration();
+
+        $params = $this->addId($config, $request, $param->getRequestStorage());
+        $params = array_merge($params, $this->addOptionMapping($config, $request, $param->getRequestStorage()));
+
+        if ($config instanceof Entity && $config->getMapping()) {
+            $params = array_merge($params, $this->addPropMapping($config, $request, $param->getRequestStorage()));
+        }
+
+        $paramConfig = $this->paramConverterFactory->create($param->getName(), $param->getConfiguration());
+
+        $this->converterManager->apply($request, $paramConfig);
+
+        $var = $request->attributes->get($param->getName());
+        $request->attributes->remove($param->getName());
+
+        foreach ($params as $param) {
+            $request->attributes->remove($param);
+        }
+
+        return $var;
+    }
+
+    /**
+     * @param PropConfigurationInterface $config
+     * @param Request                    $request
+     * @param RequestStorage|null        $storage
+     *
+     * @return array<string>
+     */
+    private function addId(PropConfigurationInterface $config, Request $request, $storage)
+    {
+        $options = $config->getOptions();
+        $id = isset($options['id']) ? $options['id'] : $this->storage->get('id', $storage);
 
         if ($id) {
             $request->attributes->set(
                 $id,
                 $this->storage->get(
-                    $param->getConfiguration()->getName() ?: $this->namingConversion->convert($id),
-                    $param->getRequestStorage()
+                    $config->getName() ?: $this->namingConversion->convert($id),
+                    $storage
                 )
             );
         }
 
+        return $id ? [$id] : [];
+    }
+
+    /**
+     * @param PropConfigurationInterface $config
+     * @param Request                    $request
+     * @param RequestStorage|null        $storage
+     *
+     * @return array<string>
+     */
+    private function addOptionMapping(PropConfigurationInterface $config, Request $request, $storage)
+    {
+        $result = [];
+        $options = $config->getOptions();
+
         /** @var array<string, string> $mapping */
         $mapping = isset($options['mapping']) ? $options['mapping'] : [];
-        $meta = isset($options['meta']) ? $options['meta'] : [];
-
-        unset($options['meta']);
-
-        $mapping = array_merge($mapping, $meta);
 
         foreach ($mapping as $alias => $option) {
-            if ("expr" === $option) {
+            if ("expr" === $alias) {
                 continue;
             }
 
             $request->attributes->set(
                 $alias,
                 $this->storage->get(
-                    $param->getConfiguration()->getName() ?: $this->namingConversion->convert($alias),
-                    $param->getRequestStorage()
+                    $config->getName() ?: $this->namingConversion->convert($alias),
+                    $storage
                 )
             );
+            $result[] = $alias;
         }
 
-        $paramConfig = $this->paramConverterFactory->create($param->getName(), $param->getConfiguration());
-        $this->converterManager->apply($request, $paramConfig);
-        $var = $request->attributes->get($param->getName());
-        $request->attributes->remove($param->getName());
+        return $result;
+    }
 
-        if ($id) {
-            $request->attributes->remove($id);
+    /**
+     * @param Entity              $config
+     * @param Request             $request
+     * @param RequestStorage|null $storage
+     *
+     * @return array<string>
+     */
+    private function addPropMapping(Entity $config, Request $request, $storage)
+    {
+        $result = [];
+
+        foreach ($config->getMapping() as $alias => $option) {
+            $request->attributes->set(
+                $alias,
+                $this->storage->get(
+                    $config->getName() ?: $this->namingConversion->convert($option),
+                    $storage
+                )
+            );
+            $result[] = $alias;
         }
 
-        foreach ($mapping as $alias => $option) {
-            $request->attributes->remove($alias);
-        }
-
-        return $var;
+        return $result;
     }
 }

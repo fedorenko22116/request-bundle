@@ -189,20 +189,28 @@ There is an annotation `@Entity` which is almost equal to the sensio annotation.
 
 ```php
 use LSBProject\RequestBundle\Configuration\Entity;
+use App\Entity\User;
 
 class TestRequest extends AbstractRequest
 {
     /**
-     * @Entity("App\Entity\User", expr="repository.find(id)", mapping={"user_id": "id"})
+     * @Entity("App\Entity\User", expr="repository.find(id)", mapping={"id": "user_id"})
      */
     public $userA;
     
     // or
 
     /**
-     * @Entity("App\Entity\User", options={"id"="user_id"})
+     * @Entity(options={"id"="user_id"})
      */
-    public $userB;
+    public User $userB;
+
+    // or
+
+    /**
+     * @Entity(options={"mapping": {"user_id": "id"}})
+     */
+    public User $userB;    
 }
 ```
 

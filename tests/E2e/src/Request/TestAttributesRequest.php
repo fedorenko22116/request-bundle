@@ -6,6 +6,7 @@ use App\Entity\TestEntity;
 use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Request\AbstractRequest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @RequestStorage({"attributes"})
@@ -25,7 +26,23 @@ class TestAttributesRequest extends AbstractRequest
     public string $testId;
 
     /**
-     * @Entity(expr="repository.find(id)", mapping={"test_id"="id"})
+     * @RequestStorage({"query"})
+     * @ParamConverter(name="bar_baz")
      */
-    public TestEntity $entity;
+    public string $baz;
+
+    /**
+     * @Entity(options={"id"="test_id"})
+     */
+    public TestEntity $entityA;
+
+    /**
+     * @Entity(expr="repository.find(id)", mapping={"id"="test_id"})
+     */
+    public TestEntity $entityB;
+
+    /**
+     * @Entity(options={"mapping": {"bar_baz": "text"}})
+     */
+    public TestEntity $entityC;
 }

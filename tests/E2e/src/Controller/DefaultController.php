@@ -43,7 +43,9 @@ class DefaultController extends AbstractController
         return new JsonResponse([
             'foo' => $request->fooAttr,
             'bar' => $request->bar,
-            'entityText' => $request->entity->getText(),
+            'entityA' => $request->entityA->getText(),
+            'entityB' => $request->entityB->getText(),
+            'entityC' => $request->entityC->getText(),
         ]);
     }
 }
