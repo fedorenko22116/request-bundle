@@ -8,4 +8,5 @@ return [
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
+    LSBProject\RequestBundle\LSBProjectRequestBundle::class => ['all' => true]
 ];

@@ -6,7 +6,6 @@ use App\Request\TestAttributesRequest;
 use App\Request\TestBodyRequest;
 use App\Request\TestQueryRequest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractFOSRestController
