@@ -9,4 +9,8 @@ RUN composer install
 
 FROM php:7.4-fpm
 
+RUN apt-get update && apt-get install -y netcat
+
 COPY --chown=www-data:www-data --from=assets /var/www/app /var/www/app
+
+CMD ["/var/www/app/tests/E2e/docker-entrypoint.sh"]
