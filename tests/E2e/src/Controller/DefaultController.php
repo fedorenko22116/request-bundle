@@ -45,7 +45,7 @@ class DefaultController extends AbstractController
             'bar' => $request->bar,
             'entityA' => $request->entityA->getText(),
             'entityB' => $request->entityB->getText(),
-            'entityC' => $request->entityC->getText(),
+            'entityC' => $request->entityC->getText()
         ]);
     }
 }
