@@ -3,7 +3,7 @@ services:
   app:
     build: .
     volumes:
-      - assets:/var/www/app
+      - assets1:/var/www/app
   db:
     image: mysql
     environment:
@@ -15,7 +15,7 @@ services:
       - app
       - db
     volumes:
-      - assets:/var/www/app
+      - assets1:/var/www/app
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
   test:
     build: .docker/tester
@@ -27,4 +27,4 @@ services:
     volumes:
       - ./test-entrypoint.sh:/usr/bin/test-entrypoint.sh
 volumes:
-  assets: ~
+  assets1: ~

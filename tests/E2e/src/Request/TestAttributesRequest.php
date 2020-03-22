@@ -25,7 +25,7 @@ class TestAttributesRequest extends AbstractRequest
     public string $testId;
 
     /**
-     * @Entity(options={"id"="test_id"})
+     * @Entity(expr="repository.find(id)", mapping={"test_id"="id"})
      */
     public TestEntity $entity;
 }
