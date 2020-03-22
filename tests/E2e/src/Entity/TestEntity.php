@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace E2e\src\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,4 +21,9 @@ class TestEntity
      * @ORM\Column(type="string")
      */
     protected string $text;
+
+    public function getText(): string
+    {
+        return $this->text;
+    }
 }

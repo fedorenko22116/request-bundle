@@ -12,8 +12,8 @@ host=${TEST_HOST:-'http://127.0.0.1:8000'}
 
 ###############################################################################
 
-url="$host/attributes/123?bar=1"
-expected='{"foo":"123","bar":"1"}'
+url="$host/attributes/123?bar=1&test_id=1"
+expected='{"foo":"123","bar":"1","entityText":"Foo text"}'
 result="$(curl -s $url)"
 
 if [ $result = $expected ];
