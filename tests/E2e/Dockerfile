@@ -11,6 +11,8 @@ FROM php:7.4-fpm
 
 RUN apt-get update && apt-get install -y netcat
 
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+
 COPY --chown=www-data:www-data --from=assets /var/www/app /var/www/app
 COPY docker-entrypoint.sh /usr/local/bin/app-docker-entrypoint.sh
 

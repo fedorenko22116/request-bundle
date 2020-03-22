@@ -6,6 +6,6 @@ do
     sleep 5
 done
 
-php bin/console doctrine:migrations:migrate
+php bin/console doctrine:migrations:migrate -n
 
 docker-php-entrypoint php-fpm

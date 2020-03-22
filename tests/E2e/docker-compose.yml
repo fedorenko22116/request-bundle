@@ -11,8 +11,6 @@ services:
       MYSQL_ROOT_PASSWORD: root
   nginx:
     image: nginx
-    ports:
-      - 8000:80
     depends_on:
       - app
       - db
