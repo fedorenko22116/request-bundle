@@ -32,7 +32,7 @@ class TestAttributesRequest extends AbstractRequest
     public string $baz;
 
     /**
-     * @Entity(options={"test_id": "id"})
+     * @Entity(options={"id": "test_id"})
      */
     public TestEntity $entityA;
 
