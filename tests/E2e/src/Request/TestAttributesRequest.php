@@ -27,6 +27,7 @@ class TestAttributesRequest extends AbstractRequest
 
     /**
      * @RequestStorage({"query"})
+     * @PropConverter(name="bar_baz")
      */
     public string $baz;
 

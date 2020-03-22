@@ -12,7 +12,7 @@ host=${TEST_HOST:-'http://127.0.0.1:8000'}
 
 ###############################################################################
 
-url="$host/attributes/123?bar=1&test_id=1&baz=SuperFoo"
+url="$host/attributes/123?bar=1&test_id=1&bar_baz=SuperFoo"
 expected='{"foo":"123","bar":"1","entityA":"SuperFoo","entityB":"SuperFoo","entityC":"SuperFoo"}'
 result="$(curl -s $url)"
 

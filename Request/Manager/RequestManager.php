@@ -5,6 +5,7 @@ namespace LSBProject\RequestBundle\Request\Manager;
 use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Exception\ConfigurationException;
 use LSBProject\RequestBundle\Util\Factory\ParamConverterFactoryInterface;
 use LSBProject\RequestBundle\Util\NamingConversion\NamingConversionInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
@@ -12,6 +13,7 @@ use LSBProject\RequestBundle\Util\Storage\StorageInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Throwable;
 
 class RequestManager implements RequestManagerInterface
 {
@@ -90,7 +92,13 @@ class RequestManager implements RequestManagerInterface
 
         $paramConfig = $this->paramConverterFactory->create($param->getName(), $param->getConfiguration());
 
-        $this->converterManager->apply($request, $paramConfig);
+        try {
+            $this->converterManager->apply($request, $paramConfig);
+        } catch (Throwable $exception) {
+            throw new ConfigurationException(
+                sprintf("Cannot convert '%s' property. %s", $param->getName(), $exception->getMessage())
+            );
+        }
 
         $var = $request->attributes->get($param->getName());
         $request->attributes->remove($param->getName());
