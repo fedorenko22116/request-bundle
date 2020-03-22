@@ -1,5 +1,11 @@
 #!/bin/sh
 
+until nc -z -v -w30 app 9000
+do
+    echo "Waiting for application connection..."
+    sleep 5
+done
+
 sleep 5
 
 host=${TEST_HOST:-'http://127.0.0.1:8000'}

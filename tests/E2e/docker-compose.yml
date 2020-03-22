@@ -20,7 +20,7 @@ services:
       - assets:/var/www/app
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
   test:
-    image: curlimages/curl
+    build: .docker/tester
     entrypoint: "/usr/bin/test-entrypoint.sh"
     depends_on:
       - nginx
