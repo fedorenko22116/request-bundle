@@ -44,7 +44,7 @@ class Entity extends PropConverter
     }
 
     /**
-     * @param string $mapping
+     * @param array<string, string> $mapping
      *
      * @return void
      */
