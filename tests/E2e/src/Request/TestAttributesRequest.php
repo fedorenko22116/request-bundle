@@ -32,16 +32,19 @@ class TestAttributesRequest extends AbstractRequest
     public string $baz;
 
     /**
+     * @RequestStorage({"query"})
      * @Entity(options={"id": "test_id"})
      */
     public TestEntity $entityA;
 
     /**
+     * @RequestStorage({"query"})
      * @Entity(expr="repository.find(id)", mapping={"id": "test_id"})
      */
     public TestEntity $entityB;
 
     /**
+     * @RequestStorage({"query"})
      * @Entity(options={"mapping": {"bar_baz": "text"}})
      */
     public TestEntity $entityC;
