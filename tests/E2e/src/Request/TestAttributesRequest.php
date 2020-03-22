@@ -32,12 +32,12 @@ class TestAttributesRequest extends AbstractRequest
     public string $baz;
 
     /**
-     * @Entity(options={"id"="test_id"})
+     * @Entity(options={"id": "test_id"})
      */
     public TestEntity $entityA;
 
     /**
-     * @Entity(expr="repository.find(id)", mapping={"id"="test_id"})
+     * @Entity(expr="repository.find(id)", mapping={"id": "test_id"})
      */
     public TestEntity $entityB;
 
