@@ -23,7 +23,7 @@ class TestAttributesRequest extends AbstractRequest
     /**
      * @RequestStorage({"query"})
      */
-    public string $testId;
+    public int $testId;
 
     /**
      * @RequestStorage({"query"})
@@ -32,7 +32,7 @@ class TestAttributesRequest extends AbstractRequest
     public string $baz;
 
     /**
-     * @Entity(options={"id": "test_id"})
+     * @Entity(options={"test_id": "id"})
      */
     public TestEntity $entityA;
 
