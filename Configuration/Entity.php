@@ -42,4 +42,14 @@ class Entity extends PropConverter
     {
         return $this->mapping;
     }
+
+    /**
+     * @param string $mapping
+     *
+     * @return void
+     */
+    public function setMapping($mapping)
+    {
+        $this->mapping = $mapping;
+    }
 }
