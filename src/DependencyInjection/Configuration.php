@@ -2,7 +2,6 @@
 
 namespace LSBProject\RequestBundle\DependencyInjection;
 
-use LSBProject\RequestBundle\Util\NamingConversion\SnakeConversion;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
