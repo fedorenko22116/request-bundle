@@ -216,8 +216,37 @@ class TestRequest extends AbstractRequest
 
 Use `mapping` property to point aliases from the request to the original parameters names.
 
+### Custom naming conversion
 
-## TODO
+By default all properties will be converter to snake_case style. You can change this behaviour 
+by creating a class which implements `LSBProject\RequestBundle\Util\NamingConversion\NamingConversionInterface`
 
-- Validation group configuration
-- Unit testing
+```php
+<?php
+
+namespace LSBProject\RequestBundle\Util\NamingConversion;
+
+class SnakeConversion implements NamingConversionInterface
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function convert($value)
+    {
+        return strtolower(preg_replace('/[A-Z]/', '_\\0', lcfirst($value)) ?: '');
+    }
+}
+```
+
+then you should register it as a service and point it out in the bundle configuration
+
+```yaml
+# ./config/packages/lsbproject_request.yaml
+
+lsbproject_request:
+    naming_conversion: my_custom_conversion
+```
+
+## Examples
+
+More examples you can find [here](https://github.com/22116/request-bundle/tree/master/tests/E2e)
