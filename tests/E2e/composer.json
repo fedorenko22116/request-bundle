@@ -14,7 +14,8 @@
         "symfony/orm-pack": "^1.0",
         "symfony/serializer": "4.4.*",
         "symfony/twig-pack": "^1.0",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+        "lsbproject/request-bundle": "*"
     },
     "require-dev": {
     },
@@ -26,8 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
-            "LSBProject\\RequestBundle\\": "../../"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
@@ -63,5 +63,11 @@
             "allow-contrib": false,
             "require": "4.4.*"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../"
+        }
+    ]
 }

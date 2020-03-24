@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "LSBProject\\RequestBundle\\": "."
+            "LSBProject\\RequestBundle\\": "src/"
         }
     },
     "autoload-dev": {
@@ -33,7 +33,7 @@
         }
     },
     "scripts": {
-        "phpstan": "vendor/bin/phpstan analyse .",
+        "phpstan": "vendor/bin/phpstan analyse src",
         "phpcs": "./vendor/bin/phpcs",
         "phpcbf": "./vendor/bin/phpcbf"
     }
