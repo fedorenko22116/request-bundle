@@ -19,4 +19,9 @@ class TestQueryRequest extends AbstractRequest
     {
         $this->barBaz = $value;
     }
+
+    public function getBarBaz(): bool
+    {
+        return $this->barBaz;
+    }
 }

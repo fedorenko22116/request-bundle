@@ -19,7 +19,7 @@ class DefaultController extends AbstractFOSRestController
     {
         return [
             'foo' => $request->foo,
-            'barBaz' => $request->barBaz,
+            'barBaz' => $request->getBarBaz(),
             'dto' => $request->dto->getFoo()
         ];
     }
