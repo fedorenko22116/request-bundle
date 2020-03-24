@@ -70,8 +70,10 @@ class RequestFactory implements RequestFactoryInterface
         $props = array_filter(
             $meta->getProperties(),
             function (ReflectionProperty $prop) use ($meta) {
+                $method = 'set' . ucfirst($prop);
+
                 return $prop->getDeclaringClass()->getName() === $meta->getName() &&
-                    ($prop->isPublic() || $meta->hasMethod('set' . ucfirst($prop)));
+                    ($prop->isPublic() || ($meta->hasMethod($method) && $meta->getMethod($method)->isPublic()));
             }
         );
 
