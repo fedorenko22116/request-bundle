@@ -27,7 +27,7 @@ fi
 ###############################################################################
 
 url="$host/query?foo=123&bar_baz=1"
-expected='{"foo":"123","barBaz":true,"dto":"SomeAwesomeText"}'
+expected='{"foo":"Pre123","barBaz":true,"dto":"SomeAwesomeText"}'
 result="$(curl -s $url)"
 
 if [ $result = $expected ];
@@ -41,7 +41,7 @@ fi
 ###############################################################################
 
 url="$host/body"
-expected='{"foo":"Pre123","barBaz":true,"dto":"SomeAwesomeText"}'
+expected='{"foo":"123","barBaz":true,"dto":"SomeAwesomeText"}'
 result="$(curl -s $url -d 'foo=123&bar_baz=1')"
 
 if [ $result = $expected ];
