@@ -18,7 +18,7 @@ class DefaultController extends AbstractFOSRestController
     public function testQueryRequest(TestQueryRequest $request): array
     {
         return [
-            'foo' => $request->getFoo(),
+            'foo' => 'Pre' . $request->getFoo(),
             'barBaz' => $request->getBarBaz(),
             'dto' => $request->dto->getFoo()
         ];

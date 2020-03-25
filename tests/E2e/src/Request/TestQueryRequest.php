@@ -32,6 +32,6 @@ class TestQueryRequest extends AbstractRequest
 
     public function setFoo(string $value): void
     {
-        $this->foo = $value;
+        $this->foo = 'Pre' . $value;
     }
 }
