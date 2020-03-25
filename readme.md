@@ -241,9 +241,9 @@ class SnakeConversion implements NamingConversionInterface
 then you should register it as a service and point it out in the bundle configuration
 
 ```yaml
-# ./config/packages/lsbproject_request.yaml
+# ./config/packages/lsb_project_request.yaml
 
-lsbproject_request:
+lsb_project_request:
     naming_conversion: my_custom_conversion
 ```
 

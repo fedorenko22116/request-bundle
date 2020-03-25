@@ -12,13 +12,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('lsbproject_request');
+        $treeBuilder = new TreeBuilder('lsb_project_request');
 
         if (method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('lsbproject_request');
+            $rootNode = $treeBuilder->root('lsb_project_request');
         }
 
         $rootNode
