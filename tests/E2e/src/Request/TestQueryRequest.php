@@ -11,7 +11,7 @@ use App\Entity\DTO\TestDTO;
  */
 class TestQueryRequest extends AbstractRequest
 {
-    public string $foo;
+    private string $foo;
     public bool $barBaz;
     public TestDTO $dto;
 
@@ -23,5 +23,15 @@ class TestQueryRequest extends AbstractRequest
     public function getBarBaz(): bool
     {
         return $this->barBaz;
+    }
+
+    public function getFoo(): string
+    {
+        return $this->foo;
+    }
+
+    public function setFoo(string $value): void
+    {
+        $this->foo = $value;
     }
 }
