@@ -39,7 +39,9 @@ class RequestFactory implements RequestFactoryInterface
     public function create($class)
     {
         $meta = new ReflectionClass($class);
+        var_dump($this->filterProps($meta));
         $props = $this->reflectionExtractor->extract($meta, $this->filterProps($meta));
+        var_dump($props);
 
         /** @var AbstractRequest $object */
         $object = $meta->newInstance();
