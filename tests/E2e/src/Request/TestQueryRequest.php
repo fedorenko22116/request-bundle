@@ -12,7 +12,7 @@ use App\Entity\DTO\TestDTO;
 class TestQueryRequest extends AbstractRequest
 {
     public string $foo;
-    private bool $barBaz;
+    public bool $barBaz;
     public TestDTO $dto;
 
     public function setBarBaz(bool $value): void
