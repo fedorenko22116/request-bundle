@@ -3,6 +3,7 @@
     "description": "Bundle to structure common request data",
     "type": "symfony-bundle",
     "license": "MIT",
+    "version": "v1.2.0",
     "authors": [
         {
             "name": "victor.fedorenko",
@@ -24,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "LSBProject\\RequestBundle\\": "src/"
+            "LSBProject\\RequestBundle\\": "src"
         }
     },
     "autoload-dev": {
