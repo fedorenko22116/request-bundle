@@ -49,8 +49,11 @@ class RequestFactory implements RequestFactoryInterface
         foreach ($props as $prop) {
             $configuration = $prop->getConfiguration();
 
-            if ($configuration->isDto() && $configuration->getType() && $configuration->isBuiltInType()) {
-                $var = $this->create($configuration->getType());
+            /** @var class-string<AbstractRequest> $type */
+            $type = $configuration->getType();
+
+            if ($configuration->isDto() && $type && $configuration->isBuiltInType()) {
+                $var = $this->create($type);
             } else {
                 $var = $prop->getConfiguration()->isBuiltInType() ?
                     $this->requestManager->get($prop) :
