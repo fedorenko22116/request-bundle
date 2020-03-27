@@ -33,6 +33,8 @@ interface PropConfigurationInterface
     public function setConverter($converter);
 
     /**
+     * @param bool $isDto
+     *
      * @return void
      */
     public function setIsDto($isDto);
