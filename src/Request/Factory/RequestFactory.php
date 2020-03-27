@@ -4,6 +4,7 @@ namespace LSBProject\RequestBundle\Request\Factory;
 
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractorInterface;
 use ReflectionClass;
 use ReflectionProperty;
@@ -44,10 +45,17 @@ class RequestFactory implements RequestFactoryInterface
         /** @var AbstractRequest $object */
         $object = $meta->newInstance();
 
+        /** @var ExtractDTO $prop */
         foreach ($props as $prop) {
-            $var = $prop->getConfiguration()->isBuiltInType() ?
-                $this->requestManager->get($prop) :
-                $this->requestManager->getFromParamConverters($prop);
+            $configuration = $prop->getConfiguration();
+
+            if ($configuration->isDto() && $configuration->getType() && $configuration->isBuiltInType()) {
+                $var = $this->create($configuration->getType());
+            } else {
+                $var = $prop->getConfiguration()->isBuiltInType() ?
+                    $this->requestManager->get($prop) :
+                    $this->requestManager->getFromParamConverters($prop);
+            }
 
             if ($meta->hasMethod($method = 'set' . ucfirst($prop->getName()))) {
                 $object->$method($var);

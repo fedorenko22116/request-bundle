@@ -38,6 +38,13 @@ class PropConverter extends AbstractPropConfiguration
     private $name;
 
     /**
+     * If object should be converted as request
+     *
+     * @var bool
+     */
+    private $isDto = false;
+
+    /**
      * @param string $value
      *
      * @return void
@@ -109,5 +116,21 @@ class PropConverter extends AbstractPropConfiguration
     public function getConverter()
     {
         return $this->converter;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsDto($isDto)
+    {
+        $this->isDto = $isDto;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isDto()
+    {
+        return $this->isDto;
     }
 }

@@ -109,7 +109,7 @@ use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 
 /**
- * @RequestStorage({"request", "attributes"})
+ * @RequestStorage({"body", "attributes"})
  */
 class TestRequest extends AbstractRequest
 {
@@ -123,7 +123,7 @@ class TestRequest extends AbstractRequest
 ```
 
 From example above you will get `foo_baz` parameter from request body or path, and `foo_bar` parameter exactly from request body. \
-There are 3 types of storage to be set: `query`, `request`, `attributes`.
+There are 3 types of storage to be set: `query`, `body`, `attributes`.
 
 ### Validation
 
@@ -245,6 +245,31 @@ then you should register it as a service and point it out in the bundle configur
 
 lsb_project_request:
     naming_conversion: my_custom_conversion
+```
+
+### Using DTOs as property
+
+There is also a possibility to specify deeper nested level in request. To do it, specify special option of `PropConverter::isDto`
+to parameter. This will recursively perform AbstractRequest converter to the object.
+
+```php
+use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Configuration\PropConverter;
+use App\Request\DTO\Data;
+
+/**
+ * @RequestStorage({"body"})
+ */
+class JsonRpcRequest extends AbstractRequest
+{
+    public string $jsonrpc;
+    public string $method;
+    public int $id;
+
+    /** @PropConverter(isDto=true) */
+    public Data $params;
+}
 ```
 
 ## Examples
