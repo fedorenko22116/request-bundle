@@ -12,5 +12,4 @@ abstract class JsonRpcRequest
     public string $jsonrpc;
     public string $method;
     public int $id;
-    public $params;
 }
