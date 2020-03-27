@@ -54,10 +54,10 @@ class RequestFactory implements RequestFactoryInterface
 
             if ($configuration->isDto() && $type && !$configuration->isBuiltInType()) {
                 $var = $this->create($type);
+            } elseif ($configuration->isBuiltInType()) {
+                $var = $this->requestManager->get($prop);
             } else {
-                $var = $configuration->isBuiltInType() ?
-                    $this->requestManager->get($prop) :
-                    $this->requestManager->getFromParamConverters($prop);
+                $var = $this->requestManager->getFromParamConverters($prop);
             }
 
             if ($meta->hasMethod($method = 'set' . ucfirst($prop->getName()))) {
