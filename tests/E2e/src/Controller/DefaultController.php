@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Request\TestAttributesRequest;
 use App\Request\TestBodyRequest;
+use App\Request\TestJsonRpcRequest;
 use App\Request\TestQueryRequest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -49,6 +50,22 @@ class DefaultController extends AbstractFOSRestController
             'entityA' => $request->entityA->getText(),
             'entityB' => $request->entityB->getText(),
             'entityC' => $request->entityC->getText()
+        ];
+    }
+
+    /**
+     * @Rest\View()
+     * @Route("/jsonrpc")
+     */
+    public function jsonrpcRequest(TestJsonRpcRequest $request): array
+    {
+        return [
+            'jsonrpc' => $request->jsonrpc,
+            'method' => $request->method,
+            'id' => $request->id,
+            'params' => [
+                'foo' => $request->params->foo,
+            ]
         ];
     }
 }
