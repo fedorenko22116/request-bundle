@@ -52,7 +52,7 @@ class RequestFactory implements RequestFactoryInterface
             /** @var class-string<AbstractRequest> $type */
             $type = $configuration->getType();
 
-            if ($configuration->isDto() && $type && $configuration->isBuiltInType()) {
+            if ($configuration->isDto() && $type && !$configuration->isBuiltInType()) {
                 $var = $this->create($type);
             } else {
                 $var = $prop->getConfiguration()->isBuiltInType() ?
