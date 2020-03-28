@@ -45,6 +45,13 @@ class PropConverter extends AbstractPropConfiguration
     private $isDto = false;
 
     /**
+     * If type is optional
+     *
+     * @var bool
+     */
+    private $isOptional = true;
+
+    /**
      * @param string $value
      *
      * @return void
@@ -132,5 +139,21 @@ class PropConverter extends AbstractPropConfiguration
     public function isDto()
     {
         return $this->isDto;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsOptional($isOptional)
+    {
+        $this->isOptional = $isOptional;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isOptional()
+    {
+        return $this->isOptional;
     }
 }

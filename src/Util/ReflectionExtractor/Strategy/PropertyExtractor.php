@@ -53,6 +53,7 @@ class PropertyExtractor implements ReflectorExtractorInterface
                 $config->setType($this->extractType($reflector));
             } elseif (method_exists($reflector, 'getType') && $type = $reflector->getType()) {
                 $config->setType($type->getName());
+                $config->setIsOptional($type->allowsNull());
             }
         }
 

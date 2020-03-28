@@ -40,6 +40,13 @@ interface PropConfigurationInterface
     public function setIsDto($isDto);
 
     /**
+     * @param bool $isOptional
+     *
+     * @return void
+     */
+    public function setIsOptional($isOptional);
+
+    /**
      * @return string|null
      */
     public function getName();
@@ -68,4 +75,9 @@ interface PropConfigurationInterface
      * @return bool
      */
     public function isDto();
+
+    /**
+     * @return bool
+     */
+    public function isOptional();
 }

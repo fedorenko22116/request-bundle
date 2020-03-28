@@ -89,6 +89,12 @@ class RequestFactory implements RequestFactoryInterface
                 $var = $this->requestManager->getFromParamConverters($prop, $request);
             }
 
+            if (!$configuration->isOptional() && null === $var) {
+                throw new UnprocessableEntityHttpException(
+                    sprintf("Property '%s' cannot be empty", $prop->getName())
+                );
+            }
+
             if ($meta->hasMethod($method = 'set' . ucfirst($prop->getName()))) {
                 $object->$method($var);
             } else {
