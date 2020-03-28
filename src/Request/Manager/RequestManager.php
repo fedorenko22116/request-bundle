@@ -33,11 +33,6 @@ class RequestManager implements RequestManagerInterface
     private $converterManager;
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var StorageInterface
      */
     private $storage;
@@ -47,40 +42,36 @@ class RequestManager implements RequestManagerInterface
      * @param ParamConverterFactoryInterface $paramConverterFactory
      * @param ParamConverterManager          $converterManager
      * @param StorageInterface               $storage
-     * @param RequestStack                   $requestStack
      */
     public function __construct(
         NamingConversionInterface $namingConversion,
         ParamConverterFactoryInterface $paramConverterFactory,
         ParamConverterManager $converterManager,
-        StorageInterface $storage,
-        RequestStack $requestStack
+        StorageInterface $storage
     ) {
         $this->namingConversion = $namingConversion;
         $this->paramConverterFactory = $paramConverterFactory;
         $this->converterManager = $converterManager;
         $this->storage = $storage;
-        $this->requestStack = $requestStack;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function get(ExtractDTO $param)
+    public function get(ExtractDTO $param, Request $request)
     {
         return $this->storage->get(
             $param->getConfiguration()->getName() ?: $this->namingConversion->convert($param->getName()),
-            $param->getRequestStorage()
+            $param->getRequestStorage(),
+            $request
         );
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getFromParamConverters(ExtractDTO $param)
-    {
-        /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
+    public function getFromParamConverters(ExtractDTO $param, Request $request)
+    {;
         $config  = $param->getConfiguration();
 
         $params = $this->addId($config, $request, $param->getRequestStorage());
@@ -127,7 +118,8 @@ class RequestManager implements RequestManagerInterface
                 $id,
                 $this->storage->get(
                     $config->getName() ?: $this->namingConversion->convert($id),
-                    $storage
+                    $storage,
+                    $request
                 )
             );
         }
@@ -159,7 +151,8 @@ class RequestManager implements RequestManagerInterface
                 $alias,
                 $this->storage->get(
                     $config->getName() ?: $this->namingConversion->convert($alias),
-                    $storage
+                    $storage,
+                    $request
                 )
             );
             $result[] = $alias;
@@ -184,7 +177,8 @@ class RequestManager implements RequestManagerInterface
                 $alias,
                 $this->storage->get(
                     $config->getName() ?: $this->namingConversion->convert($option),
-                    $storage
+                    $storage,
+                    $request
                 )
             );
             $result[] = $alias;

@@ -4,7 +4,6 @@ namespace LSBProject\RequestBundle\Request\ParamConverter;
 
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
-use LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface;
 use ReflectionClass;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -21,20 +20,11 @@ class RequestConverter implements ParamConverterInterface
     private $requestFactory;
 
     /**
-     * @var RequestValidatorInterface
+     * @param RequestFactoryInterface $requestFactory
      */
-    private $validator;
-
-    /**
-     * @param RequestFactoryInterface   $requestFactory
-     * @param RequestValidatorInterface $validator
-     */
-    public function __construct(
-        RequestFactoryInterface $requestFactory,
-        RequestValidatorInterface $validator
-    ) {
+    public function __construct(RequestFactoryInterface $requestFactory)
+    {
         $this->requestFactory = $requestFactory;
-        $this->validator = $validator;
     }
 
     /**
@@ -47,13 +37,8 @@ class RequestConverter implements ParamConverterInterface
 
         /** @var class-string<AbstractRequest> $class */
         $class = $configuration->getClass();
-        $object = $this->requestFactory->create($class);
 
-        if (!$this->validator->validate($object)) {
-            throw new UnprocessableEntityHttpException($this->validator->getError());
-        }
-
-        $request->attributes->add([$configuration->getName() => $object]);
+        $request->attributes->add([$configuration->getName() => $this->requestFactory->create($class, $request)]);
 
         return true;
     }

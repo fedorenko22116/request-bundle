@@ -35,7 +35,6 @@
             <argument type="service" id="LSBProject\RequestBundle\Util\Factory\ParamConverterFactoryInterface" />
             <argument type="service" id="Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager" />
             <argument type="service" id="LSBProject\RequestBundle\Util\Storage\StorageInterface" />
-            <argument type="service" id="request_stack" />
         </service>
         <service
                 id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContextInterface"
@@ -56,6 +55,7 @@
         >
             <argument type="service" id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractorInterface" />
             <argument type="service" id="LSBProject\RequestBundle\Request\Manager\RequestManagerInterface" />
+            <argument type="service" id="LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface" />
         </service>
         <service
                 id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractorInterface"
@@ -71,7 +71,6 @@
         >
             <tag name="request.param_converter" converter="lsbproject_request_converter" />
             <argument type="service" id="LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface" />
-            <argument type="service" id="LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface" />
         </service>
     </services>
 </container>

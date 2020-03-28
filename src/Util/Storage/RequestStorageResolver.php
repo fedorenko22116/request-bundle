@@ -24,10 +24,10 @@ class RequestStorageResolver implements StorageInterface
     /**
      * {@inheritDoc}
      */
-    public function get($param, $paramConfiguration = null)
+    public function get($param, $paramConfiguration = null, Request $request = null)
     {
         /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
+        $request = $request ?: $this->requestStack->getCurrentRequest();
 
         if (!$paramConfiguration) {
             return $request->get($param);
@@ -45,15 +45,16 @@ class RequestStorageResolver implements StorageInterface
     }
 
     /**
-     * @param string $source
-     * @param string $param
+     * @param string       $source
+     * @param string       $param
+     * @param Request|null $request
      *
      * @return mixed|null
      */
-    private function getFromStorage($source, $param)
+    private function getFromStorage($source, $param, Request $request = null)
     {
         /** @var Request $request */
-        $request = $this->requestStack->getCurrentRequest();
+        $request = $request ?: $this->requestStack->getCurrentRequest();
 
         switch ($source) {
             case RequestStorage::QUERY:
