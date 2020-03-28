@@ -264,7 +264,14 @@ use App\Request\DTO\Data;
 class JsonRpcRequest extends AbstractRequest
 {
     public string $jsonrpc;
-    public string $method;
+
+    /**
+     * 'method' property is already present in a base Request class, so alias should be used
+     *
+     * @PropConverter(name="method")
+     */
+    public string $methodName;
+
     public int $id;
 
     /** @PropConverter(isDto=true) */
