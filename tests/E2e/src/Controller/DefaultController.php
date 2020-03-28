@@ -61,7 +61,7 @@ class DefaultController extends AbstractFOSRestController
     {
         return [
             'jsonrpc' => $request->jsonrpc,
-            'method' => $request->method,
+            'method' => $request->methodName,
             'id' => $request->id,
             'params' => [
                 'foo' => $request->params->foo,
