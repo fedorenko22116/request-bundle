@@ -3,11 +3,12 @@
 namespace App\Request;
 
 use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Request\AbstractRequest;
 
 /**
  * @RequestStorage({"body"})
  */
-abstract class JsonRpcRequest
+abstract class JsonRpcRequest extends AbstractRequest
 {
     public string $jsonrpc;
     public string $method;
