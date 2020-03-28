@@ -71,7 +71,7 @@ class RequestManager implements RequestManagerInterface
      * {@inheritDoc}
      */
     public function getFromParamConverters(ExtractDTO $param, Request $request)
-    {;
+    {
         $config  = $param->getConfiguration();
 
         $params = $this->addId($config, $request, $param->getRequestStorage());
