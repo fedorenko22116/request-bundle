@@ -1,6 +1,6 @@
 # LSBProjectRequestBundle
 [![SymfonyInsight](https://insight.symfony.com/projects/0e64da25-252b-4d3f-9752-9ed18f93c9f1/mini.svg)](https://insight.symfony.com/projects/0e64da25-252b-4d3f-9752-9ed18f93c9f1) \
-Request bundle created to represent user data as a strict objects.
+Request bundle created to represent request data as a strict objects.
 
 ## Installation
 
