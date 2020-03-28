@@ -116,7 +116,7 @@ class TestRequest extends AbstractRequest
     public $fooBaz;
 
     /**
-     * @RequestStorage({"request"})
+     * @RequestStorage({"body"})
      */
     public $fooBar;
 }
