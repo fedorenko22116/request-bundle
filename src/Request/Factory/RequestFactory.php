@@ -116,7 +116,7 @@ class RequestFactory implements RequestFactoryInterface
             function (ReflectionProperty $prop) use ($meta) {
                 $method = 'set' . ucfirst($prop->getName());
 
-                return $prop->getDeclaringClass()->getName() === $meta->getName() &&
+                return $prop->getDeclaringClass()->getName() !== Request::class &&
                     ($prop->isPublic() || ($meta->hasMethod($method) && $meta->getMethod($method)->isPublic()));
             }
         );
