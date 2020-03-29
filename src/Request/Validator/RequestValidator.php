@@ -37,7 +37,7 @@ class RequestValidator implements RequestValidatorInterface
             }
         }
 
-        if (method_exists($object, 'validate') && !$object->validate()) {
+        if (method_exists($object, 'validate') && !$object->validate($this->container)) {
             $this->message = $object->getErrorMessage();
 
             if ($this->container->has('translator')) {

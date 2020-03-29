@@ -153,7 +153,7 @@ class TestRequest extends AbstractRequest
     public int $userId;
     public ?string $comment;
 
-    public function validate(): bool
+    public function validate(ContainerInterface $container): bool
     {
         return $this->userId === self::ADMIN || ($this->comment && preg_match('/super/', $this->comment));
     }
