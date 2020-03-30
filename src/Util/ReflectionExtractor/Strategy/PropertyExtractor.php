@@ -69,18 +69,12 @@ class PropertyExtractor implements ReflectorExtractorInterface
         $isDto = true;
         $type = $config->getType();
 
-        if ($this->container->has('doctrine') && $type) {
+        if ($this->container->has('doctrine') && !$config->isBuiltInType()) {
             $class = new ReflectionClass($type);
             $annotation = $this->reader->getClassAnnotation($class, 'Doctrine\ORM\Mapping\Entity');
 
             if ($annotation) {
-                if (is_object($class)) {
-                    $class = 'Doctrine\Common\Persistence\Proxy' === get_class($class)
-                        ? get_parent_class($class)
-                        : get_class($class);
-                }
-
-                $isDto = $this->container->get('doctrine')->getManager()->getMetadataFactory()->isTransient($class);
+                $isDto = $this->container->get('doctrine')->getManager()->getMetadataFactory()->isTransient($type);
             }
         }
 
