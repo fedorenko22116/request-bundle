@@ -8,6 +8,7 @@ use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConverter;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
+use ReflectionClass;
 use ReflectionProperty;
 use Reflector;
 
@@ -57,7 +58,19 @@ class PropertyExtractor implements ReflectorExtractorInterface
             }
         }
 
-        return new ExtractDTO($reflector->getName(), $config, $storage);
+        $isDto = true;
+        $type = $config->getType();
+
+        if ($type) {
+            $class = new ReflectionClass($type);
+            $annotation = $this->reader->getClassAnnotation($class, \Doctrine\ORM\Mapping\Entity::class);
+
+            if ($annotation) {
+                $isDto = false;
+            }
+        }
+
+        return new ExtractDTO($reflector->getName(), $isDto, $config, $storage);
     }
 
     /**
@@ -69,7 +82,7 @@ class PropertyExtractor implements ReflectorExtractorInterface
     {
         $docblock = $property->getDocComment();
 
-        if ($docblock && preg_match('/@var\s+([^\s]+)/', $docblock, $matches)) {
+        if ($docblock && preg_match('/@var\s+([^\s]+)\|?/', $docblock, $matches)) {
             list(, $type) = $matches;
 
             return $type;

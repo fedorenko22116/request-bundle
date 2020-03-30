@@ -73,9 +73,7 @@ class RequestManager implements RequestManagerInterface
     public function getFromParamConverters(ExtractDTO $param, Request $request)
     {
         $config  = $param->getConfiguration();
-
-        $params = $this->addId($config, $request, $param->getRequestStorage());
-        $params = array_merge($params, $this->addOptionMapping($config, $request, $param->getRequestStorage()));
+        $params = $this->addOptionMapping($config, $request, $param->getRequestStorage());
 
         if ($config instanceof Entity && $config->getMapping()) {
             $params = array_merge($params, $this->addPropMapping($config, $request, $param->getRequestStorage()));
@@ -99,32 +97,6 @@ class RequestManager implements RequestManagerInterface
         }
 
         return $var;
-    }
-
-    /**
-     * @param PropConfigurationInterface $config
-     * @param Request                    $request
-     * @param RequestStorage|null        $storage
-     *
-     * @return array<string>
-     */
-    private function addId(PropConfigurationInterface $config, Request $request, $storage)
-    {
-        $options = $config->getOptions();
-        $id = isset($options['id']) ? $options['id'] : $this->storage->get('id', $storage);
-
-        if ($id) {
-            $request->attributes->set(
-                $id,
-                $this->storage->get(
-                    $config->getName() ?: $this->namingConversion->convert($id),
-                    $storage,
-                    $request
-                )
-            );
-        }
-
-        return $id ? [$id] : [];
     }
 
     /**

@@ -66,7 +66,7 @@ class RequestFactory implements RequestFactoryInterface
             /** @var class-string<AbstractRequest> $type */
             $type = $configuration->getType();
 
-            if ($configuration->isDto() && $type && !$configuration->isBuiltInType()) {
+            if ($prop->isDto() && $type && !$configuration->isBuiltInType()) {
                 $request = clone $request;
                 $value = $this->requestManager->get($prop, $request);
                 $value = is_array($value) ? $value : [];

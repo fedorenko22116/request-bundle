@@ -23,13 +23,20 @@ class ExtractDTO
     private $requestStorage;
 
     /**
+     * @var bool
+     */
+    private $isDto;
+
+    /**
      * @param string                     $name
+     * @param bool                       $isDto
      * @param PropConfigurationInterface $configuration
      * @param RequestStorage|null        $requestStorage
      */
-    public function __construct($name, PropConfigurationInterface $configuration, $requestStorage)
+    public function __construct($name, $isDto, PropConfigurationInterface $configuration, $requestStorage)
     {
         $this->name = $name;
+        $this->isDto = $isDto;
         $this->configuration = $configuration;
         $this->requestStorage = $requestStorage;
     }
@@ -40,6 +47,14 @@ class ExtractDTO
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDto()
+    {
+        return $this->isDto;
     }
 
     /**

@@ -249,7 +249,8 @@ lsb_project_request:
 
 ### Using DTOs as property
 
-There is also a possibility to specify deeper nested level in request. To do it, specify special option of `PropConverter::isDto`
+There is also a possibility to specify deeper nested level in request. To do it, sjust specify classname in property or
+ annotation without doctrine mapping
 to parameter. This will recursively perform AbstractRequest converter to the object.
 
 ```php
@@ -271,10 +272,7 @@ class JsonRpcRequest extends AbstractRequest
      * @PropConverter(name="method")
      */
     public string $methodName;
-
     public int $id;
-
-    /** @PropConverter(isDto=true) */
     public Data $params;
 }
 ```
