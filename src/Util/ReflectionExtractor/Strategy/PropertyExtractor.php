@@ -8,6 +8,7 @@ use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConverter;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
+use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionProperty;
 use Reflector;
@@ -20,11 +21,18 @@ class PropertyExtractor implements ReflectorExtractorInterface
     private $reader;
 
     /**
-     * @param Reader $reader
+     * @var ContainerInterface
      */
-    public function __construct(Reader $reader)
+    private $container;
+
+    /**
+     * @param Reader             $reader
+     * @param ContainerInterface $container
+     */
+    public function __construct(Reader $reader, ContainerInterface $container)
     {
         $this->reader = $reader;
+        $this->container = $container;
     }
 
     /**
@@ -61,12 +69,18 @@ class PropertyExtractor implements ReflectorExtractorInterface
         $isDto = true;
         $type = $config->getType();
 
-        if ($type) {
+        if ($this->container->has('doctrine') && $type) {
             $class = new ReflectionClass($type);
-            $annotation = $this->reader->getClassAnnotation($class, \Doctrine\ORM\Mapping\Entity::class);
+            $annotation = $this->reader->getClassAnnotation($class, 'Doctrine\ORM\Mapping\Entity');
 
             if ($annotation) {
-                $isDto = false;
+                if (is_object($class)) {
+                    $class = 'Doctrine\Common\Persistence\Proxy' === get_class($class)
+                        ? get_parent_class($class)
+                        : get_class($class);
+                }
+
+                $isDto = $this->container->get('doctrine')->getManager()->getMetadataFactory()->isTransient($class);
             }
         }
 

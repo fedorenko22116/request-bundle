@@ -5,6 +5,7 @@ namespace LSBProject\RequestBundle\Util\ReflectionExtractor;
 use Doctrine\Common\Annotations\Reader;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy\PropertyExtractor;
+use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
@@ -23,13 +24,19 @@ class ReflectionExtractor implements ReflectionExtractorInterface
     private $reader;
 
     /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
      * @param ReflectorContextInterface $context
      * @param Reader                    $reader
      */
-    public function __construct(ReflectorContextInterface $context, Reader $reader)
+    public function __construct(ReflectorContextInterface $context, Reader $reader, ContainerInterface $container)
     {
         $this->context = $context;
         $this->reader = $reader;
+        $this->container = $container;
     }
 
     /**
@@ -50,7 +57,7 @@ class ReflectionExtractor implements ReflectionExtractorInterface
 
             if ($reflector instanceof ReflectionProperty) {
                 $reflectors[] = $this->context
-                    ->setExtractor(new PropertyExtractor($this->reader))
+                    ->setExtractor(new PropertyExtractor($this->reader, $this->container))
                     ->extract($reflector, $requestStorage);
             }
         }

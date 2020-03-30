@@ -64,6 +64,7 @@
         >
             <argument type="service" id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContextInterface" />
             <argument type="service" id="Doctrine\Common\Annotations\Reader" />
+            <argument type="service" id="service_container" />
         </service>
         <service
                 id="lsbproject.request.param_converter.request_converter"

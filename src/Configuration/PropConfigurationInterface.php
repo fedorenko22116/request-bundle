@@ -33,13 +33,6 @@ interface PropConfigurationInterface
     public function setConverter($converter);
 
     /**
-     * @param bool $isDto
-     *
-     * @return void
-     */
-    public function setIsDto($isDto);
-
-    /**
      * @param bool $isOptional
      *
      * @return void
@@ -70,11 +63,6 @@ interface PropConfigurationInterface
      * @return string|null
      */
     public function getConverter();
-
-    /**
-     * @return bool
-     */
-    public function isDto();
 
     /**
      * @return bool

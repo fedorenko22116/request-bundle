@@ -121,14 +121,6 @@ class PropConverter extends AbstractPropConfiguration
     /**
      * {@inheritDoc}
      */
-    public function setIsDto($isDto)
-    {
-        $this->isDto = $isDto;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function setIsOptional($isOptional)
     {
         $this->isOptional = $isOptional;
