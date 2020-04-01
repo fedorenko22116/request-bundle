@@ -6,9 +6,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Meta
-        run: export BRANCH=${GITHUB_REF##*/}
-
       - name: Test build PHP 7.4
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
@@ -21,4 +18,5 @@ jobs:
 
       - name: E2e tests
         run: |
+          export BRANCH=${GITHUB_REF##*/} |
           docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
