@@ -1,3 +1,5 @@
+ARG BRANCH
+
 FROM 22116/request-bundle-ci:${BRANCH} as base
 FROM composer as assets
 
