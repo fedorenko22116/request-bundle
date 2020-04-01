@@ -79,5 +79,10 @@ interface PropConfigurationInterface
     /**
      * @return bool
      */
+    public function isCollection();
+
+    /**
+     * @return bool
+     */
     public function isOptional();
 }

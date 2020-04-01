@@ -45,6 +45,13 @@ class PropConverter extends AbstractPropConfiguration
     private $isDto = false;
 
     /**
+     * If property is an array of objects
+     *
+     * @var bool
+     */
+    private $isCollection = false;
+
+    /**
      * If type is optional
      *
      * @var bool
@@ -139,6 +146,14 @@ class PropConverter extends AbstractPropConfiguration
     public function isDto()
     {
         return $this->isDto;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isCollection()
+    {
+        return $this->isCollection;
     }
 
     /**

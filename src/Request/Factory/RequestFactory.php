@@ -67,22 +67,21 @@ class RequestFactory implements RequestFactoryInterface
             $type = $configuration->getType();
 
             if ($configuration->isDto() && $type && !$configuration->isBuiltInType()) {
-                $request = clone $request;
-                $value = $this->requestManager->get($prop, $request);
-                $value = is_array($value) ? $value : [];
-                $storage = $prop->getRequestStorage();
+                $params = $this->requestManager->get($prop, $request);
+                $params = is_array($params) ? $params : [];
 
-                if (!$storage) {
-                    $request->query->replace($value);
-                } elseif (in_array(RequestStorage::QUERY, $storage->getSource())) {
-                    $request->query->replace($value);
-                } elseif (in_array(RequestStorage::BODY, $storage->getSource())) {
-                    $request->request->replace($value);
+                if ($configuration->isCollection()) {
+                    $var = [];
+
+                    foreach ($params as $param) {
+                        $var[] = $this->create(
+                            $type,
+                            $this->cloneRequest($request, $param, $prop->getRequestStorage())
+                        );
+                    }
                 } else {
-                    $request->query->replace($value);
+                    $var = $this->create($type, $this->cloneRequest($request, $params, $prop->getRequestStorage()));
                 }
-
-                $var = $this->create($type, $request);
             } elseif ($configuration->isBuiltInType()) {
                 $var = $this->requestManager->get($prop, $request);
             } else {
@@ -109,6 +108,28 @@ class RequestFactory implements RequestFactoryInterface
         return $object;
     }
 
+    /**
+     * @param Request $request
+     * @param array<string, mixed> $params
+     * @param RequestStorage|null $storage
+     * @return Request
+     */
+    private function cloneRequest(Request $request, array $params, RequestStorage $storage)
+    {
+        $request = clone $request;
+
+        if (!$storage) {
+            $request->query->replace($params);
+        } elseif (in_array(RequestStorage::QUERY, $storage->getSource())) {
+            $request->query->replace($params);
+        } elseif (in_array(RequestStorage::BODY, $storage->getSource())) {
+            $request->request->replace($params);
+        } else {
+            $request->query->replace($params);
+        }
+
+        return $request;
+    }
 
     /**
      * @param ReflectionClass<AbstractRequest> $meta
