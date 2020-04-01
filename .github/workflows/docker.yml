@@ -19,4 +19,6 @@ jobs:
       - name: E2e tests
         env:
           BRANCH: ${GITHUB_REF##*/}
-        run: docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
+        run: |
+          echo Running on ${BRANCH} branch |
+          docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
