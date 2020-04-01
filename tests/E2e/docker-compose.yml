@@ -1,9 +1,10 @@
 version: "3.4"
 services:
   app:
-    build: .
-    arguments:
-      BRANCH: "${GITHUB_REF##*/}"
+    build:
+      context: .
+      args:
+        BRANCH: "${GITHUB_REF##*/}"
     volumes:
       - assets:/var/www/app
   db:
