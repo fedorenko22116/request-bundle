@@ -17,6 +17,6 @@ jobs:
           buildargs: PHP_VERSION
 
       - name: E2e tests
-        run: |
-          export BRANCH=${GITHUB_REF##*/} |
-          docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
+        env:
+          BRANCH: ${GITHUB_REF##*/}
+        run: docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
