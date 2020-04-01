@@ -17,8 +17,6 @@ jobs:
           buildargs: PHP_VERSION
 
       - name: E2e tests
-        env:
-          BRANCH: ${GITHUB_REF##*/}
         run: |
-          echo Running on ${BRANCH} branch |
+          echo ::set-env name=BRANCH::${GITHUB_REF##*/} |
           docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
