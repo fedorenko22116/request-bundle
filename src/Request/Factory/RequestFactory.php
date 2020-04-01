@@ -109,12 +109,13 @@ class RequestFactory implements RequestFactoryInterface
     }
 
     /**
-     * @param Request $request
+     * @param Request              $request
      * @param array<string, mixed> $params
-     * @param RequestStorage|null $storage
+     * @param RequestStorage|null  $storage
+     *
      * @return Request
      */
-    private function cloneRequest(Request $request, array $params, RequestStorage $storage)
+    private function cloneRequest(Request $request, array $params, RequestStorage $storage = null)
     {
         $request = clone $request;
 
