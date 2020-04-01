@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Request\DTO\TestParamsA;
 use App\Request\TestAttributesRequest;
 use App\Request\TestBodyRequest;
 use App\Request\TestJsonRpcRequest;
@@ -9,6 +10,7 @@ use App\Request\TestQueryRequest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class DefaultController extends AbstractFOSRestController
 {
@@ -65,7 +67,11 @@ class DefaultController extends AbstractFOSRestController
             'id' => $request->id,
             'params' => [
                 'foo' => $request->params->foo,
-            ]
+                'bar' => [
+                    ['foo' => $request->params->bar[0]->foo],
+                    ['foo' => $request->params->bar[1]->foo],
+                ],
+            ],
         ];
     }
 }

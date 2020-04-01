@@ -16,6 +16,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           buildargs: PHP_VERSION
 
+      - name: Set env
+        run: echo ::set-env name=BRANCH::${GITHUB_REF##*/}
       - name: E2e tests
-        run: |
-          docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
+        run: docker-compose -f ./tests/E2e/docker-compose.yml run --rm test

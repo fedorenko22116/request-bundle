@@ -249,8 +249,8 @@ lsb_project_request:
 
 ### Using DTOs as property
 
-There is also a possibility to specify deeper nested level in request. To do it, specify special option of `PropConverter::isDto`
-to parameter. This will recursively perform AbstractRequest converter to the object.
+There is also a possibility to specify deeper nested level in the request. To do it, specify special option of `PropConverter::isDto`
+for class property. This will recursively perform AbstractRequest converter to the object.
 
 ```php
 use LSBProject\RequestBundle\Request\AbstractRequest;
@@ -276,6 +276,38 @@ class JsonRpcRequest extends AbstractRequest
 
     /** @PropConverter(isDto=true) */
     public Data $params;
+}
+```
+
+### Using Collections
+
+To specify an array of objects which should be converted, use `isCollection` property in combination with `isDto`.\
+Entity collection is not supported yet.
+
+```php
+use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Configuration\PropConverter;
+use App\Request\DTO\Data;
+
+/**
+ * @RequestStorage({"body"})
+ */
+class JsonRpcRequest extends AbstractRequest
+{
+    public string $jsonrpc;
+
+    /**
+     * 'method' property is already present in a base Request class, so alias should be used
+     *
+     * @PropConverter(name="method")
+     */
+    public string $methodName;
+
+    public int $id;
+
+    /** @PropConverter("App\Request\DTO\Data", isDto=true, isCollection=true) */
+    public array $params;
 }
 ```
 

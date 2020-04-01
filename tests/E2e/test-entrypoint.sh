@@ -55,12 +55,12 @@ fi
 ###############################################################################
 
 url="$host/jsonrpc"
-expected='{"jsonrpc":"2","method":"fooMethod","id":1,"params":{"foo":"fooParam"}}'
+expected='{"jsonrpc":"2","method":"fooMethod","id":1,"params":{"foo":"fooParam","bar":[{"foo":1},{"foo":2}]}}'
 result="$(curl -s $url -H 'Content-Type: application/json' -d $expected)"
 
 if [ $result = $expected ];
  then
-   echo 'Body tests passed OK!';
+   echo 'JsonRpc tests passed OK!';
  else
    echo "Unexpected output $result. Expected $expected"
    exit 1;
