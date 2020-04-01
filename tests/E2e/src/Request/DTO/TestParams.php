@@ -2,7 +2,6 @@
 
 namespace App\Request\DTO;
 
-use App\Request\DTO\TestParamsA;
 use LSBProject\RequestBundle\Configuration\PropConverter;
 
 class TestParams
