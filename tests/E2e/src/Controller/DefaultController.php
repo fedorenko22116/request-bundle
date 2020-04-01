@@ -61,17 +61,12 @@ class DefaultController extends AbstractFOSRestController
      */
     public function jsonrpcRequest(TestJsonRpcRequest $request): array
     {
+        var_dump($request->params);
         return [
             'jsonrpc' => $request->jsonrpc,
             'method' => $request->methodName,
             'id' => $request->id,
-            'params' => [
-                'foo' => $request->params->foo,
-                'bar' => [
-                    ['foo' => $request->params->bar[0]],
-                    ['foo' => $request->params->bar[1]],
-                ]
-            ],
+            'params' => $request->params,
         ];
     }
 }
