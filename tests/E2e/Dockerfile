@@ -1,4 +1,4 @@
-FROM 22116/request-bundle-ci as base
+FROM 22116/request-bundle-ci:${GITHUB_REF##*/} as base
 FROM composer as assets
 
 COPY --from=base /var/www/bundle /var/www/app
