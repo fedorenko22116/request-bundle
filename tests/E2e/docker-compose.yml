@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        BRANCH: "${GITHUB_REF##*/}"
+        BRANCH: "${BRANCH}"
     volumes:
       - assets:/var/www/app
   db:
