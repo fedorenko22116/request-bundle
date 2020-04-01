@@ -4,5 +4,5 @@ namespace App\Request\DTO;
 
 class TestParamsA
 {
-    public string $foo;
+    public int $foo;
 }
