@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Meta
-        run: echo ${GITHUB_REF##*/}
+        run: export BRANCH=${GITHUB_REF##*/}
 
       - name: Test build PHP 7.4
         uses: elgohr/Publish-Docker-Github-Action@master
