@@ -47,6 +47,13 @@ interface PropConfigurationInterface
     public function setIsOptional($isOptional);
 
     /**
+     * @param bool $isCollection
+     *
+     * @return void
+     */
+    public function setIsCollection($isCollection);
+
+    /**
      * @return string|null
      */
     public function getName();

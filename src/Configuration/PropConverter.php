@@ -171,4 +171,12 @@ class PropConverter extends AbstractPropConfiguration
     {
         return $this->isOptional;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsCollection($isCollection)
+    {
+        $this->isCollection = $isCollection;
+    }
 }
