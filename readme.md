@@ -282,7 +282,6 @@ class JsonRpcRequest extends AbstractRequest
 ### Using Collections
 
 To specify an array of objects which should be converted, use `isCollection` property in combination with `isDto`.\
-Entity collection is not supported yet.
 
 ```php
 use LSBProject\RequestBundle\Request\AbstractRequest;
@@ -310,6 +309,9 @@ class JsonRpcRequest extends AbstractRequest
     public array $params;
 }
 ```
+
+It's also possible to specify collectaion of entities with `isCollection` property, but be aware it's very inefficient
+way as it will perform query to each object in collection set
 
 ## Examples
 

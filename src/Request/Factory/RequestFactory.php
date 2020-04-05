@@ -65,20 +65,19 @@ class RequestFactory implements RequestFactoryInterface
 
             /** @var class-string<AbstractRequest> $type */
             $type = $configuration->getType();
+            $isNested = $configuration->isDto() || $configuration->isCollection();
 
-            if ($configuration->isDto() && $type && !$configuration->isBuiltInType()) {
+            if ($isNested && $type && !$configuration->isBuiltInType()) {
                 $params = $this->requestManager->get($prop, $request);
                 $params = is_array($params) ? $params : [];
 
                 if ($configuration->isCollection()) {
-                    $var = [];
-
-                    foreach ($params as $param) {
-                        $var[] = $this->create(
+                    $var = array_map(function ($param) use ($type, $prop, $request) {
+                        return $this->create(
                             $type,
                             $this->cloneRequest($request, $param, $prop->getRequestStorage())
                         );
-                    }
+                    }, $params);
                 } else {
                     $var = $this->create($type, $this->cloneRequest($request, $params, $prop->getRequestStorage()));
                 }
