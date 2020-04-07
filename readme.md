@@ -41,6 +41,7 @@ class TestRequest extends AbstractRequest
 
 That's all. This will require `foo_bar` parameter to be present in request, query or attributes. \
 Then use it in controller:
+
 ```php
     /**
      * @Route("/test")
@@ -50,6 +51,8 @@ Then use it in controller:
         return new Response($testRequest->fooBar);
     }
 ```
+
+(You can also apply converter to non Request objects with Sensio ParamConverter annotation. Just point converter `lsbconverter` there)
 
 ### Using objects
 

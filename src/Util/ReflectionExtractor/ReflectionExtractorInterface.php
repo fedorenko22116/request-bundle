@@ -9,8 +9,8 @@ use ReflectionClass;
 interface ReflectionExtractorInterface
 {
     /**
-     * @param ReflectionClass<AbstractRequest> $reflector
-     * @param string[]                         $props
+     * @param ReflectionClass<object> $reflector
+     * @param string[]                $props
      *
      * @return array<int, ExtractDTO>
      */

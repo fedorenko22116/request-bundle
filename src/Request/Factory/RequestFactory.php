@@ -2,6 +2,7 @@
 
 namespace LSBProject\RequestBundle\Request\Factory;
 
+use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
@@ -51,7 +52,7 @@ class RequestFactory implements RequestFactoryInterface
      * @throws ReflectionException
      * @throws UnprocessableEntityHttpException
      */
-    public function create($class, Request $request)
+    public function create($class, Request $request, PropConfigurationInterface $configuration = null)
     {
         $meta = new ReflectionClass($class);
         $props = $this->reflectionExtractor->extract($meta, $this->filterProps($meta));
@@ -61,7 +62,7 @@ class RequestFactory implements RequestFactoryInterface
 
         /** @var ExtractDTO $prop */
         foreach ($props as $prop) {
-            $configuration = $prop->getConfiguration();
+            $configuration = $configuration ?: $prop->getConfiguration();
 
             /** @var class-string<AbstractRequest> $type */
             $type = $configuration->getType();
@@ -72,11 +73,18 @@ class RequestFactory implements RequestFactoryInterface
                 $params = is_array($params) ? $params : [];
 
                 if ($configuration->isCollection()) {
-                    $var = array_map(function ($param) use ($type, $prop, $request) {
-                        return $this->create(
-                            $type,
-                            $this->cloneRequest($request, $param, $prop->getRequestStorage())
+                    $var = array_map(function ($param) use ($prop, $request, $configuration) {
+                        $config = clone $configuration;
+                        $config->setIsCollection(false);
+
+                        /** @var CollectionUnit $unit */
+                        $unit = $this->create(
+                            CollectionUnit::class,
+                            $this->cloneRequest($request, $param, $prop->getRequestStorage()),
+                            $config
                         );
+
+                        return $unit->unit;
                     }, $params);
                 } else {
                     $var = $this->create($type, $this->cloneRequest($request, $params, $prop->getRequestStorage()));
@@ -132,7 +140,7 @@ class RequestFactory implements RequestFactoryInterface
     }
 
     /**
-     * @param ReflectionClass<AbstractRequest> $meta
+     * @param ReflectionClass<object> $meta
      *
      * @return string[]
      */

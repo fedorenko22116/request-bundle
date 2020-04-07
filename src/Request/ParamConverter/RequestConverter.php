@@ -48,6 +48,10 @@ class RequestConverter implements ParamConverterInterface
      */
     public function supports(ParamConverter $configuration)
     {
+        if ('lsbconverter' === $configuration->getConverter()) {
+            return true;
+        }
+
         try {
             /**
              * @template T of object
