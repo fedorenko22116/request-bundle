@@ -8,6 +8,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN touch /usr/local/etc/php/php.ini
 RUN composer global require phpunit/phpunit
 
+RUN export PATH=/root/.composer/vendor/bin:$PATH
+
 COPY . /var/www/bundle
 
 WORKDIR /var/www/bundle
