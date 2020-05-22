@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y zip libzip-dev
 RUN docker-php-ext-configure zip --with-libzip && docker-php-ext-install zip || docker-php-ext-install zip
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN touch /usr/local/etc/php/php.ini
+RUN composer global require phpunit/phpunit
 
 COPY . /var/www/bundle
 
