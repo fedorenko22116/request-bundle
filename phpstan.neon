@@ -1,11 +1,10 @@
 parameters:
     paths:
-        - "%rootDir%/../../.."
+        - src
 
     level: 8
-
     tmpDir: "%rootDir%/../../../phpstan"
 
     excludes_analyse:
-        - "%rootDir%/../../../src/Util/ReflectionExtractor/Strategy/PropertyExtractor.php"
-        - "%rootDir%/../../../src/DependencyInjection/Configuration.php"
+        - src/Util/ReflectionExtractor/Strategy/PropertyExtractor.php
+        - src/DependencyInjection/Configuration.php

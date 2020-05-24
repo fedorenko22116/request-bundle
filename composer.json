@@ -32,7 +32,7 @@
         }
     },
     "scripts": {
-        "phpstan": "phpstan analyse src",
+        "phpstan": "phpstan analyse -c ./phpstan.neon",
         "phpcs": "./vendor/bin/phpcs",
         "phpcbf": "./vendor/bin/phpcbf"
     }
