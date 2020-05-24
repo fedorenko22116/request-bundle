@@ -2,8 +2,8 @@
 
 namespace LSBProject\RequestBundle\Request\Factory;
 
-use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\Factory\Param\CompositeFactory;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
@@ -54,6 +54,7 @@ class RequestFactory implements RequestFactoryInterface
     public function create($class, Request $request)
     {
         $meta = new ReflectionClass($class);
+        $compositeFactory = new CompositeFactory($this->requestManager, [$this, 'create']);
         $props = $this->reflectionExtractor->extract($meta, $this->filterProps($meta));
 
         /** @var AbstractRequest $object */
@@ -62,31 +63,7 @@ class RequestFactory implements RequestFactoryInterface
         /** @var ExtractDTO $prop */
         foreach ($props as $prop) {
             $configuration = $prop->getConfiguration();
-
-            /** @var class-string<AbstractRequest> $type */
-            $type = $configuration->getType();
-
-            if ($configuration->isDto() && $type && !$configuration->isBuiltInType()) {
-                $params = $this->requestManager->get($prop, $request);
-                $params = is_array($params) ? $params : [];
-
-                if ($configuration->isCollection()) {
-                    $var = [];
-
-                    foreach ($params as $param) {
-                        $var[] = $this->create(
-                            $type,
-                            $this->cloneRequest($request, $param, $prop->getRequestStorage())
-                        );
-                    }
-                } else {
-                    $var = $this->create($type, $this->cloneRequest($request, $params, $prop->getRequestStorage()));
-                }
-            } elseif ($configuration->isBuiltInType()) {
-                $var = $this->requestManager->get($prop, $request);
-            } else {
-                $var = $this->requestManager->getFromParamConverters($prop, $request);
-            }
+            $var = $compositeFactory->create($prop, $request, $configuration);
 
             if (!$configuration->isOptional() && null === $var) {
                 throw new UnprocessableEntityHttpException(
@@ -106,30 +83,6 @@ class RequestFactory implements RequestFactoryInterface
         }
 
         return $object;
-    }
-
-    /**
-     * @param Request              $request
-     * @param array<string, mixed> $params
-     * @param RequestStorage|null  $storage
-     *
-     * @return Request
-     */
-    private function cloneRequest(Request $request, array $params, RequestStorage $storage = null)
-    {
-        $request = clone $request;
-
-        if (!$storage) {
-            $request->query->replace($params);
-        } elseif (in_array(RequestStorage::QUERY, $storage->getSource())) {
-            $request->query->replace($params);
-        } elseif (in_array(RequestStorage::BODY, $storage->getSource())) {
-            $request->request->replace($params);
-        } else {
-            $request->query->replace($params);
-        }
-
-        return $request;
     }
 
     /**
