@@ -3,9 +3,11 @@
 namespace LSBProject\RequestBundle\Request\Factory\Param;
 
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
+use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
+use LSBProject\RequestBundle\Request\AbstractRequest;
 
 class CollectionParamFactory implements ParamAwareFactoryInterface
 {
@@ -17,20 +19,20 @@ class CollectionParamFactory implements ParamAwareFactoryInterface
     private $requestManager;
 
     /**
-     * @var callable
+     * @var RequestFactoryInterface
      */
-    private $callback;
+    private $requestFactory;
 
     /**
      * ConverterParamFactory constructor.
      *
      * @param RequestManagerInterface $requestManager
-     * @param callable                $callback
+     * @param RequestFactoryInterface $requestFactory
      */
-    public function __construct(RequestManagerInterface $requestManager, $callback)
+    public function __construct(RequestManagerInterface $requestManager, RequestFactoryInterface $requestFactory)
     {
         $this->requestManager = $requestManager;
-        $this->callback = $callback;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -52,11 +54,12 @@ class CollectionParamFactory implements ParamAwareFactoryInterface
         $params = $this->requestManager->get($data, $request);
         $params = is_array($params) ? $params : [];
 
-        $callback = $this->callback;
+        /** @var class-string<AbstractRequest> $type */
+        $type = $configuration->getType();
 
-        return array_map(function (array $param) use ($request, $data, $configuration, $callback) {
-            return $callback(
-                $configuration->getType(),
+        return array_map(function (array $param) use ($request, $data, $type) {
+            return $this->requestFactory->create(
+                $type,
                 $this->cloneRequest($request, $param, $data->getRequestStorage())
             );
         }, $params);

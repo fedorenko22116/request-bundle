@@ -54,7 +54,7 @@ class RequestFactory implements RequestFactoryInterface
     public function create($class, Request $request)
     {
         $meta = new ReflectionClass($class);
-        $compositeFactory = new CompositeFactory($this->requestManager, [$this, 'create']);
+        $compositeFactory = new CompositeFactory($this->requestManager, $this);
         $props = $this->reflectionExtractor->extract($meta, $this->filterProps($meta));
 
         /** @var AbstractRequest $object */

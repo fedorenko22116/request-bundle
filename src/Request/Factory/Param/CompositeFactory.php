@@ -3,6 +3,7 @@
 namespace LSBProject\RequestBundle\Request\Factory\Param;
 
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
+use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,13 +19,13 @@ class CompositeFactory implements ParamAwareFactoryInterface
      * CompositeFactory constructor.
      *
      * @param RequestManagerInterface $requestManager
-     * @param callable                $callback
+     * @param RequestFactoryInterface $requestFactory
      */
-    public function __construct(RequestManagerInterface $requestManager, $callback)
+    public function __construct(RequestManagerInterface $requestManager, RequestFactoryInterface $requestFactory)
     {
         $this->composites = [
-            new CollectionParamFactory($requestManager, $callback),
-            new DtoParamFactory($requestManager, $callback),
+            new CollectionParamFactory($requestManager, $requestFactory),
+            new DtoParamFactory($requestManager, $requestFactory),
             new ConverterParamFactory($requestManager),
             new ScalarParamFactory($requestManager),
         ];
