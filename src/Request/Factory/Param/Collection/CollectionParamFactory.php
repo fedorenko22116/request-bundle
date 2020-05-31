@@ -26,6 +26,7 @@ class CollectionParamFactory implements ParamAwareFactoryInterface
     {
         $this->factories = [
             new CollectionDtoParamFactory($requestManager, $requestFactory),
+            new CollectionConverterParamFactory($requestManager, $requestFactory),
         ];
     }
 

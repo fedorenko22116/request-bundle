@@ -71,6 +71,9 @@ class DefaultController extends AbstractFOSRestController
                     ['foo' => $request->params->bar[0]->foo],
                     ['foo' => $request->params->bar[1]->foo],
                 ],
+                'baz' => [
+                    $request->params->baz[0]->getText(),
+                ],
             ],
         ];
     }

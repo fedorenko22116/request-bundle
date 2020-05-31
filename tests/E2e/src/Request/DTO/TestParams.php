@@ -2,6 +2,8 @@
 
 namespace App\Request\DTO;
 
+use App\Entity\TestEntity;
+use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConverter;
 
 class TestParams
@@ -13,4 +15,10 @@ class TestParams
      * @var TestParamsA[]
      */
     public array $bar;
+
+    /**
+     * @Entity("App\Entity\TestEntity", isCollection=true, options={"mapping": {"text": "text"}})
+     * @var TestEntity[]
+     */
+    public array $baz;
 }
