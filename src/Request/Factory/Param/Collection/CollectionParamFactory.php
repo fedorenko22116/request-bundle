@@ -34,7 +34,7 @@ class CollectionParamFactory implements ParamAwareFactoryInterface
      */
     public function supports(PropConfigurationInterface $configuration)
     {
-        return $configuration->isCollection() && $configuration->getType();
+        return $configuration->isCollection() && $configuration->getType() && !$configuration->isBuiltInType();
     }
 
     /**

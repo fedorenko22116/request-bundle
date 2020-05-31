@@ -42,7 +42,7 @@ class CollectionDtoParamFactory implements ParamAwareFactoryInterface
      */
     public function supports(PropConfigurationInterface $configuration)
     {
-        return $configuration->isDto() && !$configuration->isBuiltInType();
+        return $configuration->isDto();
     }
 
     /**
