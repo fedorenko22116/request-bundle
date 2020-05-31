@@ -1,34 +1,31 @@
 <?php
 
-namespace LSBProject\RequestBundle\Request\Factory\Param;
+namespace LSBProject\RequestBundle\Request\Factory\Param\Collection;
 
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
-use LSBProject\RequestBundle\Request\Factory\Param\Collection\CollectionParamFactory;
+use LSBProject\RequestBundle\Request\Factory\Param\ParamAwareFactoryInterface;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
 
-class CompositeFactory implements ParamAwareFactoryInterface
+class CollectionParamFactory implements ParamAwareFactoryInterface
 {
     /**
-     * @var ParamAwareFactoryInterface[]
+     * @var ParamAwareFactoryInterface[] array
      */
-    private $composites;
+    private $factories;
 
     /**
-     * CompositeFactory constructor.
+     * ConverterParamFactory constructor.
      *
      * @param RequestManagerInterface $requestManager
      * @param RequestFactoryInterface $requestFactory
      */
     public function __construct(RequestManagerInterface $requestManager, RequestFactoryInterface $requestFactory)
     {
-        $this->composites = [
-            new CollectionParamFactory($requestManager, $requestFactory),
-            new DtoParamFactory($requestManager, $requestFactory),
-            new ConverterParamFactory($requestManager),
-            new ScalarParamFactory($requestManager),
+        $this->factories = [
+            new CollectionDtoParamFactory($requestManager, $requestFactory),
         ];
     }
 
@@ -37,7 +34,7 @@ class CompositeFactory implements ParamAwareFactoryInterface
      */
     public function supports(PropConfigurationInterface $configuration)
     {
-        return true;
+        return $configuration->isCollection() && $configuration->getType();
     }
 
     /**
@@ -45,9 +42,9 @@ class CompositeFactory implements ParamAwareFactoryInterface
      */
     public function create(ExtractDTO $data, Request $request, PropConfigurationInterface $configuration)
     {
-        foreach ($this->composites as $composite) {
-            if ($composite->supports($configuration)) {
-                return $composite->create($data, $request, $configuration);
+        foreach ($this->factories as $factory) {
+            if ($factory->supports($configuration)) {
+                return $factory->create($data, $request, $configuration);
             }
         }
 

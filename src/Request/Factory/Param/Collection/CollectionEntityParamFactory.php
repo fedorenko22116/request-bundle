@@ -1,14 +1,16 @@
 <?php
 
-namespace LSBProject\RequestBundle\Request\Factory\Param;
+namespace LSBProject\RequestBundle\Request\Factory\Param\Collection;
 
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
+use LSBProject\RequestBundle\Request\Factory\Param\ParamAwareFactoryInterface;
+use LSBProject\RequestBundle\Request\Factory\Param\RequestCopyTrait;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
 
-class DtoParamFactory implements ParamAwareFactoryInterface
+class CollectionEntityParamFactory implements ParamAwareFactoryInterface
 {
     use RequestCopyTrait;
 
@@ -39,10 +41,7 @@ class DtoParamFactory implements ParamAwareFactoryInterface
      */
     public function supports(PropConfigurationInterface $configuration)
     {
-        return $configuration->isDto()
-            && $configuration->getType()
-            && !$configuration->isBuiltInType()
-            && !$configuration->isCollection();
+        return !$configuration->isDto() && !$configuration->isBuiltInType();
     }
 
     /**
@@ -56,9 +55,11 @@ class DtoParamFactory implements ParamAwareFactoryInterface
         /** @var class-string<AbstractRequest> $type */
         $type = $configuration->getType();
 
-        return $this->requestFactory->create(
-            $type,
-            $this->cloneRequest($request, $params, $data->getRequestStorage())
-        );
+        return array_map(function (array $param) use ($request, $data, $type) {
+            return $this->requestFactory->create(
+                $type,
+                $this->cloneRequest($request, $param, $data->getRequestStorage())
+            );
+        }, $params);
     }
 }
