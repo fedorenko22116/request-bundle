@@ -55,7 +55,7 @@ fi
 ###############################################################################
 
 url="$host/jsonrpc"
-expected='{"jsonrpc":"2","method":"fooMethod","id":1,"params":{"foo":"fooParam","bar":[{"foo":1},{"foo":2}]}}'
+expected='{"jsonrpc":"2","method":"fooMethod","id":1,"params":{"foo":"fooParam","bar":[{"foo":1},{"foo":2}],"baz":[{"text":"SuperFoo"}]}}'
 result="$(curl -s $url -H 'Content-Type: application/json' -d $expected)"
 
 if [ $result = $expected ];
