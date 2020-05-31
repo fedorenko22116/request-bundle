@@ -7,6 +7,7 @@ use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
+use LSBProject\RequestBundle\Request\AbstractRequest;
 
 class DtoParamFactory implements ParamAwareFactoryInterface
 {
