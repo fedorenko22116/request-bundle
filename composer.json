@@ -3,6 +3,7 @@
     "description": "Bundle to structure common request data",
     "type": "symfony-bundle",
     "license": "MIT",
+    "version": "v2.2.0",
     "authors": [
         {
             "name": "victor.fedorenko",
