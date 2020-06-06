@@ -24,10 +24,12 @@ class CompositeFactory implements ParamAwareFactoryInterface
      */
     public function __construct(RequestManagerInterface $requestManager, RequestFactoryInterface $requestFactory)
     {
+        $converterFactory = new ConverterParamFactory($requestManager);
+
         $this->composites = [
-            new CollectionParamFactory($requestManager, $requestFactory),
+            new CollectionParamFactory($requestManager, $requestFactory, $converterFactory),
             new DtoParamFactory($requestManager, $requestFactory),
-            new ConverterParamFactory($requestManager),
+            $converterFactory,
             new ScalarParamFactory($requestManager),
         ];
     }
