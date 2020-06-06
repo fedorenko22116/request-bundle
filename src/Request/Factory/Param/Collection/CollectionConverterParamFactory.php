@@ -3,6 +3,7 @@
 namespace LSBProject\RequestBundle\Request\Factory\Param\Collection;
 
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
+use LSBProject\RequestBundle\Request\Factory\Param\ConverterParamFactory;
 use LSBProject\RequestBundle\Request\Factory\Param\ParamAwareFactoryInterface;
 use LSBProject\RequestBundle\Request\Factory\Param\RequestCopyTrait;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
@@ -26,15 +27,25 @@ class CollectionConverterParamFactory implements ParamAwareFactoryInterface
     private $requestFactory;
 
     /**
+     * @var ConverterParamFactory
+     */
+    private $converterParamFactory;
+
+    /**
      * ConverterParamFactory constructor.
      *
      * @param RequestManagerInterface $requestManager
      * @param RequestFactoryInterface $requestFactory
+     * @param ConverterParamFactory   $converterParamFactory
      */
-    public function __construct(RequestManagerInterface $requestManager, RequestFactoryInterface $requestFactory)
-    {
+    public function __construct(
+        RequestManagerInterface $requestManager,
+        RequestFactoryInterface $requestFactory,
+        ConverterParamFactory $converterParamFactory
+    ) {
         $this->requestManager = $requestManager;
         $this->requestFactory = $requestFactory;
+        $this->converterParamFactory = $converterParamFactory;
     }
 
     /**
@@ -53,13 +64,11 @@ class CollectionConverterParamFactory implements ParamAwareFactoryInterface
         $params = $this->requestManager->get($data, $request);
         $params = is_array($params) ? $params : [];
 
-        /** @var class-string<AbstractRequest> $type */
-        $type = $configuration->getType();
-
-        return array_map(function (array $param) use ($request, $data, $type) {
-            return $this->requestFactory->create(
-                $type,
-                $this->cloneRequest($request, $param, $data->getRequestStorage())
+        return array_map(function (array $param) use ($request, $data, $configuration) {
+            return $this->converterParamFactory->create(
+                $data,
+                $this->cloneRequest($request, $param, $data->getRequestStorage()),
+                $configuration
             );
         }, $params);
     }

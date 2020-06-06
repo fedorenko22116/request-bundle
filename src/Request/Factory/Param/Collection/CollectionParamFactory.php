@@ -3,6 +3,7 @@
 namespace LSBProject\RequestBundle\Request\Factory\Param\Collection;
 
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
+use LSBProject\RequestBundle\Request\Factory\Param\ConverterParamFactory;
 use LSBProject\RequestBundle\Request\Factory\Param\ParamAwareFactoryInterface;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
@@ -21,12 +22,16 @@ class CollectionParamFactory implements ParamAwareFactoryInterface
      *
      * @param RequestManagerInterface $requestManager
      * @param RequestFactoryInterface $requestFactory
+     * @param ConverterParamFactory   $converterParamFactory
      */
-    public function __construct(RequestManagerInterface $requestManager, RequestFactoryInterface $requestFactory)
-    {
+    public function __construct(
+        RequestManagerInterface $requestManager,
+        RequestFactoryInterface $requestFactory,
+        ConverterParamFactory $converterParamFactory
+    ) {
         $this->factories = [
             new CollectionDtoParamFactory($requestManager, $requestFactory),
-            new CollectionConverterParamFactory($requestManager, $requestFactory),
+            new CollectionConverterParamFactory($requestManager, $requestFactory, $converterParamFactory),
         ];
     }
 

@@ -81,14 +81,16 @@ class RequestManager implements RequestManagerInterface
             $params = array_merge($params, $this->addPropMapping($config, $request, $param->getRequestStorage()));
         }
 
-        $paramConfig = $this->paramConverterFactory->create($param->getName(), $param->getConfiguration());
+        $paramConfig = $this->paramConverterFactory->create($param->getName(), $config);
 
         try {
             $this->converterManager->apply($request, $paramConfig);
         } catch (Throwable $exception) {
-            throw new ConfigurationException(
-                sprintf("Cannot convert '%s' property. %s", $param->getName(), $exception->getMessage())
-            );
+            if (!$param->getConfiguration()->isOptional()) {
+                throw new ConfigurationException(
+                    sprintf("Cannot convert '%s' property. %s", $param->getName(), $exception->getMessage())
+                );
+            }
         }
 
         $var = $request->attributes->get($param->getName());

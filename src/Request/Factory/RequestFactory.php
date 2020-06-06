@@ -2,6 +2,7 @@
 
 namespace LSBProject\RequestBundle\Request\Factory;
 
+use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Request\Factory\Param\CompositeFactory;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
@@ -51,7 +52,7 @@ class RequestFactory implements RequestFactoryInterface
      * @throws ReflectionException
      * @throws UnprocessableEntityHttpException
      */
-    public function create($class, Request $request)
+    public function create($class, Request $request, PropConfigurationInterface $configuration = null)
     {
         $meta = new ReflectionClass($class);
         $compositeFactory = new CompositeFactory($this->requestManager, $this);
@@ -62,10 +63,10 @@ class RequestFactory implements RequestFactoryInterface
 
         /** @var ExtractDTO $prop */
         foreach ($props as $prop) {
-            $configuration = $prop->getConfiguration();
-            $var = $compositeFactory->create($prop, $request, $configuration);
+            $finalConfiguration = $configuration ?: $prop->getConfiguration();
+            $var = $compositeFactory->create($prop, $request, $finalConfiguration);
 
-            if (!$configuration->isOptional() && null === $var) {
+            if (!$finalConfiguration->isOptional() && null === $var) {
                 throw new UnprocessableEntityHttpException(
                     sprintf("Property '%s' cannot be empty", $prop->getName())
                 );
