@@ -55,31 +55,23 @@ class RequestStorageResolver implements StorageInterface
     {
         /** @var Request $request */
         $request = $request ?: $this->requestStack->getCurrentRequest();
+        $result = null;
 
         switch ($source) {
             case RequestStorage::QUERY:
                 $result = $request->query->get($param);
 
-                if ($result) {
-                    return $result;
-                }
                 break;
             case RequestStorage::BODY:
                 $result = $request->request->get($param);
 
-                if ($result) {
-                    return $result;
-                }
                 break;
             case RequestStorage::ATTR:
                 $result = $request->attributes->get($param);
 
-                if ($result) {
-                    return $result;
-                }
                 break;
         }
 
-        return null;
+        return $result;
     }
 }
