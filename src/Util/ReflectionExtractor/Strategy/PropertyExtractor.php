@@ -50,7 +50,7 @@ class PropertyExtractor implements ReflectorExtractorInterface
 
         if (!$config->getType()) {
             if ($type = $this->extractType($reflector)) {
-                $config->setType($this->extractType($reflector));
+                $config->setType($type);
             } elseif (method_exists($reflector, 'getType') && $type = $reflector->getType()) {
                 $config->setType($type->getName());
                 $config->setIsOptional($type->allowsNull());
@@ -70,9 +70,7 @@ class PropertyExtractor implements ReflectorExtractorInterface
         $docblock = $property->getDocComment();
 
         if ($docblock && preg_match('/@var\s+([^\s]+)/', $docblock, $matches)) {
-            list(, $type) = $matches;
-
-            return $type;
+            return $matches[1];
         }
 
         return null;
