@@ -23,15 +23,22 @@ class ExtractDTO
     private $requestStorage;
 
     /**
+     * @var bool
+     */
+    private $default;
+
+    /**
      * @param string                     $name
      * @param PropConfigurationInterface $configuration
      * @param RequestStorage|null        $requestStorage
+     * @param bool                       $default
      */
-    public function __construct($name, PropConfigurationInterface $configuration, $requestStorage)
+    public function __construct($name, PropConfigurationInterface $configuration, $requestStorage, $default = false)
     {
         $this->name = $name;
         $this->configuration = $configuration;
         $this->requestStorage = $requestStorage;
+        $this->default = $default;
     }
 
     /**
@@ -56,5 +63,24 @@ class ExtractDTO
     public function getRequestStorage()
     {
         return $this->requestStorage;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDefault()
+    {
+        return $this->default;
+    }
+
+    /**
+     * @param bool $default
+     * @return self
+     */
+    public function setDefault($default)
+    {
+        $this->default = $default;
+
+        return $this;
     }
 }

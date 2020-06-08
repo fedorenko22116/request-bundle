@@ -55,7 +55,7 @@ class ReflectionExtractor implements ReflectionExtractorInterface
                     ->extract($reflector, $requestStorage);
 
                 if (in_array($reflector->getName(), $defaultProperties)) {
-                    $reflector->getConfiguration()->setIsOptional(true);
+                    $reflector->setDefault(true);
                 }
 
                 $reflectors[] = $reflector;

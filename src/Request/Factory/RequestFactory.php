@@ -66,10 +66,16 @@ class RequestFactory implements RequestFactoryInterface
             $finalConfiguration = $configuration ?: $prop->getConfiguration();
             $var = $compositeFactory->create($prop, $request, $finalConfiguration);
 
-            if (!$finalConfiguration->isOptional() && null === $var) {
-                throw new UnprocessableEntityHttpException(
-                    sprintf("Property '%s' cannot be empty", $prop->getName())
-                );
+            if (null === $var) {
+                if ($prop->isDefault()) {
+                    continue;
+                }
+
+                if (!$finalConfiguration->isOptional()) {
+                    throw new UnprocessableEntityHttpException(
+                        sprintf("Property '%s' cannot be empty", $prop->getName())
+                    );
+                }
             }
 
             if ($meta->hasMethod($method = 'set' . ucfirst($prop->getName()))) {
