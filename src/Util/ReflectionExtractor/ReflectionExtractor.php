@@ -41,6 +41,7 @@ class ReflectionExtractor implements ReflectionExtractorInterface
 
         /** @var RequestStorage|null $requestStorage */
         $requestStorage = $this->reader->getClassAnnotation($class, RequestStorage::class);
+        $defaultProperties = array_keys($class->getDefaultProperties());
 
         /** @var ReflectionProperty|ReflectionMethod $reflector */
         foreach (array_merge($class->getMethods(), $class->getProperties()) as $reflector) {
@@ -49,10 +50,16 @@ class ReflectionExtractor implements ReflectionExtractorInterface
             }
 
             if ($reflector instanceof ReflectionProperty) {
-                $reflectors[] = $this->context
+                $reflector = $this->context
                     ->setExtractor(new PropertyExtractor($this->reader))
                     ->extract($reflector, $requestStorage);
+
+                if (in_array($reflector->getName(), $defaultProperties)) {
+                    $reflector->getConfiguration()->setIsOptional(true);
+                }
             }
+
+            $reflectors[] = $reflector;
         }
 
         return $reflectors;
