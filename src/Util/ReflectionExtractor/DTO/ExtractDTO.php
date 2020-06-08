@@ -75,6 +75,7 @@ class ExtractDTO
 
     /**
      * @param bool $default
+     *
      * @return self
      */
     public function setDefault($default)
