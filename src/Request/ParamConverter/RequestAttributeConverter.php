@@ -46,7 +46,7 @@ class RequestAttributeConverter implements ParamConverterInterface
         $class = $configuration->getClass();
 
         $requestStorage = new RequestStorage([]);
-        $requestStorage->setSource($attribute->getSources());
+        $requestStorage->setSources($attribute->getSources());
 
         $request->attributes->set(
             $configuration->getName(),
