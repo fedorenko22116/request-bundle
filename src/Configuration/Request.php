@@ -62,7 +62,7 @@ final class Request extends ConfigurationAnnotation
      *
      * @throws Exception
      */
-    public function setSource($sources)
+    public function setSources($sources)
     {
         foreach ($sources as $source) {
             if (!in_array($source, RequestStorage::TYPES)) {

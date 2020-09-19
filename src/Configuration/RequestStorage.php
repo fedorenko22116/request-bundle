@@ -37,7 +37,7 @@ final class RequestStorage extends ConfigurationAnnotation
      */
     public function setValue($value)
     {
-        $this->setSource($value);
+        $this->setSources($value);
     }
 
     /**
@@ -47,7 +47,7 @@ final class RequestStorage extends ConfigurationAnnotation
      *
      * @throws Exception
      */
-    public function setSource($sources)
+    public function setSources($sources)
     {
         foreach ($sources as $source) {
             if (!in_array($source, self::TYPES)) {
