@@ -21,7 +21,7 @@ final class Request extends ConfigurationAnnotation
     /**
      * @var string[]
      */
-    private $sources = [];
+    private $sources = RequestStorage::TYPES;
 
     /**
      * @param string $parameter

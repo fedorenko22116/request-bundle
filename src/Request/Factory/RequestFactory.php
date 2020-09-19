@@ -57,7 +57,7 @@ final class RequestFactory implements RequestFactoryInterface
         $class,
         Request $request,
         PropConfigurationInterface $configuration = null,
-        RequestStorage $requestStorage = null
+        RequestStorage $parentStorage = null
     ) {
         $meta = new ReflectionClass($class);
         $compositeFactory = new CompositeFactory($this->requestManager, $this);
@@ -68,10 +68,8 @@ final class RequestFactory implements RequestFactoryInterface
 
         /** @var ExtractDTO $prop */
         foreach ($props as $prop) {
-            $parentStorage = $prop->getRequestStorage();
-
-            if ($parentStorage && !$parentStorage->getSources() && $requestStorage) {
-                $prop->setRequestStorage($requestStorage);
+            if (!$prop->getRequestStorage() && $parentStorage) {
+                $prop->setRequestStorage($parentStorage);
             }
 
             $finalConfiguration = $configuration ?: $prop->getConfiguration();
