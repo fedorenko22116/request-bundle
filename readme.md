@@ -14,7 +14,7 @@ $ composer require lsbproject/request-bundle
 
 This command requires you to have Composer installed globally, as explained in the installation chapter of the Composer documentation.
 
-### Step 2: Enable the Bundle
+### Step 2: Enable the Bundle (If composer flex is not installed)
 Then, enable the bundle by adding it to the list of registered bundles in the config/bundles.php file of your project:
 
 ```php
@@ -56,6 +56,9 @@ Then use it in controller:
 Also this bundle supports loading objects like you usually do with `@ParamConverter`. All ParamConverts will be performed to the property.
 
 ```php
+use LSBProject\RequestBundle\Request\AbstractRequest;
+use App\Model\SomeAwesomeClass;
+
 class TestRequest extends AbstractRequest
 {
     public SomeAwesomeClass $fooBar;
@@ -66,6 +69,7 @@ If you are not using PHP 7.4, you can point the class with annotations `@var` or
 
 ```php
 use LSBProject\RequestBundle\Configuration\PropConverter;
+use LSBProject\RequestBundle\Request\AbstractRequest;
 
 class TestRequest extends AbstractRequest
 {
@@ -90,10 +94,13 @@ As you could notice there is a useful annotation `@PropConverter` which is in fa
 Be free to modify any of parameters, as they are working in the same way as in the original one.
 
 ```php
+use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Configuration as LSB;
+
 class TestRequest extends AbstractRequest
 {
     /**
-     * @PropConverter("App\Model\SomeAwesomeClass", converter="awesome_converter", options={"mapping": {"user_id": "id"}})
+     * @LSB\PropConverter("App\Model\SomeAwesomeClass", converter="awesome_converter", options={"mapping": {"user_id": "id"}})
      */
     public $fooBarBaz;
 }
@@ -101,22 +108,23 @@ class TestRequest extends AbstractRequest
 
 ### Request storage
 
-By default all parameters from body, request or path attributes will be used. \
+By default all parameters from body, request, headers or path attributes will be used. \
 To restrict parameter to be located in exact place you can use `@RequestStorage` annotation
 
 ```php
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Configuration as LSB;
 
 /**
- * @RequestStorage({"body", "attributes"})
+ * @RequestStorage({@LSB\RequestStorage::BODY, @LSB\RequestStorage::ATTR})
  */
 class TestRequest extends AbstractRequest
 {
     public $fooBaz;
 
     /**
-     * @RequestStorage({"body"})
+     * @LSB\RequestStorage({@LSB\RequestStorage::BODY})
      */
     public $fooBar;
 }
@@ -131,6 +139,8 @@ You can use `symfony/validation` to validate parameters in request.
 Install component and use it as usual
 
 ```php
+use LSBProject\RequestBundle\Request\AbstractRequest;
+
 class TestRequest extends AbstractRequest
 {
     /**
@@ -143,6 +153,9 @@ class TestRequest extends AbstractRequest
 For a complex request validation there are an optional methods `validate`, `getErrorMessage`.
 
 ```php
+use LSBProject\RequestBundle\Request\AbstractRequest;
+use Psr\Container\ContainerInterface;
+
 class TestRequest extends AbstractRequest
 {
     private const ADMIN = 0;
@@ -172,6 +185,8 @@ If translation component is installed, it will be performed to the message
 To specify property you also can use setters instead of `public` properties to add some additional logic.
 
 ```php
+use LSBProject\RequestBundle\Request\AbstractRequest;
+
 class TestRequest extends AbstractRequest
 {
     private string $comment;
@@ -188,27 +203,28 @@ class TestRequest extends AbstractRequest
 There is an annotation `@Entity` which is almost equal to the sensio annotation.
 
 ```php
-use LSBProject\RequestBundle\Configuration\Entity;
+use LSBProject\RequestBundle\Configuration as LSB;
+use LSBProject\RequestBundle\Request\AbstractRequest;
 use App\Entity\User;
 
 class TestRequest extends AbstractRequest
 {
     /**
-     * @Entity("App\Entity\User", expr="repository.find(id)", mapping={"id": "user_id"})
+     * @LSB\Entity("App\Entity\User", expr="repository.find(id)", mapping={"id": "user_id"})
      */
     public $userA;
     
     // or
 
     /**
-     * @Entity(options={"id"="user_id"})
+     * @LSB\Entity(options={"id"="user_id"})
      */
     public User $userB;
 
     // or
 
     /**
-     * @Entity(options={"mapping": {"user_id": "id"}})
+     * @LSB\Entity(options={"mapping": {"user_id": "id"}})
      */
     public User $userC;    
 }
@@ -254,12 +270,11 @@ for class property. This will recursively perform AbstractRequest converter to t
 
 ```php
 use LSBProject\RequestBundle\Request\AbstractRequest;
-use LSBProject\RequestBundle\Configuration\RequestStorage;
-use LSBProject\RequestBundle\Configuration\PropConverter;
+use LSBProject\RequestBundle\Configuration as LSB;
 use App\Request\DTO\Data;
 
 /**
- * @RequestStorage({"body"})
+ * @LSB\RequestStorage({@LSB\RequestStorage::BODY})
  */
 class JsonRpcRequest extends AbstractRequest
 {
@@ -268,13 +283,13 @@ class JsonRpcRequest extends AbstractRequest
     /**
      * 'method' property is already present in a base Request class, so alias should be used
      *
-     * @PropConverter(name="method")
+     * @LSB\PropConverter(name="method")
      */
     public string $methodName;
 
     public int $id;
 
-    /** @PropConverter(isDto=true) */
+    /** @LSB\PropConverter(isDto=true) */
     public Data $params;
 }
 ```
@@ -288,12 +303,11 @@ will perform request to DB.
 
 ```php
 use LSBProject\RequestBundle\Request\AbstractRequest;
-use LSBProject\RequestBundle\Configuration\RequestStorage;
-use LSBProject\RequestBundle\Configuration\PropConverter;
+use LSBProject\RequestBundle\Configuration as LSB;
 use App\Request\DTO\Data;
 
 /**
- * @RequestStorage({"body"})
+ * @LSB\RequestStorage({@LSB\RequestStorage::BODY})
  */
 class JsonRpcRequest extends AbstractRequest
 {
@@ -302,15 +316,36 @@ class JsonRpcRequest extends AbstractRequest
     /**
      * 'method' property is already present in a base Request class, so alias should be used
      *
-     * @PropConverter(name="method")
+     * @LSB\PropConverter(name="method")
      */
     public string $methodName;
 
     public int $id;
 
-    /** @PropConverter("App\Request\DTO\Data", isDto=true, isCollection=true) */
+    /** @LSB\PropConverter("App\Request\DTO\Data", isDto=true, isCollection=true) */
     public array $params;
 }
+```
+
+### Use on a custom objects
+
+There is also possibility to apply LSB converter to the object
+not inheriting AbstractRequest. You can use `@LSB\Request` annotation
+to point out parameter in controller.
+
+```php
+    use LSBProject\RequestBundle\Configuration as LSB;
+
+    //...
+
+    /**
+     * @Route("/foo")
+     * @LSB\Request("params", sources={LSB\RequestStorage::HEAD})
+     */
+    public function testHeadRequest(TestParamsA $params): Response
+    {
+        return new Response($params->foo);
+    }
 ```
 
 ## Examples
