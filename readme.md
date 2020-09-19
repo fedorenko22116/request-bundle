@@ -113,11 +113,10 @@ To restrict parameter to be located in exact place you can use `@RequestStorage`
 
 ```php
 use LSBProject\RequestBundle\Request\AbstractRequest;
-use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Configuration as LSB;
 
 /**
- * @RequestStorage({@LSB\RequestStorage::BODY, @LSB\RequestStorage::ATTR})
+ * @LSB\RequestStorage({@LSB\RequestStorage::BODY, @LSB\RequestStorage::ATTR})
  */
 class TestRequest extends AbstractRequest
 {
