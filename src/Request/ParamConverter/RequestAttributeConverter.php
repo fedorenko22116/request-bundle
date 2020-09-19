@@ -61,6 +61,6 @@ class RequestAttributeConverter implements ParamConverterInterface
      */
     public function supports(ParamConverter $configuration)
     {
-        return null !== $configuration->getClass();
+        return !!$configuration->getClass();
     }
 }

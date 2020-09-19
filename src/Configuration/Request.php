@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
  */
 final class Request extends ConfigurationAnnotation
 {
-    const ALIAS = 'lsbproject_request';
+    const ALIAS = '_lsbproject_request';
 
     /**
      * @var string
@@ -21,7 +21,7 @@ final class Request extends ConfigurationAnnotation
     /**
      * @var string[]
      */
-    private $sources;
+    private $sources = [];
 
     /**
      * @param string $parameter
@@ -88,7 +88,7 @@ final class Request extends ConfigurationAnnotation
      */
     public function getAliasName()
     {
-        return self::ALIAS;
+        return ltrim(self::ALIAS, '_');
     }
 
     /**

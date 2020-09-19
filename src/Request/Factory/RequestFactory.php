@@ -68,7 +68,9 @@ class RequestFactory implements RequestFactoryInterface
 
         /** @var ExtractDTO $prop */
         foreach ($props as $prop) {
-            if ($requestStorage) {
+            $parentStorage = $prop->getRequestStorage();
+
+            if ($parentStorage && !$parentStorage->getSource() && $requestStorage) {
                 $prop->setRequestStorage($requestStorage);
             }
 
