@@ -33,7 +33,7 @@ final class RequestAttributeConverter implements ParamConverterInterface
      */
     public function apply(Request $request, ParamConverter $configuration)
     {
-        if (false === $request->attributes->has(LSBRequest::ALIAS)) {
+        if (!$request->attributes->has(LSBRequest::ALIAS)) {
             return false;
         }
 

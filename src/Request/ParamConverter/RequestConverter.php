@@ -49,17 +49,6 @@ final class RequestConverter implements ParamConverterInterface
      */
     public function supports(ParamConverter $configuration)
     {
-        try {
-            /**
-             * @template T of object
-             *
-             * @var class-string<T> $class
-             */
-            $class = $configuration->getClass();
-
-            return (new ReflectionClass($class))->isSubclassOf(AbstractRequest::class);
-        } catch (ReflectionException $exception) {
-            return false;
-        }
+        return is_subclass_of($configuration->getClass(), AbstractRequest::class);
     }
 }
