@@ -65,3 +65,17 @@ if [ $result = $expected ];
    echo "Unexpected output $result. Expected $expected"
    exit 1;
 fi
+
+###############################################################################
+
+url="$host/head"
+expected='{"foo":"123"}'
+result="$(curl -s $url -H 'foo: 123')"
+
+if [ $result = $expected ];
+ then
+   echo 'Head tests passed OK!';
+ else
+   echo "Unexpected output $result. Expected $expected"
+   exit 1;
+fi

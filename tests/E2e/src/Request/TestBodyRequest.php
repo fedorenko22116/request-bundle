@@ -2,12 +2,12 @@
 
 namespace App\Request;
 
-use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use App\Entity\DTO\TestDTO;
+use LSBProject\RequestBundle\Configuration as LSB;
 
 /**
- * @RequestStorage({"body"})
+ * @LSB\RequestStorage({LSB\RequestStorage::BODY})
  */
 class TestBodyRequest extends AbstractRequest
 {

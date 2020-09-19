@@ -2,12 +2,12 @@
 
 namespace App\Request;
 
-use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Configuration as LSB;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use App\Entity\DTO\TestDTO;
 
 /**
- * @RequestStorage({"query"})
+ * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
  */
 class TestQueryRequest extends AbstractRequest
 {

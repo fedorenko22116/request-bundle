@@ -2,12 +2,11 @@
 
 namespace App\Request;
 
-use LSBProject\RequestBundle\Configuration\PropConverter;
-use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Configuration as LSB;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 
 /**
- * @RequestStorage({"body"})
+ * @LSB\RequestStorage({LSB\RequestStorage::BODY})
  */
 abstract class JsonRpcRequest extends AbstractRequest
 {
@@ -17,7 +16,7 @@ abstract class JsonRpcRequest extends AbstractRequest
     /**
      * 'method' property already present in a base Request class, so alias should be used
      *
-     * @PropConverter(name="method")
+     * @LSB\PropConverter(name="method")
      */
     public string $methodName;
 }

@@ -9,6 +9,7 @@ use App\Request\TestJsonRpcRequest;
 use App\Request\TestQueryRequest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use LSBProject\RequestBundle\Configuration as LSB;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -75,6 +76,18 @@ class DefaultController extends AbstractFOSRestController
                     ['text' => $request->params->baz[0]->getText()],
                 ],
             ],
+        ];
+    }
+
+    /**
+     * @Rest\View()
+     * @Route("/head")
+     * @LSB\Request("params", sources={LSB\RequestStorage::HEAD})
+     */
+    public function testHeadRequest(TestParamsA $params): array
+    {
+        return [
+            'foo' => $params->foo,
         ];
     }
 }

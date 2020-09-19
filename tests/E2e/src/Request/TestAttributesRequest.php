@@ -3,49 +3,47 @@
 namespace App\Request;
 
 use App\Entity\TestEntity;
-use LSBProject\RequestBundle\Configuration\Entity;
-use LSBProject\RequestBundle\Configuration\PropConverter;
-use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Configuration as LSB;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 
 /**
- * @RequestStorage({"attributes"})
+ * @LSB\RequestStorage({LSB\RequestStorage::ATTR})
  */
 class TestAttributesRequest extends AbstractRequest
 {
     public string $fooAttr;
 
     /**
-     * @RequestStorage({"query"})
+     * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
      */
     public string $bar;
 
     /**
-     * @RequestStorage({"query"})
+     * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
      */
     public int $testId;
 
     /**
-     * @RequestStorage({"query"})
-     * @PropConverter(name="bar_baz")
+     * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
+     * @LSB\PropConverter(name="bar_baz")
      */
     public string $baz;
 
     /**
-     * @RequestStorage({"query"})
-     * @Entity(options={"id": "test_id"})
+     * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
+     * @LSB\Entity(options={"id": "test_id"})
      */
     public TestEntity $entityA;
 
     /**
-     * @RequestStorage({"query"})
-     * @Entity(expr="repository.find(id)", mapping={"id": "test_id"})
+     * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
+     * @LSB\Entity(expr="repository.find(id)", mapping={"id": "test_id"})
      */
     public TestEntity $entityB;
 
     /**
-     * @RequestStorage({"query"})
-     * @Entity(options={"mapping": {"bar_baz": "text"}})
+     * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
+     * @LSB\Entity(options={"mapping": {"bar_baz": "text"}})
      */
     public TestEntity $entityC;
 }
