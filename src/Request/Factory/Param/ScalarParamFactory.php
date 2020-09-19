@@ -7,7 +7,7 @@ use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
 
-class ScalarParamFactory implements ParamAwareFactoryInterface
+final class ScalarParamFactory implements ParamAwareFactoryInterface
 {
     /**
      * @var RequestManagerInterface

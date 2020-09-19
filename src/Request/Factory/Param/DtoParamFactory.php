@@ -9,7 +9,7 @@ use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 
-class DtoParamFactory implements ParamAwareFactoryInterface
+final class DtoParamFactory implements ParamAwareFactoryInterface
 {
     use RequestCopyTrait;
 

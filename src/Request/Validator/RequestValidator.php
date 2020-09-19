@@ -4,7 +4,7 @@ namespace LSBProject\RequestBundle\Request\Validator;
 
 use Psr\Container\ContainerInterface;
 
-class RequestValidator implements RequestValidatorInterface
+final class RequestValidator implements RequestValidatorInterface
 {
     /**
      * @var string

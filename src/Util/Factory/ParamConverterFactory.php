@@ -5,7 +5,7 @@ namespace LSBProject\RequestBundle\Util\Factory;
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-class ParamConverterFactory implements ParamConverterFactoryInterface
+final class ParamConverterFactory implements ParamConverterFactoryInterface
 {
     /**
      * {@inheritDoc}

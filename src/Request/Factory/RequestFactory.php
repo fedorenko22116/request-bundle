@@ -16,7 +16,7 @@ use ReflectionProperty;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
-class RequestFactory implements RequestFactoryInterface
+final class RequestFactory implements RequestFactoryInterface
 {
     /**
      * @var ReflectionExtractorInterface
@@ -70,7 +70,7 @@ class RequestFactory implements RequestFactoryInterface
         foreach ($props as $prop) {
             $parentStorage = $prop->getRequestStorage();
 
-            if ($parentStorage && !$parentStorage->getSource() && $requestStorage) {
+            if ($parentStorage && !$parentStorage->getSources() && $requestStorage) {
                 $prop->setRequestStorage($requestStorage);
             }
 

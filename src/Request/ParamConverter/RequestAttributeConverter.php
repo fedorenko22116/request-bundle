@@ -10,8 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInte
 use Symfony\Component\HttpFoundation\Request;
 use LSBProject\RequestBundle\Configuration\Request as LSBRequest;
 
-class RequestAttributeConverter implements ParamConverterInterface
+final class RequestAttributeConverter implements ParamConverterInterface
 {
+    use ContentTypeHelperTrait;
+
     /**
      * @var RequestFactoryInterface
      */

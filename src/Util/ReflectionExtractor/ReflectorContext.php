@@ -7,7 +7,7 @@ use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy\ReflectorExtractorInterface;
 use Reflector;
 
-class ReflectorContext implements ReflectorContextInterface
+final class ReflectorContext implements ReflectorContextInterface
 {
     /**
      * @var ReflectorExtractorInterface|null

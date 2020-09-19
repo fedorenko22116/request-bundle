@@ -20,9 +20,9 @@ trait RequestCopyTrait
 
         if (!$storage) {
             $request->query->replace($params);
-        } elseif (in_array(RequestStorage::QUERY, $storage->getSource())) {
+        } elseif (in_array(RequestStorage::QUERY, $storage->getSources())) {
             $request->query->replace($params);
-        } elseif (in_array(RequestStorage::BODY, $storage->getSource())) {
+        } elseif (in_array(RequestStorage::BODY, $storage->getSources())) {
             $request->request->replace($params);
         } else {
             $request->query->replace($params);

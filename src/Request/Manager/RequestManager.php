@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Throwable;
 
-class RequestManager implements RequestManagerInterface
+final class RequestManager implements RequestManagerInterface
 {
     /**
      * @var NamingConversionInterface

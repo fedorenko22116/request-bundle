@@ -11,7 +11,7 @@ use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 
-class CollectionDtoParamFactory implements ParamAwareFactoryInterface
+final class CollectionDtoParamFactory implements ParamAwareFactoryInterface
 {
     use RequestCopyTrait;
 

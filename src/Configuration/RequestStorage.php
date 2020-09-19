@@ -63,7 +63,7 @@ final class RequestStorage extends ConfigurationAnnotation
     /**
      * @return string[]
      */
-    public function getSource()
+    public function getSources()
     {
         return $this->sources;
     }

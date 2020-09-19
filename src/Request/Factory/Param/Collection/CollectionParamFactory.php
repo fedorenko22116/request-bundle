@@ -10,7 +10,7 @@ use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
 
-class CollectionParamFactory implements ParamAwareFactoryInterface
+final class CollectionParamFactory implements ParamAwareFactoryInterface
 {
     /**
      * @var ParamAwareFactoryInterface[] array

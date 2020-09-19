@@ -5,7 +5,7 @@ namespace LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use Reflector;
 
-class EntityExtractor extends PropertyExtractor
+final class EntityExtractor extends PropertyExtractor
 {
     /**
      * {@inheritDoc}

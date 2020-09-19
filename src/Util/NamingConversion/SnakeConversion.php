@@ -2,7 +2,7 @@
 
 namespace LSBProject\RequestBundle\Util\NamingConversion;
 
-class SnakeConversion implements NamingConversionInterface
+final class SnakeConversion implements NamingConversionInterface
 {
     /**
      * {@inheritDoc}

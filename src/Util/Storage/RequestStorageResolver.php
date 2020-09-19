@@ -6,7 +6,7 @@ use LSBProject\RequestBundle\Configuration\RequestStorage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class RequestStorageResolver implements StorageInterface
+final class RequestStorageResolver implements StorageInterface
 {
     /**
      * @var RequestStack
@@ -33,7 +33,7 @@ class RequestStorageResolver implements StorageInterface
             return $request->get($param);
         }
 
-        foreach ($paramConfiguration->getSource() as $source) {
+        foreach ($paramConfiguration->getSources() as $source) {
             $result = $this->getFromStorage($source, $param);
 
             if ($result) {

@@ -12,8 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
-class RequestConverter implements ParamConverterInterface
+final class RequestConverter implements ParamConverterInterface
 {
+    use ContentTypeHelperTrait;
+
     /**
      * @var RequestFactoryInterface
      */
@@ -48,37 +50,6 @@ class RequestConverter implements ParamConverterInterface
      */
     public function supports(ParamConverter $configuration)
     {
-        try {
-            /**
-             * @template T of object
-             *
-             * @var class-string<T> $class
-             */
-            $class = $configuration->getClass();
-
-            return (new ReflectionClass($class))->isSubclassOf(AbstractRequest::class);
-        } catch (ReflectionException $exception) {
-            return false;
-        }
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return void
-     */
-    private function convertRequestContextIfEmpty(Request $request)
-    {
-        if ($request->getContentType() !== 'json' || !$request->getContent()) {
-            return;
-        }
-
-        $data = json_decode((string) $request->getContent(false), true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new BadRequestHttpException(sprintf('Invalid json body: %s', json_last_error_msg()));
-        }
-
-        $request->request->replace(is_array($data) ? $data : []);
+        return is_a($configuration->getClass(), AbstractRequest::class);
     }
 }

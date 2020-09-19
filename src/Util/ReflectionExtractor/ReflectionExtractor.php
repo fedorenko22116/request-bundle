@@ -10,7 +10,7 @@ use ReflectionMethod;
 use ReflectionProperty;
 use Reflector;
 
-class ReflectionExtractor implements ReflectionExtractorInterface
+final class ReflectionExtractor implements ReflectionExtractorInterface
 {
     /**
      * @var ReflectorContextInterface

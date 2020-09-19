@@ -9,7 +9,7 @@ use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
 use Symfony\Component\HttpFoundation\Request;
 
-class CompositeFactory implements ParamAwareFactoryInterface
+final class CompositeFactory implements ParamAwareFactoryInterface
 {
     /**
      * @var ParamAwareFactoryInterface[]

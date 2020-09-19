@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class LSBProjectRequestExtension extends Extension
+final class LSBProjectRequestExtension extends Extension
 {
     /**
      * @param mixed[]          $configs
