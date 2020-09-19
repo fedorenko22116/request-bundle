@@ -69,7 +69,7 @@ fi
 ###############################################################################
 
 url="$host/head"
-expected='{"foo":"123"}'
+expected='{"foo":123}'
 result="$(curl -s $url -H 'foo: 123')"
 
 if [ $result = $expected ];
