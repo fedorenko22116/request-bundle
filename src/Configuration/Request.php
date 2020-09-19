@@ -9,35 +9,50 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 /**
  * @Annotation
  */
-final class RequestStorage extends ConfigurationAnnotation
+final class Request extends ConfigurationAnnotation
 {
-    const BODY  = 'body';
-    const QUERY = 'query';
-    const ATTR  = 'attributes';
-    const HEAD  = 'head';
+    const ALIAS = 'lsbproject_request';
 
-    const TYPES = [
-        self::BODY,
-        self::QUERY,
-        self::ATTR,
-        self::HEAD,
-    ];
+    /**
+     * @var string
+     */
+    private $parameter;
 
     /**
      * @var string[]
      */
-    private $sources = [];
+    private $sources;
 
     /**
-     * @param string[] $value
+     * @param string $parameter
      *
-     * @return void
-     *
-     * @throws Exception
+     * @return self
      */
-    public function setValue($value)
+    public function setValue($parameter)
     {
-        $this->setSource($value);
+        $this->parameter = $parameter;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameter()
+    {
+        return $this->parameter;
+    }
+
+    /**
+     * @param string $parameter
+     *
+     * @return self
+     */
+    public function setParameter($parameter)
+    {
+        $this->parameter = $parameter;
+
+        return $this;
     }
 
     /**
@@ -50,9 +65,9 @@ final class RequestStorage extends ConfigurationAnnotation
     public function setSource($sources)
     {
         foreach ($sources as $source) {
-            if (!in_array($source, self::TYPES)) {
+            if (!in_array($source, RequestStorage::TYPES)) {
                 throw new ConfigurationException(
-                    sprintf('Unknown storage type. Available types: %s', implode(',', self::TYPES))
+                    sprintf('Unknown storage type. Available types: %s', implode(',', RequestStorage::TYPES))
                 );
             }
         }
@@ -63,7 +78,7 @@ final class RequestStorage extends ConfigurationAnnotation
     /**
      * @return string[]
      */
-    public function getSource()
+    public function getSources()
     {
         return $this->sources;
     }
@@ -73,7 +88,7 @@ final class RequestStorage extends ConfigurationAnnotation
      */
     public function getAliasName()
     {
-        return 'converter';
+        return self::ALIAS;
     }
 
     /**
@@ -81,6 +96,6 @@ final class RequestStorage extends ConfigurationAnnotation
      */
     public function allowArray()
     {
-        return true;
+        return false;
     }
 }

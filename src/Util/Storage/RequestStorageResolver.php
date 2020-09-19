@@ -70,6 +70,10 @@ class RequestStorageResolver implements StorageInterface
                 $result = $request->attributes->get($param);
 
                 break;
+            case RequestStorage::HEAD:
+                $result = $request->headers->get($param);
+
+                break;
         }
 
         return $result;

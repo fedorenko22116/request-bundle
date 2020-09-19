@@ -5,7 +5,7 @@ namespace LSBProject\RequestBundle\Configuration;
 /**
  * @Annotation
  */
-class Entity extends PropConverter
+final class Entity extends PropConverter
 {
     /**
      * @var string

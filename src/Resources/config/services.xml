@@ -72,5 +72,12 @@
             <tag name="request.param_converter" converter="lsbproject_request_converter" />
             <argument type="service" id="LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface" />
         </service>
+        <service
+                id="lsbproject.request.param_converter.request_attribute_converter"
+                class="LSBProject\RequestBundle\Request\ParamConverter\RequestAttributeConverter"
+        >
+            <tag name="request.param_converter" converter="lsbproject_request_attribute_converter" />
+            <argument type="service" id="LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface" />
+        </service>
     </services>
 </container>

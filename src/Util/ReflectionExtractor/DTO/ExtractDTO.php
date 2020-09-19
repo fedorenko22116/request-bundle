@@ -66,6 +66,18 @@ class ExtractDTO
     }
 
     /**
+     * @param RequestStorage|null $requestStorage
+     *
+     * @return self
+     */
+    public function setRequestStorage($requestStorage)
+    {
+        $this->requestStorage = $requestStorage;
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isDefault()

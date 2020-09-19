@@ -38,7 +38,7 @@ class RequestConverter implements ParamConverterInterface
         /** @var class-string<AbstractRequest> $class */
         $class = $configuration->getClass();
 
-        $request->attributes->add([$configuration->getName() => $this->requestFactory->create($class, $request)]);
+        $request->attributes->set($configuration->getName(), $this->requestFactory->create($class, $request));
 
         return true;
     }

@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 
 abstract class AbstractPropConfiguration extends ConfigurationAnnotation implements PropConfigurationInterface
 {
+    const ALIAS = 'lsbproject_converter';
     const BUILTIN_TYPES = [null, "string", "int", "float", "bool", "array"];
 
     /**
@@ -21,7 +22,7 @@ abstract class AbstractPropConfiguration extends ConfigurationAnnotation impleme
      */
     public function getAliasName()
     {
-        return 'converter';
+        return self::ALIAS;
     }
 
     /**

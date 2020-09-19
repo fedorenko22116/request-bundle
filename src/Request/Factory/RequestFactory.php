@@ -3,6 +3,7 @@
 namespace LSBProject\RequestBundle\Request\Factory;
 
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
+use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Request\Factory\Param\CompositeFactory;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
@@ -52,8 +53,12 @@ class RequestFactory implements RequestFactoryInterface
      * @throws ReflectionException
      * @throws UnprocessableEntityHttpException
      */
-    public function create($class, Request $request, PropConfigurationInterface $configuration = null)
-    {
+    public function create(
+        $class,
+        Request $request,
+        PropConfigurationInterface $configuration = null,
+        RequestStorage $requestStorage = null
+    ) {
         $meta = new ReflectionClass($class);
         $compositeFactory = new CompositeFactory($this->requestManager, $this);
         $props = $this->reflectionExtractor->extract($meta, $this->filterProps($meta));
@@ -63,6 +68,10 @@ class RequestFactory implements RequestFactoryInterface
 
         /** @var ExtractDTO $prop */
         foreach ($props as $prop) {
+            if ($requestStorage) {
+                $prop->setRequestStorage($requestStorage);
+            }
+
             $finalConfiguration = $configuration ?: $prop->getConfiguration();
             $var = $compositeFactory->create($prop, $request, $finalConfiguration);
 
