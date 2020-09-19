@@ -9,7 +9,6 @@ use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 final class RequestConverter implements ParamConverterInterface
@@ -50,6 +49,17 @@ final class RequestConverter implements ParamConverterInterface
      */
     public function supports(ParamConverter $configuration)
     {
-        return is_a($configuration->getClass(), AbstractRequest::class);
+        try {
+            /**
+             * @template T of object
+             *
+             * @var class-string<T> $class
+             */
+            $class = $configuration->getClass();
+
+            return (new ReflectionClass($class))->isSubclassOf(AbstractRequest::class);
+        } catch (ReflectionException $exception) {
+            return false;
+        }
     }
 }
