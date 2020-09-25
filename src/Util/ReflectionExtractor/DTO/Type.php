@@ -12,7 +12,7 @@ class Type
     /**
      * @var bool
      */
-    private $nullable;
+    private $nullable = false;
 
     /**
      * @return string[]
