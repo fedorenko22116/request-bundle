@@ -3,11 +3,12 @@
 namespace LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy;
 
 use Doctrine\Common\Annotations\Reader;
-use Exception;
 use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConverter;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
+use LSBProject\RequestBundle\Exception\ConfigurationException;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Type;
 use ReflectionProperty;
 use Reflector;
 
@@ -31,14 +32,14 @@ class PropertyExtractor implements ReflectorExtractorInterface
      * @param ReflectionProperty|Reflector $reflector
      * @param RequestStorage|null          $storage
      *
-     * @return ExtractDTO
+     * @return Extraction
      *
-     * @throws Exception
+     * @throws ConfigurationException
      */
     public function extract(Reflector $reflector, RequestStorage $storage = null)
     {
         if (!$reflector instanceof ReflectionProperty) {
-            throw new Exception('Unsupported extractor type');
+            throw new ConfigurationException('Unsupported extractor type');
         }
 
         $storage = $this->reader->getPropertyAnnotation($reflector, RequestStorage::class) ?: $storage;
@@ -50,29 +51,42 @@ class PropertyExtractor implements ReflectorExtractorInterface
 
         if (!$config->getType()) {
             if ($type = $this->extractType($reflector)) {
-                $config->setType($type);
+                $config->setType($type->getFirst());
+                $config->setIsOptional($type->isNullable());
             } elseif (method_exists($reflector, 'getType') && $type = $reflector->getType()) {
                 $config->setType($type->getName());
                 $config->setIsOptional($type->allowsNull());
             }
         }
 
-        return new ExtractDTO($reflector->getName(), $config, $storage);
+        return new Extraction($reflector->getName(), $config, $storage);
     }
 
     /**
      * @param ReflectionProperty $property
      *
-     * @return string|null
+     * @return Type
      */
     private function extractType(ReflectionProperty $property)
     {
+        $dto = new Type();
         $docblock = $property->getDocComment();
 
-        if ($docblock && preg_match('/@var\s+([^\s]+)/', $docblock, $matches)) {
-            return $matches[1];
+        if ($docblock
+            && preg_match('/@var\s+([^\s]+)/', $docblock, $matches)
+            && preg_match_all('/([^|\s]+)*/', $matches[1], $matches)
+        ) {
+            foreach ($matches[1] as $type) {
+                $lowerType = strtolower($type);
+
+                if ($type && 'null' !== $lowerType) {
+                    $dto->addValue($type);
+                } elseif ('null' === $lowerType) {
+                    $dto->setNullable(true);
+                }
+            }
         }
 
-        return null;
+        return $dto;
     }
 }

@@ -5,7 +5,7 @@ namespace LSBProject\RequestBundle\Util\ReflectionExtractor\DTO;
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 
-final class ExtractDTO
+final class Extraction
 {
     /**
      * @var string

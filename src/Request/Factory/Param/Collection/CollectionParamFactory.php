@@ -7,7 +7,7 @@ use LSBProject\RequestBundle\Request\Factory\Param\ConverterParamFactory;
 use LSBProject\RequestBundle\Request\Factory\Param\ParamAwareFactoryInterface;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use Symfony\Component\HttpFoundation\Request;
 
 final class CollectionParamFactory implements ParamAwareFactoryInterface
@@ -46,7 +46,7 @@ final class CollectionParamFactory implements ParamAwareFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(ExtractDTO $data, Request $request, PropConfigurationInterface $configuration)
+    public function create(Extraction $data, Request $request, PropConfigurationInterface $configuration)
     {
         foreach ($this->factories as $factory) {
             if ($factory->supports($configuration)) {

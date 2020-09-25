@@ -2,8 +2,8 @@
 
 namespace LSBProject\RequestBundle\Util\ReflectionExtractor;
 
-use Exception;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Exception\ConfigurationException;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy\ReflectorExtractorInterface;
 use Reflector;
 
@@ -26,12 +26,12 @@ final class ReflectorContext implements ReflectorContextInterface
 
     /**
      * {@inheritDoc}
-     * @throws Exception
+     * @throws ConfigurationException
      */
     public function extract(Reflector $reflector, RequestStorage $storage = null)
     {
         if (!$this->extractor) {
-            throw new Exception("Extractor is not set");
+            throw new ConfigurationException("Extractor is not set");
         }
 
         return $this->extractor->extract($reflector, $storage);

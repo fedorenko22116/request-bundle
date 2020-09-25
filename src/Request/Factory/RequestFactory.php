@@ -4,17 +4,17 @@ namespace LSBProject\RequestBundle\Request\Factory;
 
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
+use LSBProject\RequestBundle\Exception\BadRequestException;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Request\Factory\Param\CompositeFactory;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractorInterface;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 final class RequestFactory implements RequestFactoryInterface
 {
@@ -51,7 +51,7 @@ final class RequestFactory implements RequestFactoryInterface
     /**
      * {@inheritDoc}
      * @throws ReflectionException
-     * @throws UnprocessableEntityHttpException
+     * @throws BadRequestException
      */
     public function create(
         $class,
@@ -66,7 +66,7 @@ final class RequestFactory implements RequestFactoryInterface
         /** @var AbstractRequest $object */
         $object = $meta->newInstance();
 
-        /** @var ExtractDTO $prop */
+        /** @var Extraction $prop */
         foreach ($props as $prop) {
             if (!$prop->getRequestStorage() && $parentStorage) {
                 $prop->setRequestStorage($parentStorage);
@@ -81,7 +81,7 @@ final class RequestFactory implements RequestFactoryInterface
                 }
 
                 if (!$finalConfiguration->isOptional()) {
-                    throw new UnprocessableEntityHttpException(
+                    throw new BadRequestException(
                         sprintf("Property '%s' cannot be empty", $prop->getName())
                     );
                 }
@@ -95,7 +95,7 @@ final class RequestFactory implements RequestFactoryInterface
         }
 
         if (!$this->validator->validate($object)) {
-            throw new UnprocessableEntityHttpException($this->validator->getError());
+            throw new BadRequestException($this->validator->getError());
         }
 
         return $object;

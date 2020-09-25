@@ -8,7 +8,7 @@ use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Exception\ConfigurationException;
 use LSBProject\RequestBundle\Util\Factory\ParamConverterFactoryInterface;
 use LSBProject\RequestBundle\Util\NamingConversion\NamingConversionInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use LSBProject\RequestBundle\Util\Storage\StorageInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,7 +58,7 @@ final class RequestManager implements RequestManagerInterface
     /**
      * {@inheritDoc}
      */
-    public function get(ExtractDTO $param, Request $request)
+    public function get(Extraction $param, Request $request)
     {
         return $this->storage->get(
             $param->getConfiguration()->getName() ?: $this->namingConversion->convert($param->getName()),
@@ -70,7 +70,7 @@ final class RequestManager implements RequestManagerInterface
     /**
      * {@inheritDoc}
      */
-    public function getFromParamConverters(ExtractDTO $param, Request $request)
+    public function getFromParamConverters(Extraction $param, Request $request)
     {
         $config  = $param->getConfiguration();
 

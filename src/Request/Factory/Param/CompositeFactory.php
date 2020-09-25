@@ -6,7 +6,7 @@ use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Request\Factory\Param\Collection\CollectionParamFactory;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use Symfony\Component\HttpFoundation\Request;
 
 final class CompositeFactory implements ParamAwareFactoryInterface
@@ -45,7 +45,7 @@ final class CompositeFactory implements ParamAwareFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(ExtractDTO $data, Request $request, PropConfigurationInterface $configuration)
+    public function create(Extraction $data, Request $request, PropConfigurationInterface $configuration)
     {
         foreach ($this->composites as $composite) {
             if ($composite->supports($configuration)) {

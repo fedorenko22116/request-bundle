@@ -3,7 +3,7 @@
 namespace LSBProject\RequestBundle\Request\Factory\Param;
 
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\ExtractDTO;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use Symfony\Component\HttpFoundation\Request;
 
 interface ParamAwareFactoryInterface
@@ -16,11 +16,11 @@ interface ParamAwareFactoryInterface
     public function supports(PropConfigurationInterface $configuration);
 
     /**
-     * @param ExtractDTO                 $data
+     * @param Extraction                 $data
      * @param Request                    $request
      * @param PropConfigurationInterface $configuration
      *
      * @return mixed
      */
-    public function create(ExtractDTO $data, Request $request, PropConfigurationInterface $configuration);
+    public function create(Extraction $data, Request $request, PropConfigurationInterface $configuration);
 }
