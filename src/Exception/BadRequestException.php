@@ -4,7 +4,7 @@ namespace LSBProject\RequestBundle\Exception;
 
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class BadRequestException extends BadRequestHttpException
+final class BadRequestException extends BadRequestHttpException
 {
 
 }
