@@ -2,7 +2,7 @@
 
 namespace LSBProject\RequestBundle\Util\ReflectionExtractor\DTO;
 
-class Type
+final class Type
 {
     /**
      * @var string[]
