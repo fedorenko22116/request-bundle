@@ -13,11 +13,12 @@ use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractorInterface;
 use ReflectionClass;
 use ReflectionException;
-use ReflectionProperty;
 use Symfony\Component\HttpFoundation\Request;
 
 final class RequestFactory implements RequestFactoryInterface
 {
+    use RequestPropertyHelperTrait;
+
     /**
      * @var ReflectionExtractorInterface
      */
@@ -99,27 +100,5 @@ final class RequestFactory implements RequestFactoryInterface
         }
 
         return $object;
-    }
-
-    /**
-     * @param ReflectionClass<AbstractRequest> $meta
-     *
-     * @return string[]
-     */
-    private function filterProps(ReflectionClass $meta)
-    {
-        $props = array_filter(
-            $meta->getProperties(),
-            function (ReflectionProperty $prop) use ($meta) {
-                $method = 'set' . ucfirst($prop->getName());
-
-                return $prop->getDeclaringClass()->getName() !== Request::class &&
-                    ($prop->isPublic() || ($meta->hasMethod($method) && $meta->getMethod($method)->isPublic()));
-            }
-        );
-
-        return array_map(function (ReflectionProperty $property) {
-            return $property->getName();
-        }, $props);
     }
 }
