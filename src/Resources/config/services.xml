@@ -58,9 +58,9 @@
             <argument type="service" id="LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface" />
         </service>
         <service
-            id="lsbproject.request.property_info.phpdocextractor"
-            class="Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor"
-            public="false"
+                id="lsbproject.request.property_info.phpdocextractor"
+                class="Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor"
+                public="false"
         />
         <service
                 id="lsbproject.request.property_info.reflectionextractor"
