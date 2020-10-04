@@ -8,9 +8,10 @@ use LSBProject\RequestBundle\Configuration\PropConverter;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Exception\ConfigurationException;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Type;
 use ReflectionProperty;
 use Reflector;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
+use Symfony\Component\PropertyInfo\Type;
 
 class PropertyExtractor implements ReflectorExtractorInterface
 {
@@ -20,11 +21,18 @@ class PropertyExtractor implements ReflectorExtractorInterface
     private $reader;
 
     /**
-     * @param Reader $reader
+     * @var PropertyInfoExtractorInterface
      */
-    public function __construct(Reader $reader)
+    private $propertyInfoExtractor;
+
+    /**
+     * @param Reader                         $reader
+     * @param PropertyInfoExtractorInterface $propertyInfoExtractor
+     */
+    public function __construct(Reader $reader, PropertyInfoExtractorInterface $propertyInfoExtractor)
     {
         $this->reader = $reader;
+        $this->propertyInfoExtractor = $propertyInfoExtractor;
     }
 
     /**
@@ -50,45 +58,27 @@ class PropertyExtractor implements ReflectorExtractorInterface
         $config = $config ?: new PropConverter([]);
 
         if (!$config->getType()) {
-            $type = $this->extractType($reflector);
+            $types = $this->propertyInfoExtractor->getTypes(
+                $reflector->getDeclaringClass()->getName(),
+                $reflector->getName()
+            );
 
-            if ($type->getFirst()) {
-                $config->setType($type->getFirst());
+            if ($types) {
+                $type = current($types);
+
+                if ($collectionType = $type->getCollectionValueType()) {
+                    $type = $collectionType;
+                }
+
+                if ($type->getBuiltinType() === Type::BUILTIN_TYPE_ARRAY) {
+                    $config->setIsCollection(true);
+                }
+
+                $config->setType($type->getClassName() ?: $type->getBuiltinType());
                 $config->setIsOptional($type->isNullable());
-            } elseif (method_exists($reflector, 'getType') && $type = $reflector->getType()) {
-                $config->setType($type->getName());
-                $config->setIsOptional($type->allowsNull());
             }
         }
 
         return new Extraction($reflector->getName(), $config, $storage);
-    }
-
-    /**
-     * @param ReflectionProperty $property
-     *
-     * @return Type
-     */
-    private function extractType(ReflectionProperty $property)
-    {
-        $dto = new Type();
-        $docblock = $property->getDocComment();
-
-        if ($docblock
-            && preg_match('/@var\s+([^\s]+)/', $docblock, $matches)
-            && preg_match_all('/([^|\s]+)*/', $matches[1], $matches)
-        ) {
-            foreach ($matches[1] as $type) {
-                $lowerType = strtolower($type);
-
-                if ($type && 'null' !== $lowerType) {
-                    $dto->addValue($type);
-                } elseif ('null' === $lowerType) {
-                    $dto->setNullable(true);
-                }
-            }
-        }
-
-        return $dto;
     }
 }

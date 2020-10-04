@@ -9,6 +9,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
 use Reflector;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
 
 final class ReflectionExtractor implements ReflectionExtractorInterface
 {
@@ -23,13 +24,23 @@ final class ReflectionExtractor implements ReflectionExtractorInterface
     private $reader;
 
     /**
-     * @param ReflectorContextInterface $context
-     * @param Reader                    $reader
+     * @var PropertyInfoExtractorInterface
      */
-    public function __construct(ReflectorContextInterface $context, Reader $reader)
-    {
+    private $propertyInfoExtractor;
+
+    /**
+     * @param ReflectorContextInterface      $context
+     * @param Reader                         $reader
+     * @param PropertyInfoExtractorInterface $propertyInfoExtractor
+     */
+    public function __construct(
+        ReflectorContextInterface $context,
+        Reader $reader,
+        PropertyInfoExtractorInterface $propertyInfoExtractor
+    ) {
         $this->context = $context;
         $this->reader = $reader;
+        $this->propertyInfoExtractor = $propertyInfoExtractor;
     }
 
     /**
@@ -51,7 +62,7 @@ final class ReflectionExtractor implements ReflectionExtractorInterface
 
             if ($reflector instanceof ReflectionProperty) {
                 $reflector = $this->context
-                    ->setExtractor(new PropertyExtractor($this->reader))
+                    ->setExtractor(new PropertyExtractor($this->reader, $this->propertyInfoExtractor))
                     ->extract($reflector, $requestStorage);
 
                 if (in_array($reflector->getName(), $defaultProperties)) {
