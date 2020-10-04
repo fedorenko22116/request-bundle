@@ -11,7 +11,6 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use LSBProject\RequestBundle\Configuration as LSB;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class DefaultController extends AbstractFOSRestController
 {
