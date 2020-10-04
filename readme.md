@@ -81,7 +81,7 @@ class TestRequest extends AbstractRequest
     // or
     
     /**
-     * @PropConverter("App\Model\SomeAwesomeClass")
+     * @PropConverter(App\Model\SomeAwesomeClass::class)
      */
     public $fooBarBaz;
 }
@@ -100,7 +100,7 @@ use LSBProject\RequestBundle\Configuration as LSB;
 class TestRequest extends AbstractRequest
 {
     /**
-     * @LSB\PropConverter("App\Model\SomeAwesomeClass", converter="awesome_converter", options={"mapping": {"user_id": "id"}})
+     * @LSB\PropConverter(App\Model\SomeAwesomeClass::class, converter="awesome_converter", options={"mapping": {"user_id": "id"}})
      */
     public $fooBarBaz;
 }
@@ -179,7 +179,7 @@ class TestRequest extends AbstractRequest
 
 If translation component is installed, it will be performed to the message
 
-### Additional setting logic
+### Using mutators
 
 To specify property you also can use setters instead of `public` properties to add some additional logic.
 
@@ -209,7 +209,7 @@ use App\Entity\User;
 class TestRequest extends AbstractRequest
 {
     /**
-     * @LSB\Entity("App\Entity\User", expr="repository.find(id)", mapping={"id": "user_id"})
+     * @LSB\Entity(App\Entity\User::class, expr="repository.find(id)", mapping={"id": "user_id"})
      */
     public $userA;
     
@@ -295,7 +295,7 @@ class JsonRpcRequest extends AbstractRequest
 
 ### Using Collections
 
-To specify an array of objects which should be converted, use `isCollection` property. You can use it in combination \
+To specify an array of objects which should be converted, use `isCollection` property or use typehinting. You can use it in combination \
 with `isDto` to specify array of objects to be set. \
 Be aware that it's not recommended to use collection for entities as it's very inefficient way of getting data as it \
 will perform request to DB.
@@ -321,7 +321,10 @@ class JsonRpcRequest extends AbstractRequest
 
     public int $id;
 
-    /** @LSB\PropConverter("App\Request\DTO\Data", isDto=true, isCollection=true) */
+    /** 
+     * @LSB\PropConverter(isDto=true)
+     * @var App\Request\DTO\Data[]
+     */
     public array $params;
 }
 ```
