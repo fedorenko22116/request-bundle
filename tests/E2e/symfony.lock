@@ -240,6 +240,9 @@
     "symfony/polyfill-php80": {
         "version": "v1.18.1"
     },
+    "symfony/property-info": {
+        "version": "v5.1.7"
+    },
     "symfony/routing": {
         "version": "4.2",
         "recipe": {
