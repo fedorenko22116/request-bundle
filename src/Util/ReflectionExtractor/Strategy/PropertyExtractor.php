@@ -66,12 +66,12 @@ class PropertyExtractor implements ReflectorExtractorInterface
             if ($types) {
                 $type = current($types);
 
-                if ($collectionType = $type->getCollectionValueType()) {
-                    $type = $collectionType;
-                }
-
                 if ($type->getBuiltinType() === Type::BUILTIN_TYPE_ARRAY) {
                     $config->setIsCollection(true);
+                }
+
+                if ($collectionType = $type->getCollectionValueType()) {
+                    $type = $collectionType;
                 }
 
                 $config->setType($type->getClassName() ?: $type->getBuiltinType());
