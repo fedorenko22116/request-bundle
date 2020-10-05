@@ -342,7 +342,7 @@ to point out parameter in controller.
 
     /**
      * @Route("/foo")
-     * @LSB\Request("params", sources={LSB\RequestStorage::HEAD})
+     * @LSB\Request("params", storage=@LSB\RequestStorage({"head"}))
      */
     public function testHeadRequest(TestParamsA $params): Response
     {

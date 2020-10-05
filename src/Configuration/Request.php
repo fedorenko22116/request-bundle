@@ -19,9 +19,9 @@ final class Request extends ConfigurationAnnotation
     private $parameter;
 
     /**
-     * @var string[]
+     * @var RequestStorage
      */
-    private $sources = RequestStorage::TYPES;
+    private $storage;
 
     /**
      * @param string $parameter
@@ -56,31 +56,23 @@ final class Request extends ConfigurationAnnotation
     }
 
     /**
-     * @param string[] $sources
+     * @param RequestStorage $storage
      *
      * @return void
      *
      * @throws Exception
      */
-    public function setSources($sources)
+    public function setStorage($storage)
     {
-        foreach ($sources as $source) {
-            if (!in_array($source, RequestStorage::TYPES)) {
-                throw new ConfigurationException(
-                    sprintf('Unknown storage type. Available types: %s', implode(',', RequestStorage::TYPES))
-                );
-            }
-        }
-
-        $this->sources = $sources;
+        $this->storage = $storage;
     }
 
     /**
-     * @return string[]
+     * @return RequestStorage
      */
-    public function getSources()
+    public function getStorage()
     {
-        return $this->sources;
+        return $this->storage;
     }
 
     /**

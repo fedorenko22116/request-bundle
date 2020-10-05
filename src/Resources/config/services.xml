@@ -11,7 +11,7 @@
         />
         <service
                 id="LSBProject\RequestBundle\Util\NamingConversion\NamingConversionInterface"
-                class="LSBProject\RequestBundle\Util\NamingConversion\SnakeConversion"
+                class="LSBProject\RequestBundle\Util\NamingConversion\CamelCaseToSnakeConversion"
                 public="false"
         />
         <service

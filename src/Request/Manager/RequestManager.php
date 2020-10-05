@@ -61,7 +61,7 @@ final class RequestManager implements RequestManagerInterface
     public function get(Extraction $param, Request $request)
     {
         return $this->storage->get(
-            $param->getConfiguration()->getName() ?: $this->namingConversion->convert($param->getName()),
+            $param->getConfiguration()->getName() ?: $this->namingConversion->normalize($param->getName()),
             $param->getRequestStorage(),
             $request
         );
@@ -119,7 +119,7 @@ final class RequestManager implements RequestManagerInterface
             $request->attributes->set(
                 $id,
                 $this->storage->get(
-                    $config->getName() ?: $this->namingConversion->convert($id),
+                    $config->getName() ?: $this->namingConversion->normalize($id),
                     $storage,
                     $request
                 )
@@ -152,7 +152,7 @@ final class RequestManager implements RequestManagerInterface
             $request->attributes->set(
                 $alias,
                 $this->storage->get(
-                    $config->getName() ?: $this->namingConversion->convert($alias),
+                    $config->getName() ?: $this->namingConversion->normalize($alias),
                     $storage,
                     $request
                 )
@@ -178,7 +178,7 @@ final class RequestManager implements RequestManagerInterface
             $request->attributes->set(
                 $alias,
                 $this->storage->get(
-                    $config->getName() ?: $this->namingConversion->convert($option),
+                    $config->getName() ?: $this->namingConversion->normalize($option),
                     $storage,
                     $request
                 )

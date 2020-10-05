@@ -9,5 +9,12 @@ interface NamingConversionInterface
      *
      * @return string
      */
-    public function convert($value);
+    public function normalize($value);
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public function denormalize($value);
 }

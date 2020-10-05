@@ -47,12 +47,11 @@ final class RequestAttributeConverter implements ParamConverterInterface
         /** @var class-string<AbstractRequest> $class */
         $class = $configuration->getClass();
 
-        $requestStorage = new RequestStorage([]);
-        $requestStorage->setSources($attribute->getSources());
+        dump($attribute);
 
         $request->attributes->set(
             $configuration->getName(),
-            $this->requestFactory->create($class, $request, null, $requestStorage)
+            $this->requestFactory->create($class, $request, null, $attribute->getStorage())
         );
 
         return true;
