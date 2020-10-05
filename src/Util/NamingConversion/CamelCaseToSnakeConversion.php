@@ -19,7 +19,7 @@ final class CamelCaseToSnakeConversion implements NamingConversionInterface
     {
         $camelCasedName = preg_replace_callback('/(^|_|\.)+(.)/', function ($match) {
             return ('.' === $match[1] ? '_' : '') . strtoupper($match[2]);
-        }, $value);
+        }, $value) ?: '';
 
         return lcfirst($camelCasedName);
     }

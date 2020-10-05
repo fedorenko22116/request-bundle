@@ -83,6 +83,8 @@ final class RequestStorage extends ConfigurationAnnotation
 
     /**
      * @param string|null $converter
+     *
+     * @return void
      */
     public function setConverter($converter)
     {
