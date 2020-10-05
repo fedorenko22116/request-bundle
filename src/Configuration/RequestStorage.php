@@ -29,6 +29,11 @@ final class RequestStorage extends ConfigurationAnnotation
     private $sources = self::TYPES;
 
     /**
+     * @var string|null
+     */
+    private $converter = null;
+
+    /**
      * @param string[] $value
      *
      * @return void
@@ -66,6 +71,22 @@ final class RequestStorage extends ConfigurationAnnotation
     public function getSources()
     {
         return $this->sources;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getConverter()
+    {
+        return $this->converter;
+    }
+
+    /**
+     * @param string|null $converter
+     */
+    public function setConverter($converter)
+    {
+        $this->converter = $converter;
     }
 
     /**

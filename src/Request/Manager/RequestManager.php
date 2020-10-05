@@ -10,6 +10,7 @@ use LSBProject\RequestBundle\Util\Factory\ParamConverterFactoryInterface;
 use LSBProject\RequestBundle\Util\NamingConversion\NamingConversionInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use LSBProject\RequestBundle\Util\Storage\StorageInterface;
+use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -38,21 +39,29 @@ final class RequestManager implements RequestManagerInterface
     private $storage;
 
     /**
+     * @var ContainerInterface
+     */
+    private ContainerInterface $container;
+
+    /**
      * @param NamingConversionInterface      $namingConversion
      * @param ParamConverterFactoryInterface $paramConverterFactory
      * @param ParamConverterManager          $converterManager
      * @param StorageInterface               $storage
+     * @param ContainerInterface             $container
      */
     public function __construct(
         NamingConversionInterface $namingConversion,
         ParamConverterFactoryInterface $paramConverterFactory,
         ParamConverterManager $converterManager,
-        StorageInterface $storage
+        StorageInterface $storage,
+        ContainerInterface $container
     ) {
         $this->namingConversion = $namingConversion;
         $this->paramConverterFactory = $paramConverterFactory;
         $this->converterManager = $converterManager;
         $this->storage = $storage;
+        $this->container = $container;
     }
 
     /**
@@ -61,7 +70,7 @@ final class RequestManager implements RequestManagerInterface
     public function get(Extraction $param, Request $request)
     {
         return $this->storage->get(
-            $param->getConfiguration()->getName() ?: $this->namingConversion->normalize($param->getName()),
+            $this->getParameterName($param->getConfiguration(), $param->getRequestStorage(), $param->getName()),
             $param->getRequestStorage(),
             $request
         );
@@ -119,7 +128,7 @@ final class RequestManager implements RequestManagerInterface
             $request->attributes->set(
                 $id,
                 $this->storage->get(
-                    $config->getName() ?: $this->namingConversion->normalize($id),
+                    $this->getParameterName($config, $storage, $id),
                     $storage,
                     $request
                 )
@@ -152,7 +161,7 @@ final class RequestManager implements RequestManagerInterface
             $request->attributes->set(
                 $alias,
                 $this->storage->get(
-                    $config->getName() ?: $this->namingConversion->normalize($alias),
+                    $this->getParameterName($config, $storage, $alias),
                     $storage,
                     $request
                 )
@@ -178,7 +187,7 @@ final class RequestManager implements RequestManagerInterface
             $request->attributes->set(
                 $alias,
                 $this->storage->get(
-                    $config->getName() ?: $this->namingConversion->normalize($option),
+                    $this->getParameterName($config, $storage, $option),
                     $storage,
                     $request
                 )
@@ -187,5 +196,22 @@ final class RequestManager implements RequestManagerInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @param PropConfigurationInterface $config
+     * @param RequestStorage|null        $requestStorage
+     * @param string                     $name
+     *
+     * @return string
+     */
+    private function getParameterName(PropConfigurationInterface $config, $requestStorage, $name)
+    {
+        $converterName = $requestStorage ? $requestStorage->getConverter() : '';
+
+        /** @var NamingConversionInterface $converter */
+        $converter = $converterName ? $this->container->get($converterName) : $this->namingConversion;
+
+        return $config->getName() ?: $converter->normalize($name);
     }
 }

@@ -35,6 +35,7 @@
             <argument type="service" id="LSBProject\RequestBundle\Util\Factory\ParamConverterFactoryInterface" />
             <argument type="service" id="Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager" />
             <argument type="service" id="LSBProject\RequestBundle\Util\Storage\StorageInterface" />
+            <argument type="service" id="service_container" />
         </service>
         <service
                 id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContextInterface"

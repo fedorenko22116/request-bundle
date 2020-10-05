@@ -241,19 +241,31 @@ by creating a class which implements `LSBProject\RequestBundle\Util\NamingConver
 
 namespace LSBProject\RequestBundle\Util\NamingConversion;
 
-class SnakeConversion implements NamingConversionInterface
+final class CamelCaseToSnakeConversion implements NamingConversionInterface
 {
     /**
      * {@inheritDoc}
      */
-    public function convert($value)
+    public function normalize($value)
     {
         return strtolower(preg_replace('/[A-Z]/', '_\\0', lcfirst($value)) ?: '');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function denormalize($value)
+    {
+        $camelCasedName = preg_replace_callback('/(^|_|\.)+(.)/', function ($match) {
+            return ('.' === $match[1] ? '_' : '') . strtoupper($match[2]);
+        }, $value);
+
+        return lcfirst($camelCasedName);
     }
 }
 ```
 
-then you should register it as a service and point it out in the bundle configuration
+then you should register it as a service and point it out in the bundle configuration.
 
 ```yaml
 # ./config/packages/lsb_project_request.yaml
@@ -262,10 +274,13 @@ lsb_project_request:
     naming_conversion: my_custom_conversion
 ```
 
+You can also apply your conversion to the separate object or its part. Just register your conversion
+as a service and point its name in `RequestStorage::converter`
+
 ### Using DTOs as property
 
 There is also a possibility to specify deeper nested level in the request. To do it, specify special option of `PropConverter::isDto`
-for class property. This will recursively perform AbstractRequest converter to the object.
+for class property. This will prevent standart `ParamConverter` to be applied and will recursively perform `AbstractRequest` converter to the object.
 
 ```php
 use LSBProject\RequestBundle\Request\AbstractRequest;
