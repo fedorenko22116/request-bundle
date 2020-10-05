@@ -130,7 +130,7 @@ class TestRequest extends AbstractRequest
 ```
 
 From example above you will get `foo_baz` parameter from request body or path, and `foo_bar` parameter exactly from request body. \
-There are 3 types of storage to be set: `query`, `body`, `attributes`.
+There are 4 types of storage: `query`, `body`, `attributes` and `head`.
 
 ### Validation
 
