@@ -81,7 +81,7 @@ class DefaultController extends AbstractFOSRestController
     /**
      * @Rest\View()
      * @Route("/head")
-     * @LSB\Request("params", storage=@LSB\RequestStorage({"head"}))
+     * @LSB\Request("params", storage=@LSB\RequestStorage({LSB\RequestStorage::HEAD}))
      */
     public function testHeadRequest(TestParamsA $params): array
     {
