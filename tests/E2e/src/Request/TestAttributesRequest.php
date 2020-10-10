@@ -7,7 +7,7 @@ use LSBProject\RequestBundle\Configuration as LSB;
 use LSBProject\RequestBundle\Request\AbstractRequest;
 
 /**
- * @LSB\RequestStorage({LSB\RequestStorage::ATTR})
+ * @LSB\RequestStorage({LSB\RequestStorage::PATH})
  */
 class TestAttributesRequest extends AbstractRequest
 {

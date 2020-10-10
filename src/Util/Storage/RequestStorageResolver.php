@@ -36,7 +36,7 @@ final class RequestStorageResolver implements StorageInterface
         foreach ($paramConfiguration->getSources() as $source) {
             $result = $this->getFromStorage($source, $param);
 
-            if ($result) {
+            if (null !== $result) {
                 return $result;
             }
         }
@@ -66,12 +66,16 @@ final class RequestStorageResolver implements StorageInterface
                 $result = $request->request->get($param);
 
                 break;
-            case RequestStorage::ATTR:
+            case RequestStorage::PATH:
                 $result = $request->attributes->get($param);
 
                 break;
             case RequestStorage::HEAD:
                 $result = $request->headers->get($param);
+
+                break;
+            case RequestStorage::COOKIE:
+                $result = $request->cookies->get($param);
 
                 break;
         }

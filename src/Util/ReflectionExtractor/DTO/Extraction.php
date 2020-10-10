@@ -23,7 +23,7 @@ final class Extraction
     private $requestStorage;
 
     /**
-     * @var bool
+     * @var mixed
      */
     private $default;
 
@@ -31,9 +31,9 @@ final class Extraction
      * @param string                     $name
      * @param PropConfigurationInterface $configuration
      * @param RequestStorage|null        $requestStorage
-     * @param bool                       $default
+     * @param mixed                      $default
      */
-    public function __construct($name, PropConfigurationInterface $configuration, $requestStorage, $default = false)
+    public function __construct($name, PropConfigurationInterface $configuration, $requestStorage, $default = null)
     {
         $this->name = $name;
         $this->configuration = $configuration;
@@ -82,11 +82,19 @@ final class Extraction
      */
     public function isDefault()
     {
+        return null === $this->default;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefault()
+    {
         return $this->default;
     }
 
     /**
-     * @param bool $default
+     * @param mixed $default
      *
      * @return self
      */

@@ -13,14 +13,16 @@ final class RequestStorage extends ConfigurationAnnotation
 {
     const BODY  = 'body';
     const QUERY = 'query';
-    const ATTR  = 'attributes';
-    const HEAD  = 'head';
+    const PATH  = 'path';
+    const HEAD  = 'header';
+    const COOKIE  = 'cookie';
 
     const TYPES = [
         self::BODY,
         self::QUERY,
-        self::ATTR,
+        self::PATH,
         self::HEAD,
+        self::COOKIE,
     ];
 
     /**

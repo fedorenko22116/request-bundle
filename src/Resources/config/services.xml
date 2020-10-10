@@ -100,7 +100,7 @@
                 public="false"
         >
             <argument type="service" id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContextInterface" />
-            <argument type="service" id="Doctrine\Common\Annotations\Reader" />
+            <argument type="service" id="annotations.cached_reader" />
             <argument type="service" id="lsbproject.request.property_info" />
         </service>
         <service

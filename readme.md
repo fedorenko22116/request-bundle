@@ -108,7 +108,7 @@ class TestRequest extends AbstractRequest
 
 ### Request storage
 
-By default all parameters from body, request, headers or path attributes will be used. \
+By default all parameters from body, request, headers, cookies or path will be used. \
 To restrict parameter to be located in exact place you can use `@RequestStorage` annotation
 
 ```php
@@ -116,21 +116,21 @@ use LSBProject\RequestBundle\Request\AbstractRequest;
 use LSBProject\RequestBundle\Configuration as LSB;
 
 /**
- * @LSB\RequestStorage({@LSB\RequestStorage::BODY, @LSB\RequestStorage::ATTR})
+ * @LSB\RequestStorage({LSB\RequestStorage::BODY, LSB\RequestStorage::PATH})
  */
 class TestRequest extends AbstractRequest
 {
     public $fooBaz;
 
     /**
-     * @LSB\RequestStorage({@LSB\RequestStorage::BODY})
+     * @LSB\RequestStorage({LSB\RequestStorage::BODY})
      */
     public $fooBar;
 }
 ```
 
 From example above you will get `foo_baz` parameter from request body or path, and `foo_bar` parameter exactly from request body. \
-There are 4 types of storage: `query`, `body`, `attributes` and `head`.
+There are 5 types of storage: `query`, `body`, `path`, `cookie` and `head`.
 
 ### Validation
 
