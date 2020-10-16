@@ -368,3 +368,7 @@ to point out parameter in controller.
 ## Examples
 
 More examples you can find [here](https://github.com/22116/request-bundle/tree/master/tests/E2e)
+
+## Writing documentation
+
+*OpenApi:* https://github.com/22116/request-doc-bundle
