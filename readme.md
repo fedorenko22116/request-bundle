@@ -39,7 +39,7 @@ class TestRequest extends AbstractRequest
 }
 ```
 
-That's all. This will require `foo_bar` parameter to be present in request, query or attributes. \
+That's all. This will require `foo_bar` parameter to be present in request, query, cookie, head or attribute (All types you can find in `RequestStorage`). \
 Then use it in controller:
 ```php
     /**
