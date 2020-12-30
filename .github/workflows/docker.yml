@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: echo "BRANCH=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV >> .env
-      - run: echo ${{ env.BRANCH }}
+      - run: echo $BRANCH
       - uses: elgohr/Publish-Docker-Github-Action@master
         env:
           PHP_VERSION: 7.4
@@ -15,6 +15,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           buildargs: PHP_VERSION
-          tags: ${{ env.BRANCH }}
+          tags: $BRANCH
       - name: Run tests
         run: docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
