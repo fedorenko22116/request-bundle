@@ -1,6 +1,4 @@
-ARG BRANCH
-
-FROM 22116/request-bundle-ci:${BRANCH} as base
+FROM request-bundle-ci as base
 FROM composer as assets
 
 COPY --from=base /var/www/bundle /var/www/app
