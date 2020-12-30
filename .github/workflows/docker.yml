@@ -5,7 +5,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Build
-        run: docker build --tag request-bundle-ci .
       - name: Run tests
-        run: docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
+        run: make test
