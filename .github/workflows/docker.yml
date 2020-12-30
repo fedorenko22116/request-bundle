@@ -5,10 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-
-      - name: Set env
-        run: echo ::set-env name=BRANCH::${GITHUB_REF##*/}
-
       - name: Test build PHP 7.4
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
@@ -18,7 +14,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           buildargs: PHP_VERSION
-          tags: ${{ env.BRANCH }}
-
+          tags: ${GITHUB_REF##*/}
       - name: E2e tests
         run: docker-compose -f ./tests/E2e/docker-compose.yml run --rm test
