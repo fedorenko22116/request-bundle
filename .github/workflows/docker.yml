@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: nelonoel/branch-name@v1
+      - run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
       - uses: elgohr/Publish-Docker-Github-Action@master
         env:
           PHP_VERSION: 7.4
