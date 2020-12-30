@@ -6,6 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: echo "BRANCH=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV >> .env
+      - run: echo ${{ env.BRANCH }}
       - uses: elgohr/Publish-Docker-Github-Action@master
         env:
           PHP_VERSION: 7.4
