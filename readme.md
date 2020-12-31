@@ -4,26 +4,10 @@ Request bundle created to represent request data as a strict objects.
 
 ## Installation
 
-### Step 1: Download the Bundle
-
 Open a command console, enter your project directory and execute the following command to download the latest stable version of this bundle:
 
 ```
 $ composer require lsbproject/request-bundle
-```
-
-This command requires you to have Composer installed globally, as explained in the installation chapter of the Composer documentation.
-
-### Step 2: Enable the Bundle (If composer flex is not installed)
-Then, enable the bundle by adding it to the list of registered bundles in the config/bundles.php file of your project:
-
-```php
-// config/bundles.php
-
-return [
-    // ...
-    LSBProject\RequestBundle\LSBProjectRequestBundle::class => ['all' => true],
-];
 ```
 
 ## Usage
