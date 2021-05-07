@@ -357,7 +357,7 @@ to point out parameter in controller.
 
     /**
      * @Route("/foo")
-     * @LSB\Request("params", storage=@LSB\RequestStorage({"head"}))
+     * @LSB\Request("params", storage=@LSB\RequestStorage({@LSB\RequestStorage::HEAD}))
      */
     public function testHeadRequest(TestParamsA $params): Response
     {
@@ -372,3 +372,7 @@ More examples you can find [here](https://github.com/22116/request-bundle/tree/m
 ## Writing documentation
 
 *OpenApi:* https://github.com/22116/request-doc-bundle
+
+## Known issues
+
+* Multiple types such as a mix of classes and arrays are not supported, but you can still use a mix of scalar types
