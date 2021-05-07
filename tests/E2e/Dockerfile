@@ -1,3 +1,5 @@
+ARG PHP_VERSION='8'
+
 FROM request-bundle-ci as base
 FROM composer as assets
 
@@ -7,7 +9,7 @@ WORKDIR /var/www/app/tests/E2e
 
 RUN composer install
 
-FROM php:7.4-fpm
+FROM php:${PHP_VERSION}-fpm
 
 RUN apt-get update && apt-get install -y netcat
 
