@@ -27,5 +27,6 @@ COPY --from=composer /assets/vendor /var/www/bundle/vendor
 
 WORKDIR /var/www/bundle
 
+RUN composer require squizlabs/php_codesniffer escapestudios/symfony2-coding-standard --dev
 RUN composer phpcs
 RUN composer phpstan
