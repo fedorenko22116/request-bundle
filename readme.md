@@ -133,36 +133,6 @@ class TestRequest implements RequestInterface
 }
 ```
 
-For a complex request validation there are an optional methods `validate`, `getErrorMessage`.
-
-```php
-use LSBProject\RequestBundle\Request\RequestInterface;
-use Psr\Container\ContainerInterface;
-
-class TestRequest implements RequestInterface
-{
-    private const ADMIN = 0;
-
-    /**
-     * @Assert\NotBlank()
-     */
-    public int $userId;
-    public ?string $comment;
-
-    public function validate(ContainerInterface $container): bool
-    {
-        return $this->userId === self::ADMIN || ($this->comment && preg_match('/super/', $this->comment));
-    }
-
-    public function getErrorMessage(): string
-    {
-        return 'Only admin can use "super" word in a comment text';
-    }
-}
-```
-
-If translation component is installed, it will be performed to the message
-
 ### Using mutators
 
 To specify property you also can use setters instead of `public` properties to add some additional logic.
