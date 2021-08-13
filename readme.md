@@ -12,7 +12,7 @@ $ composer require lsbproject/request-bundle
 
 ## Usage
 
-Create a request class and extend AbstractRequest:
+Create a request class and implement RequestInterface:
 
 ```php
 use LSBProject\RequestBundle\Request\RequestInterface;
@@ -234,7 +234,7 @@ as a service and point its name in `RequestStorage::converter`
 ### Using DTOs as property
 
 There is also a possibility to specify deeper nested level in the request. To do it, specify special option of `PropConverter::isDto`
-for class property. This will prevent standart `ParamConverter` to be applied and will recursively perform `AbstractRequest` converter to the object.
+for class property. This will prevent standart `ParamConverter` to be applied and will recursively perform `RequestInterface` converter to the object.
 
 ```php
 use LSBProject\RequestBundle\Request\RequestInterface;
@@ -301,7 +301,7 @@ class JsonRpcRequest implements RequestInterface
 ### Use on a custom objects
 
 There is also possibility to apply LSB converter to the object
-not inheriting AbstractRequest. You can use `@LSB\Request` annotation
+not inheriting RequestInterface. You can use `@LSB\Request` annotation
 to point out parameter in controller.
 
 ```php
