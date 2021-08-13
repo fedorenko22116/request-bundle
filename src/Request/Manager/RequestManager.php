@@ -2,6 +2,7 @@
 
 namespace LSBProject\RequestBundle\Request\Manager;
 
+use Exception;
 use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
@@ -41,7 +42,7 @@ final class RequestManager implements RequestManagerInterface
     /**
      * @var ContainerInterface
      */
-    private ContainerInterface $container;
+    private $container;
 
     /**
      * @param NamingConversionInterface      $namingConversion
@@ -94,7 +95,7 @@ final class RequestManager implements RequestManagerInterface
 
         try {
             $this->converterManager->apply($request, $paramConfig);
-        } catch (Throwable $exception) {
+        } catch (Exception $exception) {
             if (!$param->getConfiguration()->isOptional()) {
                 throw new ConfigurationException(
                     sprintf("Cannot convert '%s' property. %s", $param->getName(), $exception->getMessage())
@@ -105,8 +106,8 @@ final class RequestManager implements RequestManagerInterface
         $var = $request->attributes->get($param->getName());
         $request->attributes->remove($param->getName());
 
-        foreach ($params as $param) {
-            $request->attributes->remove($param);
+        foreach ($params as $parameter) {
+            $request->attributes->remove($parameter);
         }
 
         return $var;

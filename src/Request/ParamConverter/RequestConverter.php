@@ -2,10 +2,8 @@
 
 namespace LSBProject\RequestBundle\Request\ParamConverter;
 
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
-use ReflectionClass;
-use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +34,7 @@ final class RequestConverter implements ParamConverterInterface
     {
         $this->convertRequestContextIfEmpty($request);
 
-        /** @var class-string<AbstractRequest> $class */
+        /** @var class-string<RequestInterface> $class */
         $class = $configuration->getClass();
 
         $request->attributes->set($configuration->getName(), $this->requestFactory->create($class, $request));
@@ -49,6 +47,6 @@ final class RequestConverter implements ParamConverterInterface
      */
     public function supports(ParamConverter $configuration)
     {
-        return is_subclass_of($configuration->getClass(), AbstractRequest::class);
+        return is_subclass_of($configuration->getClass(), RequestInterface::class);
     }
 }

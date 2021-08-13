@@ -2,7 +2,7 @@
 
 namespace LSBProject\RequestBundle\Request\Factory;
 
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use ReflectionClass;
 use ReflectionProperty;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 trait RequestPropertyHelperTrait
 {
     /**
-     * @param ReflectionClass<AbstractRequest> $meta
+     * @param ReflectionClass<RequestInterface> $meta
      *
      * @return string[]
      */
-    private function filterProps(ReflectionClass $meta): array
+    private function filterProps(ReflectionClass $meta)
     {
         $props = array_filter(
             $meta->getProperties(),
@@ -23,7 +23,7 @@ trait RequestPropertyHelperTrait
 
                 return Request::class !== $prop->getDeclaringClass()->getName() &&
                     ($prop->isPublic() || ($meta->hasMethod($method) && $meta->getMethod($method)->isPublic()));
-            },
+            }
         );
 
         return array_map(function (ReflectionProperty $property) {

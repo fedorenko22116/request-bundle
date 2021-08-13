@@ -5,7 +5,7 @@ namespace LSBProject\RequestBundle\Request\Factory;
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Exception\BadRequestException;
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Request\Factory\Param\CompositeFactory;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface;
@@ -64,7 +64,7 @@ final class RequestFactory implements RequestFactoryInterface
         $compositeFactory = new CompositeFactory($this->requestManager, $this);
         $props = $this->reflectionExtractor->extract($meta, $this->filterProps($meta));
 
-        /** @var AbstractRequest $object */
+        /** @var RequestInterface $object */
         $object = $meta->newInstance();
 
         /** @var Extraction $prop */

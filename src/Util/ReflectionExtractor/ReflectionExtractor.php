@@ -57,7 +57,7 @@ final class ReflectionExtractor implements ReflectionExtractorInterface
 
         /** @var ReflectionProperty|ReflectionMethod $reflector */
         foreach (array_merge($class->getMethods(), $class->getProperties()) as $reflector) {
-            if ($props && !in_array($reflector->getName(), $props)) {
+            if ($props && !in_array($reflector->getName(), $props, true)) {
                 continue;
             }
 
@@ -66,7 +66,7 @@ final class ReflectionExtractor implements ReflectionExtractorInterface
                     ->setExtractor(new PropertyExtractor($this->reader, $this->propertyInfoExtractor))
                     ->extract($reflector, $requestStorage);
 
-                if (in_array($reflector->getName(), array_keys($defaultProperties))) {
+                if (array_key_exists($reflector->getName(), $defaultProperties)) {
                     $reflector->setDefault($defaultProperties[$reflector->getName()]);
                 }
 

@@ -2,12 +2,12 @@
 
 namespace LSBProject\RequestBundle\Request\Validator;
 
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 
 interface RequestValidatorInterface
 {
     /**
-     * @param AbstractRequest $object
+     * @param RequestInterface $object
      *
      * @return bool
      */

@@ -9,7 +9,7 @@ use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use Symfony\Component\HttpFoundation\Request;
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 
 final class CollectionDtoParamFactory implements ParamAwareFactoryInterface
 {
@@ -53,7 +53,7 @@ final class CollectionDtoParamFactory implements ParamAwareFactoryInterface
         $params = $this->requestManager->get($data, $request);
         $params = is_array($params) ? $params : [];
 
-        /** @var class-string<AbstractRequest> $type */
+        /** @var class-string<RequestInterface> $type */
         $type = $configuration->getType();
 
         return array_map(function (array $param) use ($request, $data, $type) {

@@ -3,7 +3,7 @@
 namespace LSBProject\RequestBundle\Request\ParamConverter;
 
 use LSBProject\RequestBundle\Configuration\RequestStorage;
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
@@ -44,7 +44,7 @@ final class RequestAttributeConverter implements ParamConverterInterface
             return false;
         }
 
-        /** @var class-string<AbstractRequest> $class */
+        /** @var class-string<RequestInterface> $class */
         $class = $configuration->getClass();
 
         $request->attributes->set(
