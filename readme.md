@@ -15,9 +15,9 @@ $ composer require lsbproject/request-bundle
 Create a request class and extend AbstractRequest:
 
 ```php
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 
-class TestRequest extends AbstractRequest
+class TestRequest implements RequestInterface
 {
     public $fooBar;
 }
@@ -40,10 +40,10 @@ Then use it in controller:
 Also this bundle supports loading objects like you usually do with `@ParamConverter`. All ParamConverts will be performed to the property.
 
 ```php
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use App\Model\SomeAwesomeClass;
 
-class TestRequest extends AbstractRequest
+class TestRequest implements RequestInterface
 {
     public SomeAwesomeClass $fooBar;
 }
@@ -53,9 +53,9 @@ If you are not using PHP 7.4, you can point the class with annotations `@var` or
 
 ```php
 use LSBProject\RequestBundle\Configuration\PropConverter;
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 
-class TestRequest extends AbstractRequest
+class TestRequest implements RequestInterface
 {
     /**
      * @var App\Model\SomeAwesomeClass
@@ -78,10 +78,10 @@ As you could notice there is a useful annotation `@PropConverter` which is in fa
 Be free to modify any of parameters, as they are working in the same way as in the original one.
 
 ```php
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Configuration as LSB;
 
-class TestRequest extends AbstractRequest
+class TestRequest implements RequestInterface
 {
     /**
      * @LSB\PropConverter(App\Model\SomeAwesomeClass::class, converter="awesome_converter", options={"mapping": {"user_id": "id"}})
@@ -96,13 +96,13 @@ By default all parameters from body, request, headers, cookies or path will be u
 To restrict parameter to be located in exact place you can use `@RequestStorage` annotation
 
 ```php
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Configuration as LSB;
 
 /**
  * @LSB\RequestStorage({LSB\RequestStorage::BODY, LSB\RequestStorage::PATH})
  */
-class TestRequest extends AbstractRequest
+class TestRequest implements RequestInterface
 {
     public $fooBaz;
 
@@ -122,9 +122,9 @@ You can use `symfony/validation` to validate parameters in request.
 Install component and use it as usual
 
 ```php
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 
-class TestRequest extends AbstractRequest
+class TestRequest implements RequestInterface
 {
     /**
      * @Assert\NotBlank()
@@ -136,10 +136,10 @@ class TestRequest extends AbstractRequest
 For a complex request validation there are an optional methods `validate`, `getErrorMessage`.
 
 ```php
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use Psr\Container\ContainerInterface;
 
-class TestRequest extends AbstractRequest
+class TestRequest implements RequestInterface
 {
     private const ADMIN = 0;
 
@@ -168,9 +168,9 @@ If translation component is installed, it will be performed to the message
 To specify property you also can use setters instead of `public` properties to add some additional logic.
 
 ```php
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 
-class TestRequest extends AbstractRequest
+class TestRequest implements RequestInterface
 {
     private string $comment;
 
@@ -187,10 +187,10 @@ There is an annotation `@Entity` which is almost equal to the sensio annotation.
 
 ```php
 use LSBProject\RequestBundle\Configuration as LSB;
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use App\Entity\User;
 
-class TestRequest extends AbstractRequest
+class TestRequest implements RequestInterface
 {
     /**
      * @LSB\Entity(App\Entity\User::class, expr="repository.find(id)", mapping={"id": "user_id"})
@@ -267,14 +267,14 @@ There is also a possibility to specify deeper nested level in the request. To do
 for class property. This will prevent standart `ParamConverter` to be applied and will recursively perform `AbstractRequest` converter to the object.
 
 ```php
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Configuration as LSB;
 use App\Request\DTO\Data;
 
 /**
  * @LSB\RequestStorage({@LSB\RequestStorage::BODY})
  */
-class JsonRpcRequest extends AbstractRequest
+class JsonRpcRequest implements RequestInterface
 {
     public string $jsonrpc;
 
@@ -300,14 +300,14 @@ Be aware that it's not recommended to use collection for entities as it's very i
 will perform request to DB.
 
 ```php
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Configuration as LSB;
 use App\Request\DTO\Data;
 
 /**
  * @LSB\RequestStorage({@LSB\RequestStorage::BODY})
  */
-class JsonRpcRequest extends AbstractRequest
+class JsonRpcRequest implements RequestInterface
 {
     public string $jsonrpc;
 

@@ -3,13 +3,13 @@
 namespace App\Request;
 
 use LSBProject\RequestBundle\Configuration as LSB;
-use LSBProject\RequestBundle\Request\AbstractRequest;
 use App\Entity\DTO\TestDTO;
+use LSBProject\RequestBundle\Request\RequestInterface;
 
 /**
  * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
  */
-class TestQueryRequest extends AbstractRequest
+class TestQueryRequestInterface implements RequestInterface
 {
     private string $foo;
     public bool $barBaz;

@@ -37,16 +37,6 @@ final class RequestValidator implements RequestValidatorInterface
             }
         }
 
-        if (method_exists($object, 'validate') && !$object->validate($this->container)) {
-            $this->message = $object->getErrorMessage();
-
-            if ($this->container->has('translator')) {
-                $this->message = $this->container->get('translator')->trans($this->message);
-            }
-
-            return false;
-        }
-
         return true;
     }
 

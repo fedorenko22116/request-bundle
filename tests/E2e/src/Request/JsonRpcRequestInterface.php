@@ -3,12 +3,12 @@
 namespace App\Request;
 
 use LSBProject\RequestBundle\Configuration as LSB;
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 
 /**
  * @LSB\RequestStorage({LSB\RequestStorage::BODY})
  */
-abstract class JsonRpcRequest extends AbstractRequest
+abstract class JsonRpcRequestInterface implements RequestInterface
 {
     public string $jsonrpc;
     public int $id;

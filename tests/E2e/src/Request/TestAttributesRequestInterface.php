@@ -4,12 +4,12 @@ namespace App\Request;
 
 use App\Entity\TestEntity;
 use LSBProject\RequestBundle\Configuration as LSB;
-use LSBProject\RequestBundle\Request\AbstractRequest;
+use LSBProject\RequestBundle\Request\RequestInterface;
 
 /**
  * @LSB\RequestStorage({LSB\RequestStorage::PATH})
  */
-class TestAttributesRequest extends AbstractRequest
+class TestAttributesRequestInterface implements RequestInterface
 {
     public string $fooAttr;
 
