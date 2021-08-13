@@ -17,9 +17,6 @@
         "sensio/framework-extra-bundle": "^3 || ^4 || ^5",
         "symfony/property-info": "^3 || ^4 || ^5"
     },
-    "require-dev": {
-        "symfony/class-loader": "^3.4"
-    },
     "autoload": {
         "psr-4": {
             "LSBProject\\RequestBundle\\": "src"
