@@ -20,7 +20,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN apt-get update && apt-get install -y zip libzip-dev git
 RUN docker-php-ext-configure zip --with-libzip && docker-php-ext-install zip || docker-php-ext-install zip
 RUN touch /usr/local/etc/php/php.ini
-RUN composer global require phpstan/phpstan:"^0.12.25"
+RUN composer global require phpstan/phpstan:"^1.8.2"
 
 COPY . /var/www/bundle
 COPY --from=composer /assets/vendor /var/www/bundle/vendor

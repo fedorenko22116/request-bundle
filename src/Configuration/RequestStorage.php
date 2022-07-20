@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 /**
  * @Annotation
  */
+#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_PROPERTY)]
 final class RequestStorage extends ConfigurationAnnotation
 {
     const BODY  = 'body';
@@ -34,6 +35,27 @@ final class RequestStorage extends ConfigurationAnnotation
      * @var string|null
      */
     private $converter = null;
+
+    /**
+     * @param array<string, mixed>|string $data
+     * @param array<string>               $sources
+     * @param string|null                 $converter
+     */
+    public function __construct($data = [], $sources = self::TYPES, $converter = null)
+    {
+        $values = [];
+
+        if (\is_string($data)) {
+            $values['value'] = $data;
+        } else {
+            $values = $data;
+        }
+
+        $values['sources'] = isset($values['sources']) ? $values['sources'] : $sources;
+        $values['converter'] = isset($values['converter']) ? $values['converter'] : $converter;
+
+        parent::__construct($values);
+    }
 
     /**
      * @param string[] $value

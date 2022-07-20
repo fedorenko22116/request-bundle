@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 /**
  * @Annotation
  */
+#[\Attribute(\Attribute::TARGET_CLASS)]
 final class Request extends ConfigurationAnnotation
 {
     const ALIAS = '_lsbproject_request';
@@ -22,6 +23,27 @@ final class Request extends ConfigurationAnnotation
      * @var RequestStorage
      */
     private $storage;
+
+    /**
+     * @param array<string, mixed>|string $data
+     * @param string|null                 $parameter
+     * @param string|null                 $storage
+     */
+    public function __construct($data = [], $parameter = null, $storage = null)
+    {
+        $values = [];
+
+        if (\is_string($data)) {
+            $values['value'] = $data;
+        } else {
+            $values = $data;
+        }
+
+        $values['parameter'] = isset($values['parameter']) ? $values['parameter'] : $parameter;
+        $values['storage'] = isset($values['storage']) ? $values['storage'] : $storage;
+
+        parent::__construct($values);
+    }
 
     /**
      * @param string $parameter

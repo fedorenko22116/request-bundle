@@ -22,11 +22,6 @@ final class CollectionConverterParamFactory implements ParamAwareFactoryInterfac
     private $requestManager;
 
     /**
-     * @var RequestFactoryInterface
-     */
-    private $requestFactory;
-
-    /**
      * @var ConverterParamFactory
      */
     private $converterParamFactory;
@@ -35,16 +30,13 @@ final class CollectionConverterParamFactory implements ParamAwareFactoryInterfac
      * ConverterParamFactory constructor.
      *
      * @param RequestManagerInterface $requestManager
-     * @param RequestFactoryInterface $requestFactory
      * @param ConverterParamFactory   $converterParamFactory
      */
     public function __construct(
         RequestManagerInterface $requestManager,
-        RequestFactoryInterface $requestFactory,
         ConverterParamFactory $converterParamFactory
     ) {
         $this->requestManager = $requestManager;
-        $this->requestFactory = $requestFactory;
         $this->converterParamFactory = $converterParamFactory;
     }
 

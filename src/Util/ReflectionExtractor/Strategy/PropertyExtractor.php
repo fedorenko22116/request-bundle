@@ -2,11 +2,11 @@
 
 namespace LSBProject\RequestBundle\Util\ReflectionExtractor\Strategy;
 
-use Doctrine\Common\Annotations\Reader;
 use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConverter;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Exception\ConfigurationException;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\AnnotationReader;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use ReflectionProperty;
 use Reflector;
@@ -16,7 +16,7 @@ use Symfony\Component\PropertyInfo\Type;
 class PropertyExtractor implements ReflectorExtractorInterface
 {
     /**
-     * @var Reader
+     * @var AnnotationReader
      */
     private $reader;
 
@@ -26,10 +26,10 @@ class PropertyExtractor implements ReflectorExtractorInterface
     private $propertyInfoExtractor;
 
     /**
-     * @param Reader                         $reader
+     * @param AnnotationReader               $reader
      * @param PropertyInfoExtractorInterface $propertyInfoExtractor
      */
-    public function __construct(Reader $reader, PropertyInfoExtractorInterface $propertyInfoExtractor)
+    public function __construct(AnnotationReader $reader, PropertyInfoExtractorInterface $propertyInfoExtractor)
     {
         $this->reader = $reader;
         $this->propertyInfoExtractor = $propertyInfoExtractor;

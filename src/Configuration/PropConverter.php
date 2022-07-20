@@ -5,6 +5,7 @@ namespace LSBProject\RequestBundle\Configuration;
 /**
  * @Annotation
  */
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class PropConverter extends AbstractPropConfiguration
 {
     /**
@@ -57,6 +58,42 @@ class PropConverter extends AbstractPropConfiguration
      * @var bool
      */
     private $isOptional = true;
+
+    /**
+     * @param string|array<string, mixed> $data
+     * @param string|null                 $class
+     * @param array<string, mixed>        $options
+     * @param bool                        $isOptional
+     * @param string|null                 $converter
+     * @param bool                        $isCollection
+     * @param bool                        $isDto
+     */
+    public function __construct(
+        $data = [],
+        $class = null,
+        $options = [],
+        $isOptional = false,
+        $converter = null,
+        $isCollection = false,
+        $isDto = false
+    ) {
+        $values = [];
+
+        if (\is_string($data)) {
+            $values['value'] = $data;
+        } else {
+            $values = $data;
+        }
+
+        $values['class'] = isset($values['class']) ? $values['class'] : $class;
+        $values['options'] = isset($values['options']) ? $values['options'] : $options;
+        $values['isOptional'] = isset($values['isOptional']) ? $values['isOptional'] : $isOptional;
+        $values['converter'] = isset($values['converter']) ? $values['converter'] : $converter;
+        $values['isCollection'] = isset($values['isCollection']) ? $values['isCollection'] : $isCollection;
+        $values['isDto'] = isset($values['isDto']) ? $values['isDto'] : $isDto;
+
+        parent::__construct($values);
+    }
 
     /**
      * @param string $value
