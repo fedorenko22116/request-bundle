@@ -49,7 +49,7 @@ class TestRequest implements RequestInterface
 }
 ```
 
-If you are not using PHP 7.4, you can point the class with annotations `@var` or `@PropConverter`
+If you are not using PHP 7.4, you can point the class with annotations `@var` or `@PropConverter` (attributes also available right now with the same annotation class)
 
 ```php
 use LSBProject\RequestBundle\Configuration\PropConverter;
@@ -61,12 +61,17 @@ class TestRequest implements RequestInterface
      * @var App\Model\SomeAwesomeClass
      */
     public $fooBar;
-    
+
     // or
-    
+
     /**
      * @PropConverter(App\Model\SomeAwesomeClass::class)
      */
+    public $fooBarBaz;
+
+    // or
+
+    #[PropConverter(App\Model\SomeAwesomeClass::class)]
     public $fooBarBaz;
 }
 ```
