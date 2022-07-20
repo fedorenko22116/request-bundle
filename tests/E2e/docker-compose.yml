@@ -4,20 +4,25 @@ services:
     build:
       context: .
     volumes:
-      - assets:/var/www/app
+      - ../../:/var/www/app
+
   db:
     image: mysql
     environment:
       MYSQL_DATABASE: default
       MYSQL_ROOT_PASSWORD: root
+
   nginx:
     image: nginx
     depends_on:
       - app
       - db
     volumes:
-      - assets:/var/www/app
+      - ../../:/var/www/app
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8000:80"
+
   test:
     build: .docker/tester
     entrypoint: "/usr/bin/test-entrypoint.sh"
@@ -27,5 +32,6 @@ services:
       TEST_HOST: http://nginx
     volumes:
       - ./test-entrypoint.sh:/usr/bin/test-entrypoint.sh
+
 volumes:
   assets: ~

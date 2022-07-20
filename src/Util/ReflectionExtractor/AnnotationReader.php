@@ -31,7 +31,7 @@ final class AnnotationReader
     {
         $annotation = $this->reader->getPropertyAnnotation($property, $name);
 
-        if (!$annotation && 80000 >= \PHP_VERSION_ID) {
+        if (!$annotation && 80000 <= \PHP_VERSION_ID) {
             $attribute = current($property->getAttributes($name));
 
             if ($attribute) {
@@ -54,7 +54,7 @@ final class AnnotationReader
     {
         $annotation = $this->reader->getClassAnnotation($class, $name);
 
-        if (!$annotation && 80000 >= \PHP_VERSION_ID) {
+        if (!$annotation && 80000 <= \PHP_VERSION_ID) {
             $attribute = current($class->getAttributes($name));
 
             if ($attribute) {

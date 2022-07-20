@@ -38,10 +38,9 @@ final class RequestStorage extends ConfigurationAnnotation
 
     /**
      * @param array<string, mixed>|string $data
-     * @param array<string>               $sources
      * @param string|null                 $converter
      */
-    public function __construct($data = [], $sources = self::TYPES, $converter = null)
+    public function __construct($data = [], $converter = null)
     {
         $values = [];
 
@@ -51,7 +50,6 @@ final class RequestStorage extends ConfigurationAnnotation
             $values = $data;
         }
 
-        $values['sources'] = isset($values['sources']) ? $values['sources'] : $sources;
         $values['converter'] = isset($values['converter']) ? $values['converter'] : $converter;
 
         parent::__construct($values);

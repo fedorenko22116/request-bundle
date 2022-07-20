@@ -10,14 +10,14 @@ class TestParams
     public string $foo;
 
     /**
-     * @LSB\PropConverter("App\Request\DTO\TestParamsA", isCollection=true, isDto=true)
      * @var TestParamsA[]
      */
+    #[LSB\PropConverter(data: TestParamsA::class, isCollection: true, isDto: true)]
     public array $bar;
 
     /**
-     * @LSB\Entity("App\Entity\TestEntity", isCollection=true, options={"mapping": {"text": "text"}})
      * @var TestEntity[]
      */
+    #[LSB\PropConverter(data: TestEntity::class, isCollection: true, options: ["mapping" => ["text" => "text"]])]
     public array $baz;
 }

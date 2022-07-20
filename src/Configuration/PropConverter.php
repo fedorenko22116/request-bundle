@@ -85,7 +85,7 @@ class PropConverter extends AbstractPropConfiguration
             $values = $data;
         }
 
-        $values['class'] = isset($values['class']) ? $values['class'] : $class;
+        $values['type'] = isset($values['class']) ? $values['class'] : $class;
         $values['options'] = isset($values['options']) ? $values['options'] : $options;
         $values['isOptional'] = isset($values['isOptional']) ? $values['isOptional'] : $isOptional;
         $values['converter'] = isset($values['converter']) ? $values['converter'] : $converter;

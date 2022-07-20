@@ -3,13 +3,12 @@
 namespace LSBProject\RequestBundle\Configuration;
 
 use Exception;
-use LSBProject\RequestBundle\Exception\ConfigurationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 
 /**
  * @Annotation
  */
-#[\Attribute(\Attribute::TARGET_CLASS)]
+#[\Attribute(\Attribute::TARGET_METHOD)]
 final class Request extends ConfigurationAnnotation
 {
     const ALIAS = '_lsbproject_request';
@@ -26,10 +25,9 @@ final class Request extends ConfigurationAnnotation
 
     /**
      * @param array<string, mixed>|string $data
-     * @param string|null                 $parameter
      * @param string|null                 $storage
      */
-    public function __construct($data = [], $parameter = null, $storage = null)
+    public function __construct($data = [], $storage = null)
     {
         $values = [];
 
@@ -39,7 +37,6 @@ final class Request extends ConfigurationAnnotation
             $values = $data;
         }
 
-        $values['parameter'] = isset($values['parameter']) ? $values['parameter'] : $parameter;
         $values['storage'] = isset($values['storage']) ? $values['storage'] : $storage;
 
         parent::__construct($values);
