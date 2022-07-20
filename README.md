@@ -26,13 +26,13 @@ class TestRequest implements RequestInterface
 That's all. This will require `foo_bar` parameter to be present in request, query, cookie, head or attribute (All types you can find in `RequestStorage`). \
 Then use it in controller:
 ```php
-    /**
-     * @Route("/test")
-     */
-    public function test(TestRequest $testRequest): Response
-    {
-        return new Response($testRequest->fooBar);
-    }
+/**
+ * @Route("/test")
+ */
+public function test(TestRequest $testRequest): Response
+{
+    return new Response($testRequest->fooBar);
+}
 ```
 
 ### Using objects
