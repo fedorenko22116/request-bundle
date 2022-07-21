@@ -37,10 +37,10 @@ final class RequestStorage extends ConfigurationAnnotation
     private $converter = null;
 
     /**
-     * @param array<string, mixed>|string $data
-     * @param string|null                 $converter
+     * @param array<string, mixed> $data
+     * @param string|null          $converter
      */
-    public function __construct($data = [], $converter = null)
+    public function __construct(array $data = [], $converter = null)
     {
         $values = [];
 
