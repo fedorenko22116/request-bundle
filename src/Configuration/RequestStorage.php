@@ -44,7 +44,7 @@ final class RequestStorage extends ConfigurationAnnotation
     {
         $values = [];
 
-        if (\is_string($data)) {
+        if (is_numeric(array_key_first($data))) {
             $values['value'] = $data;
         } else {
             $values = $data;
