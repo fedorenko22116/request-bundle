@@ -14,7 +14,7 @@ abstract class AbstractPropConfiguration extends ConfigurationAnnotation impleme
      */
     public function isBuiltInType()
     {
-        return in_array($this->getType(), self::BUILTIN_TYPES);
+        return in_array($this->getType(), self::BUILTIN_TYPES, true);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace LSBProject\RequestBundle\Util\Factory;
 
+use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -13,9 +14,15 @@ final class ParamConverterFactory implements ParamConverterFactoryInterface
     public function create($name, PropConfigurationInterface $configuration)
     {
         $paramConverter = new ParamConverter([]);
+        $options = $configuration->getOptions();
+
+        if ($configuration instanceof Entity) {
+            $options['expr'] = $configuration->getExpr();
+        }
+
+        $paramConverter->setOptions($options);
         $paramConverter->setName($name);
-        $paramConverter->setOptions($configuration->getOptions());
-        $paramConverter->setIsOptional(false);
+        $paramConverter->setIsOptional($configuration->isOptional());
 
         $type = $configuration->getType();
 

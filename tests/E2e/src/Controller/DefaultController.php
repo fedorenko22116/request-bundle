@@ -51,7 +51,8 @@ class DefaultController extends AbstractFOSRestController
             'bar' => $request->bar,
             'entityA' => $request->entityA->getText(),
             'entityB' => $request->entityB->getText(),
-            'entityC' => $request->entityC->getText()
+            'entityC' => $request->entityC->getText(),
+            'entityD' => $request->entityD->getText(),
         ];
     }
 

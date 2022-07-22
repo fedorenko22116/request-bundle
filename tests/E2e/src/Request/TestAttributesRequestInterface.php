@@ -37,13 +37,19 @@ class TestAttributesRequestInterface implements RequestInterface
 
     /**
      * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
-     * @LSB\Entity(expr="repository.find(id)", mapping={"id": "test_id"})
+     * @LSB\Entity(expr="repository.findByText(text_to_find)", mapping={"text_to_find": "bar_baz"})
      */
     public TestEntity $entityB;
 
     /**
      * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
-     * @LSB\Entity(options={"mapping": {"bar_baz": "text"}})
+     * @LSB\PropConverter(options={"mapping": {"bar_baz": "text"}})
      */
     public TestEntity $entityC;
+
+    /**
+     * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
+     * @LSB\Entity(mapping={"text": "bar_baz"})
+     */
+    public TestEntity $entityD;
 }
