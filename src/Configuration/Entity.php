@@ -20,8 +20,8 @@ final class Entity extends PropConverter
 
     /**
      * @param string|array<string, mixed> $data
+     * @param string|null                 $name
      * @param string|null                 $expr
-     * @param string|null                 $class
      * @param array<string, mixed>        $options
      * @param bool                        $isOptional
      * @param string|null                 $converter
