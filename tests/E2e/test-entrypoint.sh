@@ -12,7 +12,7 @@ host=${TEST_HOST:-'http://127.0.0.1:8000'}
 
 ###############################################################################
 
-url="$host/attributes/123?bar=1&test_id=1&bar_baz=SuperFoo"
+url="$host/attributes/123?bar=1&test_id=1&bar_baz=SuperFoo&fooEnum=fooEnum"
 expected='{"foo":"123","bar":"1","entityA":"SuperFoo","entityB":"SuperFoo","entityC":"SuperFoo","entityD":"SuperFoo"}'
 result="$(curl -s $url)"
 
@@ -26,8 +26,8 @@ fi
 
 ###############################################################################
 
-url="$host/query?foo=123&bar_baz=1"
-expected='{"foo":"Pre123","barBaz":true,"dto":"SomeAwesomeText"}'
+url="$host/query?foo=123&bar_baz=1&foo_enum=foo"
+expected='{"foo":"Pre123","barBaz":true,"dto":"SomeAwesomeText","fooEnum":"foo"}'
 result="$(curl -s $url)"
 
 if [ $result = $expected ];

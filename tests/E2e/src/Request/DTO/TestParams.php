@@ -12,12 +12,12 @@ class TestParams
     /**
      * @var TestParamsA[]
      */
-    #[LSB\PropConverter(data: TestParamsA::class, isCollection: true, isDto: true)]
+    #[LSB\PropConverter(isDto: true)]
     public array $bar;
 
     /**
      * @var TestEntity[]
      */
-    #[LSB\PropConverter(data: TestEntity::class, isCollection: true, options: ["mapping" => ["text" => "text"]])]
+    #[LSB\PropConverter(options: ["mapping" => ["text" => "text"]])]
     public array $baz;
 }

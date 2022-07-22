@@ -60,7 +60,7 @@ class PropConverter extends AbstractPropConfiguration
     private $isOptional = true;
 
     /**
-     * @param string|array<string, mixed> $data
+     * @param string|array<string, mixed> $class
      * @param string|null                 $name
      * @param array<string, mixed>        $options
      * @param bool                        $isOptional
@@ -69,7 +69,7 @@ class PropConverter extends AbstractPropConfiguration
      * @param bool                        $isDto
      */
     public function __construct(
-        $data = [],
+        $class = [],
         $name = null,
         $options = [],
         $isOptional = false,
@@ -79,10 +79,10 @@ class PropConverter extends AbstractPropConfiguration
     ) {
         $values = [];
 
-        if (\is_string($data)) {
-            $values['value'] = $data;
+        if (\is_string($class)) {
+            $values['value'] = $class;
         } else {
-            $values = $data;
+            $values = $class;
         }
 
         $values['name'] = isset($values['name']) ? $values['name'] : $name;

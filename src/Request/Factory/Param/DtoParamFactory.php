@@ -49,13 +49,13 @@ final class DtoParamFactory implements ParamAwareFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Extraction $data, Request $request, PropConfigurationInterface $configuration)
+    public function create(Extraction $data, Request $request)
     {
         $params = $this->requestManager->get($data, $request);
         $params = is_array($params) ? $params : [];
 
         /** @var class-string<RequestInterface> $type */
-        $type = $configuration->getType();
+        $type = $data->getConfiguration()->getType();
 
         return $this->requestFactory->create(
             $type,

@@ -37,17 +37,17 @@ final class RequestStorage extends ConfigurationAnnotation
     private $converter = null;
 
     /**
-     * @param array<string|int, mixed> $data
+     * @param array<string|int, mixed> $sources
      * @param string|null              $converter
      */
-    public function __construct(array $data = [], $converter = null)
+    public function __construct(array $sources = [], $converter = null)
     {
         $values = [];
 
-        if (is_numeric(array_key_first($data))) {
-            $values['value'] = $data;
+        if (is_numeric(array_key_first($sources))) {
+            $values['value'] = $sources;
         } else {
-            $values = $data;
+            $values = $sources;
         }
 
         $values['converter'] = isset($values['converter']) ? $values['converter'] : $converter;

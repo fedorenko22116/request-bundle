@@ -27,6 +27,7 @@ final class CompositeFactory implements ParamAwareFactoryInterface
         $converterFactory = new ConverterParamFactory($requestManager);
 
         $this->composites = [
+            new EnumParamFactory($requestManager),
             new CollectionParamFactory($requestManager, $requestFactory, $converterFactory),
             new DtoParamFactory($requestManager, $requestFactory),
             $converterFactory,
@@ -45,11 +46,11 @@ final class CompositeFactory implements ParamAwareFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Extraction $data, Request $request, PropConfigurationInterface $configuration)
+    public function create(Extraction $data, Request $request)
     {
         foreach ($this->composites as $composite) {
-            if ($composite->supports($configuration)) {
-                return $composite->create($data, $request, $configuration);
+            if ($composite->supports($data->getConfiguration())) {
+                return $composite->create($data, $request);
             }
         }
 

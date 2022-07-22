@@ -9,7 +9,7 @@ use LSBProject\RequestBundle\Request\RequestInterface;
 /**
  * @LSB\RequestStorage({LSB\RequestStorage::BODY})
  */
-class TestBodyRequestInterface implements RequestInterface
+class TestBodyRequest implements RequestInterface
 {
     public string $foo;
     public bool $barBaz;

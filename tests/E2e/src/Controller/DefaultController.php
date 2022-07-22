@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Request\DTO\TestParamsA;
-use App\Request\TestAttributesRequestInterface;
-use App\Request\TestBodyRequestInterface;
+use App\Request\TestAttributesRequest;
+use App\Request\TestBodyRequest;
 use App\Request\TestJsonRpcRequest;
-use App\Request\TestQueryRequestInterface;
+use App\Request\TestQueryRequest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use LSBProject\RequestBundle\Configuration as LSB;
@@ -18,12 +18,13 @@ class DefaultController extends AbstractFOSRestController
      * @Rest\View()
      * @Route("/query", methods={"GET"})
      */
-    public function testQueryRequest(TestQueryRequestInterface $request): array
+    public function testQueryRequest(TestQueryRequest $request): array
     {
         return [
             'foo' => $request->getFoo(),
             'barBaz' => $request->getBarBaz(),
-            'dto' => $request->dto->getFoo()
+            'dto' => $request->dto->getFoo(),
+            'fooEnum' => $request->fooEnum->value,
         ];
     }
 
@@ -31,12 +32,12 @@ class DefaultController extends AbstractFOSRestController
      * @Rest\View()
      * @Route("/body", methods={"POST"})
      */
-    public function testBodyRequest(TestBodyRequestInterface $request): array
+    public function testBodyRequest(TestBodyRequest $request): array
     {
         return [
             'foo' => $request->foo,
             'barBaz' => $request->barBaz,
-            'dto' => $request->dto->getFoo()
+            'dto' => $request->dto->getFoo(),
         ];
     }
 
@@ -44,7 +45,7 @@ class DefaultController extends AbstractFOSRestController
      * @Rest\View()
      * @Route("/attributes/{foo_attr}")
      */
-    public function testAttributesRequest(TestAttributesRequestInterface $request): array
+    public function testAttributesRequest(TestAttributesRequest $request): array
     {
         return [
             'foo' => $request->fooAttr,

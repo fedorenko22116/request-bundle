@@ -51,15 +51,12 @@ final class RequestFactory implements RequestFactoryInterface
 
     /**
      * {@inheritDoc}
+     *
      * @throws ReflectionException
      * @throws BadRequestException
      */
-    public function create(
-        $class,
-        Request $request,
-        PropConfigurationInterface $configuration = null,
-        RequestStorage $parentStorage = null
-    ) {
+    public function create($class, Request $request, RequestStorage $requestStorage = null)
+    {
         $meta = new ReflectionClass($class);
         $compositeFactory = new CompositeFactory($this->requestManager, $this);
         $props = $this->reflectionExtractor->extract($meta, $this->filterProps($meta));
@@ -69,19 +66,18 @@ final class RequestFactory implements RequestFactoryInterface
 
         /** @var Extraction $prop */
         foreach ($props as $prop) {
-            if (!$prop->getRequestStorage() && $parentStorage) {
-                $prop->setRequestStorage($parentStorage);
+            if ($requestStorage && !$prop->getRequestStorage()) {
+                $prop->setRequestStorage($requestStorage);
             }
 
-            $finalConfiguration = $configuration ?: $prop->getConfiguration();
-            $var = $compositeFactory->create($prop, $request, $finalConfiguration);
+            $var = $compositeFactory->create($prop, $request);
 
             if (null === $var) {
                 if ($prop->isDefault()) {
                     continue;
                 }
 
-                if (!$finalConfiguration->isOptional()) {
+                if (!$prop->getConfiguration()->isOptional()) {
                     throw new BadRequestException(
                         sprintf("Property '%s' cannot be empty", $prop->getName())
                     );
@@ -95,8 +91,10 @@ final class RequestFactory implements RequestFactoryInterface
             }
         }
 
-        if (!$this->validator->validate($object)) {
-            throw new BadRequestException($this->validator->getError());
+        $errors = $this->validator->validate($object);
+
+        if ($errors) {
+            throw new BadRequestException(current($errors));
         }
 
         return $object;

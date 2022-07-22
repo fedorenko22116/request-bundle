@@ -9,7 +9,7 @@ use LSBProject\RequestBundle\Request\RequestInterface;
 /**
  * @LSB\RequestStorage({LSB\RequestStorage::PATH})
  */
-class TestAttributesRequestInterface implements RequestInterface
+class TestAttributesRequest implements RequestInterface
 {
     public string $fooAttr;
 

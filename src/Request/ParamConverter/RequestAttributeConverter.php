@@ -49,7 +49,7 @@ final class RequestAttributeConverter implements ParamConverterInterface
 
         $request->attributes->set(
             $configuration->getName(),
-            $this->requestFactory->create($class, $request, null, $attribute->getStorage())
+            $this->requestFactory->create($class, $request, $attribute->getStorage())
         );
 
         return true;

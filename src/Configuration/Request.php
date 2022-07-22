@@ -24,17 +24,17 @@ final class Request extends ConfigurationAnnotation
     private $storage;
 
     /**
-     * @param array<string, mixed>|string $data
+     * @param array<string, mixed>|string $parameter
      * @param string|null                 $storage
      */
-    public function __construct($data = [], $storage = null)
+    public function __construct($parameter = [], $storage = null)
     {
         $values = [];
 
-        if (\is_string($data)) {
-            $values['value'] = $data;
+        if (\is_string($parameter)) {
+            $values['value'] = $parameter;
         } else {
-            $values = $data;
+            $values = $parameter;
         }
 
         $values['storage'] = isset($values['storage']) ? $values['storage'] : $storage;

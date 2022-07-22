@@ -4,16 +4,23 @@ namespace App\Request;
 
 use LSBProject\RequestBundle\Configuration as LSB;
 use App\Entity\DTO\TestDTO;
+use App\Request\Enum\FooEnum;
 use LSBProject\RequestBundle\Request\RequestInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @LSB\RequestStorage({LSB\RequestStorage::QUERY})
  */
-class TestQueryRequestInterface implements RequestInterface
+class TestQueryRequest implements RequestInterface
 {
     private string $foo;
     public bool $barBaz;
     public TestDTO $dto;
+
+    /**
+     * @Assert\NotBlank()
+     */
+    public FooEnum $fooEnum;
 
     public function setBarBaz(bool $value): void
     {

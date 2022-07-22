@@ -16,11 +16,10 @@ interface ParamAwareFactoryInterface
     public function supports(PropConfigurationInterface $configuration);
 
     /**
-     * @param Extraction                 $data
-     * @param Request                    $request
-     * @param PropConfigurationInterface $configuration
+     * @param Extraction $data
+     * @param Request    $request
      *
      * @return mixed
      */
-    public function create(Extraction $data, Request $request, PropConfigurationInterface $configuration);
+    public function create(Extraction $data, Request $request);
 }

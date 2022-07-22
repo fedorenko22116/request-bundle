@@ -36,7 +36,7 @@ final class ConverterParamFactory implements ParamAwareFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Extraction $data, Request $request, PropConfigurationInterface $configuration)
+    public function create(Extraction $data, Request $request)
     {
         return $this->requestManager->getFromParamConverters($data, $request);
     }

@@ -7,7 +7,7 @@ use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use Symfony\Component\HttpFoundation\Request;
 
-final class ScalarParamFactory implements ParamAwareFactoryInterface
+final class EnumParamFactory implements ParamAwareFactoryInterface
 {
     /**
      * @var RequestManagerInterface
@@ -29,7 +29,11 @@ final class ScalarParamFactory implements ParamAwareFactoryInterface
      */
     public function supports(PropConfigurationInterface $configuration)
     {
-        return $configuration->isBuiltInType();
+        if (80100 <= PHP_VERSION_ID) {
+            return enum_exists($configuration->getType() ?: '');
+        }
+
+        return false;
     }
 
     /**
@@ -37,6 +41,22 @@ final class ScalarParamFactory implements ParamAwareFactoryInterface
      */
     public function create(Extraction $data, Request $request)
     {
-        return $this->requestManager->get($data, $request);
+        if (80100 <= PHP_VERSION_ID) {
+            /** @var class-string<\BackedEnum> $enumType */
+            $enumType = $data->getConfiguration()->getType();
+
+            $reflector = new \ReflectionEnum($enumType);
+
+            /** @var \ReflectionNamedType|null $backingType */
+            $backingType = $reflector->getBackingType();
+
+            if ($backingType) {
+                $data->getConfiguration()->setType($backingType->getName());
+
+                return $enumType::tryFrom($this->requestManager->get($data, $request));
+            }
+        }
+
+        return null;
     }
 }

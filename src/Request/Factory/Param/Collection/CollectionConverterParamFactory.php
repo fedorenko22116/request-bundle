@@ -49,16 +49,15 @@ final class CollectionConverterParamFactory implements ParamAwareFactoryInterfac
     /**
      * {@inheritDoc}
      */
-    public function create(Extraction $data, Request $request, PropConfigurationInterface $configuration)
+    public function create(Extraction $data, Request $request)
     {
         $params = $this->requestManager->get($data, $request);
         $params = is_array($params) ? $params : [];
 
-        return array_map(function (array $param) use ($request, $data, $configuration) {
+        return array_map(function (array $param) use ($request, $data) {
             return $this->converterParamFactory->create(
                 $data,
-                $this->cloneRequest($request, $param, $data->getRequestStorage()),
-                $configuration
+                $this->cloneRequest($request, $param, $data->getRequestStorage())
             );
         }, $params);
     }

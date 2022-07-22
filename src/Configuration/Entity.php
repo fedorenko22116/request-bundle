@@ -19,7 +19,7 @@ final class Entity extends PropConverter
     private $mapping;
 
     /**
-     * @param string|array<string, mixed> $data
+     * @param string|array<string, mixed> $class
      * @param string|null                 $name
      * @param string|null                 $expr
      * @param array<string, mixed>        $options
@@ -30,7 +30,7 @@ final class Entity extends PropConverter
      * @param array<string, string>       $mapping
      */
     public function __construct(
-        $data = [],
+        $class = [],
         $name = null,
         $expr = null,
         $options = [],
@@ -42,10 +42,10 @@ final class Entity extends PropConverter
     ) {
         $values = [];
 
-        if (\is_string($data)) {
-            $values['value'] = $data;
+        if (\is_string($class)) {
+            $values['value'] = $class;
         } else {
-            $values = $data;
+            $values = $class;
         }
 
         $values['expr'] = isset($values['expr']) ? $values['expr'] : $expr;

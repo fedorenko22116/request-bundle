@@ -57,26 +57,27 @@ class PropertyExtractor implements ReflectorExtractorInterface
         $config = $config ?: $this->reader->getPropertyAnnotation($reflector, Entity::class);
         $config = $config ?: new PropConverter([]);
 
-        if (!$config->getType()) {
-            $types = $this->propertyInfoExtractor->getTypes(
-                $reflector->getDeclaringClass()->getName(),
-                $reflector->getName()
-            );
+        $types = $this->propertyInfoExtractor->getTypes(
+            $reflector->getDeclaringClass()->getName(),
+            $reflector->getName()
+        );
 
-            if ($types) {
-                $type = current($types);
+        if ($types) {
+            $type = current($types);
 
-                if ($type->getBuiltinType() === Type::BUILTIN_TYPE_ARRAY) {
-                    $config->setIsCollection(true);
-                }
-
-                if ($collectionType = $type->getCollectionValueType()) {
-                    $type = $collectionType;
-                }
-
-                $config->setType($type->getClassName() ?: $type->getBuiltinType());
-                $config->setIsOptional($type->isNullable());
+            if ($type->getBuiltinType() === Type::BUILTIN_TYPE_ARRAY) {
+                $config->setIsCollection(true);
             }
+
+            if ($collectionType = $type->getCollectionValueType()) {
+                $type = $collectionType;
+            }
+
+            if (!$config->getType()) {
+                $config->setType($type->getClassName() ?: $type->getBuiltinType());
+            }
+
+            $config->setIsOptional($type->isNullable());
         }
 
         return new Extraction($reflector->getName(), $config, $storage);

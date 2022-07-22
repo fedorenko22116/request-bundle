@@ -244,12 +244,13 @@ for class property. This will prevent standart `ParamConverter` to be applied an
 ```php
 use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Configuration as LSB;
+use Symfony\Component\HttpFoundation\Request;
 use App\Request\DTO\Data;
 
 /**
  * @LSB\RequestStorage({@LSB\RequestStorage::BODY})
  */
-class JsonRpcRequest implements RequestInterface
+class JsonRpcRequest extends Request implements RequestInterface
 {
     public string $jsonrpc;
 

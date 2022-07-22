@@ -7,11 +7,6 @@ use Psr\Container\ContainerInterface;
 final class RequestValidator implements RequestValidatorInterface
 {
     /**
-     * @var string
-     */
-    private $message = '';
-
-    /**
      * @var ContainerInterface
      */
     private $container;
@@ -30,21 +25,17 @@ final class RequestValidator implements RequestValidatorInterface
     public function validate($object)
     {
         if ($this->container->has('validator')) {
-            if (($result = $this->container->get('validator')->validate($object))->count()) {
-                $this->message = (string) $result->get(0)->getMessage();
+            $result = $this->container->get('validator')->validate($object);
 
-                return false;
-            }
+            return array_map(
+                /** @var Symfony\Component\Validator\ConstraintViolationList $error */
+                static function ($error) {
+                    return $error->getMessage();
+                },
+                iterator_to_array($result)
+            );
         }
 
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getError()
-    {
-        return $this->message;
+        return [];
     }
 }

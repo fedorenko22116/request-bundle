@@ -46,11 +46,11 @@ final class CollectionParamFactory implements ParamAwareFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(Extraction $data, Request $request, PropConfigurationInterface $configuration)
+    public function create(Extraction $data, Request $request)
     {
         foreach ($this->factories as $factory) {
-            if ($factory->supports($configuration)) {
-                return $factory->create($data, $request, $configuration);
+            if ($factory->supports($data->getConfiguration())) {
+                return $factory->create($data, $request);
             }
         }
 

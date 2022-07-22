@@ -7,14 +7,11 @@ use LSBProject\RequestBundle\Request\RequestInterface;
 interface RequestValidatorInterface
 {
     /**
+     * Returns array of errors
+     *
      * @param RequestInterface $object
      *
-     * @return bool
+     * @return string[]
      */
     public function validate($object);
-
-    /**
-     * @return string
-     */
-    public function getError();
 }

@@ -14,8 +14,6 @@ use LSBProject\RequestBundle\Util\Storage\StorageInterface;
 use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Throwable;
 
 final class RequestManager implements RequestManagerInterface
 {
@@ -80,31 +78,34 @@ final class RequestManager implements RequestManagerInterface
     /**
      * {@inheritDoc}
      */
-    public function getFromParamConverters(Extraction $param, Request $request)
+    public function getFromParamConverters(Extraction $configuration, Request $request)
     {
-        $config  = $param->getConfiguration();
+        $config = $configuration->getConfiguration();
 
-        $params = $this->addId($config, $request, $param->getRequestStorage());
-        $params = array_merge($params, $this->addOptionMapping($config, $request, $param->getRequestStorage()));
+        $params = $this->addId($config, $request, $configuration->getRequestStorage());
+        $params = array_merge($params, $this->addOptionMapping($config, $request, $configuration->getRequestStorage()));
 
         if ($config instanceof Entity && $config->getMapping()) {
-            $params = array_merge($params, $this->addPropMapping($config, $request, $param->getRequestStorage()));
+            $params = array_merge(
+                $params,
+                $this->addPropMapping($config, $request, $configuration->getRequestStorage())
+            );
         }
 
-        $paramConfig = $this->paramConverterFactory->create($param->getName(), $config);
+        $paramConfig = $this->paramConverterFactory->create($configuration->getName(), $config);
 
         try {
             $this->converterManager->apply($request, $paramConfig);
         } catch (Exception $exception) {
-            if (!$param->getConfiguration()->isOptional()) {
+            if (!$configuration->getConfiguration()->isOptional()) {
                 throw new ConfigurationException(
-                    sprintf("Cannot convert '%s' property. %s", $param->getName(), $exception->getMessage())
+                    sprintf("Cannot convert '%s' property. %s", $configuration->getName(), $exception->getMessage())
                 );
             }
         }
 
-        $var = $request->attributes->get($param->getName());
-        $request->attributes->remove($param->getName());
+        $var = $request->attributes->get($configuration->getName());
+        $request->attributes->remove($configuration->getName());
 
         foreach ($params as $parameter) {
             $request->attributes->remove($parameter);
