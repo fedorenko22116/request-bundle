@@ -61,7 +61,7 @@ class PropConverter extends AbstractPropConfiguration
 
     /**
      * @param string|array<string, mixed> $data
-     * @param string|null                 $class
+     * @param string|null                 $name
      * @param array<string, mixed>        $options
      * @param bool                        $isOptional
      * @param string|null                 $converter
@@ -70,7 +70,7 @@ class PropConverter extends AbstractPropConfiguration
      */
     public function __construct(
         $data = [],
-        $class = null,
+        $name = null,
         $options = [],
         $isOptional = false,
         $converter = null,
@@ -85,7 +85,7 @@ class PropConverter extends AbstractPropConfiguration
             $values = $data;
         }
 
-        $values['type'] = isset($values['class']) ? $values['class'] : $class;
+        $values['name'] = isset($values['name']) ? $values['name'] : $name;
         $values['options'] = isset($values['options']) ? $values['options'] : $options;
         $values['isOptional'] = isset($values['isOptional']) ? $values['isOptional'] : $isOptional;
         $values['converter'] = isset($values['converter']) ? $values['converter'] : $converter;

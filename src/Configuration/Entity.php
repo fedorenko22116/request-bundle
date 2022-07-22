@@ -31,8 +31,8 @@ final class Entity extends PropConverter
      */
     public function __construct(
         $data = [],
+        $name = null,
         $expr = null,
-        $class = null,
         $options = [],
         $isOptional = false,
         $converter = null,
@@ -51,7 +51,7 @@ final class Entity extends PropConverter
         $values['expr'] = isset($values['expr']) ? $values['expr'] : $expr;
         $values['mapping'] = isset($values['mapping']) ? $values['mapping'] : $mapping;
 
-        parent::__construct($values, $class, $options, $isOptional, $converter, $isCollection, $isDto);
+        parent::__construct($values, $name, $options, $isOptional, $converter, $isCollection, $isDto);
     }
 
     /**
