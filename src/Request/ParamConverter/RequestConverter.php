@@ -28,6 +28,7 @@ final class RequestConverter implements ParamConverterInterface
 
     /**
      * {@inheritDoc}
+     *
      * @throws UnprocessableEntityHttpException
      */
     public function apply(Request $request, ParamConverter $configuration)

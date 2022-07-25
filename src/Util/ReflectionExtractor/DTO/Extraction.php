@@ -2,6 +2,7 @@
 
 namespace LSBProject\RequestBundle\Util\ReflectionExtractor\DTO;
 
+use LSBProject\RequestBundle\Configuration\Discriminator;
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 
@@ -28,17 +29,29 @@ final class Extraction
     private $default;
 
     /**
+     * @var Discriminator|null
+     */
+    private $discriminator;
+
+    /**
      * @param string                     $name
      * @param PropConfigurationInterface $configuration
      * @param RequestStorage|null        $requestStorage
      * @param mixed                      $default
+     * @param Discriminator|null         $discriminator
      */
-    public function __construct($name, PropConfigurationInterface $configuration, $requestStorage, $default = null)
-    {
+    public function __construct(
+        $name,
+        PropConfigurationInterface $configuration,
+        $requestStorage,
+        $default = null,
+        Discriminator $discriminator = null
+    ) {
         $this->name = $name;
         $this->configuration = $configuration;
         $this->requestStorage = $requestStorage;
         $this->default = $default;
+        $this->discriminator = $discriminator;
     }
 
     /**
@@ -47,6 +60,14 @@ final class Extraction
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param PropConfigurationInterface $configuration
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     /**
@@ -103,5 +124,21 @@ final class Extraction
         $this->default = $default;
 
         return $this;
+    }
+
+    /**
+     * @return Discriminator|null
+     */
+    public function getDiscriminator()
+    {
+        return $this->discriminator;
+    }
+
+    /**
+     * @param Discriminator|null $discriminator
+     */
+    public function setDiscriminator($discriminator)
+    {
+        $this->discriminator = $discriminator;
     }
 }

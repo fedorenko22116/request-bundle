@@ -304,6 +304,44 @@ class JsonRpcRequest implements RequestInterface
 }
 ```
 
+### Using discriminator field
+
+Sometimes we do not know which object will be returned. To resolve this discriminator mechanism appears in game.
+
+```php
+use LSBProject\RequestBundle\Configuration as LSB;
+use LSBProject\RequestBundle\Request\RequestInterface;
+
+final class TestDiscriminatedRequest implements RequestInterface
+{
+    #[LSB\Discriminator(
+        field: 'type',
+        mapping: [
+            'foo' => new LSB\PropConverter(class: DiscriminatorParamsFoo::class, isDto: true),
+            'bar' => new LSB\PropConverter(class: DiscriminatorParamsBar::class, isDto: true)
+        ]
+    )]
+    public DiscriminatorParamsFoo|DiscriminatorParamsBar $discriminated;
+}
+
+abstract class AbstractDiscriminatorParams
+{
+    public string $type;
+}
+
+final class DiscriminatorParamsBar extends AbstractDiscriminatorParams
+{
+    public string $bar;
+}
+
+final class DiscriminatorParamsFoo extends AbstractDiscriminatorParams
+{
+    public string $foo;
+}
+```
+
+Correspondingly to `field` field in `Discriminator` attribute object will be configured accordingly to mapping.
+
 ### Use on a custom objects
 
 There is also possibility to apply LSB converter to the object

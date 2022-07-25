@@ -38,11 +38,6 @@
             <argument type="service" id="service_container" />
         </service>
         <service
-                id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContextInterface"
-                class="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContext"
-                public="false"
-        />
-        <service
                 id="LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface"
                 class="LSBProject\RequestBundle\Request\Validator\RequestValidator"
                 public="false"
@@ -66,7 +61,7 @@
         <service
                 id="lsbproject.request.property_info.reflectionextractor"
                 class="Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor"
-                public="false"
+                public="true"
         />
         <service
                 id="lsbproject.request.property_info"
@@ -106,7 +101,6 @@
                 class="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractor"
                 public="false"
         >
-            <argument type="service" id="LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectorContextInterface" />
             <argument type="service" id="LSBProject\RequestBundle\Util\ReflectionExtractor\AnnotationReader" />
             <argument type="service" id="lsbproject.request.property_info" />
         </service>

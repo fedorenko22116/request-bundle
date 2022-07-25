@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Request\DTO\TestParamsA;
 use App\Request\TestAttributesRequest;
 use App\Request\TestBodyRequest;
+use App\Request\TestDiscriminatedRequest;
 use App\Request\TestJsonRpcRequest;
 use App\Request\TestQueryRequest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -90,5 +91,26 @@ class DefaultController extends AbstractFOSRestController
         return [
             'foo' => $params->foo,
         ];
+    }
+
+    /**
+     * @Rest\View()
+     * @Route("/discriminated/foo")
+     * @LSB\Request("params")
+     */
+    public function testDiscriminatedFooRequest(TestDiscriminatedRequest $params): array
+    {
+        return [
+            'foo' => $params->discriminated->type,
+        ];
+    }
+
+    /**
+     * @Rest\View()
+     * @Route("/discriminated")
+     */
+    public function testDiscriminatedRequest(TestDiscriminatedRequest $params): array
+    {
+        return (array) $params->discriminated;
     }
 }

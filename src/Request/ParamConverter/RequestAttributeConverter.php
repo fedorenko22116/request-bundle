@@ -44,6 +44,8 @@ final class RequestAttributeConverter implements ParamConverterInterface
             return false;
         }
 
+        $this->convertRequestContextIfEmpty($request);
+
         /** @var class-string<RequestInterface> $class */
         $class = $configuration->getClass();
 

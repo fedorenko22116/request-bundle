@@ -6,5 +6,5 @@ parameters:
     tmpDir: "%rootDir%/../../../phpstan"
 
     excludePaths:
-        - src/Util/ReflectionExtractor/Strategy/PropertyExtractor.php
+        - src/Util/ReflectionExtractor
         - src/DependencyInjection/Configuration.php

@@ -79,3 +79,31 @@ if [ $result = $expected ];
    echo "Unexpected output $result. Expected $expected"
    exit 1;
 fi
+
+###############################################################################
+
+url="$host/discriminated"
+expected='{"discriminated":{"type":"foo","foo":"test"}}'
+result="$(curl -s $url -H 'Content-Type: application/json' -d $expected)"
+
+if [ $result = '{"type":"foo","foo":"test"}' ];
+ then
+   echo 'Discriminated tests #1 passed OK!';
+ else
+   echo "Unexpected output $result. Expected $expected"
+   exit 1;
+fi
+
+###############################################################################
+
+url="$host/discriminated"
+expected='{"discriminated":{"type":"bar","bar":"test"}}'
+result="$(curl -s $url -H 'Content-Type: application/json' -d $expected)"
+
+if [ $result = '{"type":"bar","bar":"test"}' ];
+ then
+   echo 'Discriminated tests #2 passed OK!';
+ else
+   echo "Unexpected output $result. Expected $expected"
+   exit 1;
+fi
