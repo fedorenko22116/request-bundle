@@ -314,11 +314,12 @@ use LSBProject\RequestBundle\Request\RequestInterface;
 
 final class TestDiscriminatedRequest implements RequestInterface
 {
+    #[LSB\PropConverter(isDto: true)]
     #[LSB\Discriminator(
         field: 'type',
         mapping: [
-            'foo' => new LSB\PropConverter(class: DiscriminatorParamsFoo::class, isDto: true),
-            'bar' => new LSB\PropConverter(class: DiscriminatorParamsBar::class, isDto: true)
+            'foo' => new LSB\PropConverter(class: DiscriminatorParamsFoo::class, isDto: false),
+            'bar' => DiscriminatorParamsBar::class
         ]
     )]
     public DiscriminatorParamsFoo|DiscriminatorParamsBar $discriminated;
