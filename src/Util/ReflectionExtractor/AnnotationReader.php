@@ -4,7 +4,7 @@ namespace LSBProject\RequestBundle\Util\ReflectionExtractor;
 
 use Doctrine\Common\Annotations\Reader;
 
-final class AnnotationReader
+class AnnotationReader
 {
     /**
      * @var Reader

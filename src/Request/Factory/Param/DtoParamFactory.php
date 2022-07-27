@@ -2,12 +2,11 @@
 
 namespace LSBProject\RequestBundle\Request\Factory\Param;
 
-use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
-use Symfony\Component\HttpFoundation\Request;
 use LSBProject\RequestBundle\Request\RequestInterface;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\Extraction;
+use Symfony\Component\HttpFoundation\Request;
 
 final class DtoParamFactory implements ParamAwareFactoryInterface
 {
@@ -38,8 +37,10 @@ final class DtoParamFactory implements ParamAwareFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function supports(PropConfigurationInterface $configuration)
+    public function supports(Extraction $data)
     {
+        $configuration = $data->getConfiguration();
+
         return $configuration->isDto()
             && $configuration->getType()
             && !$configuration->isBuiltInType()

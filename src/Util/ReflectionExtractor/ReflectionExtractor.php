@@ -7,7 +7,6 @@ use LSBProject\RequestBundle\Configuration\Entity;
 use LSBProject\RequestBundle\Configuration\PropConverter;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Exception\ConfigurationException;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
 use ReflectionClass;
 use ReflectionProperty;
 use Reflector;

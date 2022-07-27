@@ -2,14 +2,13 @@
 
 namespace LSBProject\RequestBundle\Request\Factory\Param\Collection;
 
-use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Request\Factory\Param\ParamAwareFactoryInterface;
 use LSBProject\RequestBundle\Request\Factory\Param\RequestCopyTrait;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
-use Symfony\Component\HttpFoundation\Request;
 use LSBProject\RequestBundle\Request\RequestInterface;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\Extraction;
+use Symfony\Component\HttpFoundation\Request;
 
 final class CollectionDtoParamFactory implements ParamAwareFactoryInterface
 {
@@ -40,9 +39,9 @@ final class CollectionDtoParamFactory implements ParamAwareFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function supports(PropConfigurationInterface $configuration)
+    public function supports(Extraction $data)
     {
-        return $configuration->isDto();
+        return $data->getConfiguration()->isDto();
     }
 
     /**

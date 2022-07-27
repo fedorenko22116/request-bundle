@@ -1,6 +1,6 @@
 <?php
 
-namespace LSBProject\RequestBundle\Util\ReflectionExtractor\DTO;
+namespace LSBProject\RequestBundle\Util\ReflectionExtractor;
 
 use LSBProject\RequestBundle\Configuration\Discriminator;
 use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
@@ -55,11 +55,29 @@ final class Extraction
     }
 
     /**
+     * @return void
+     */
+    public function __clone()
+    {
+        $this->configuration = clone $this->configuration;
+        $this->requestStorage = $this->requestStorage ? clone $this->requestStorage : $this->requestStorage;
+        $this->discriminator = $this->discriminator ? clone $this->discriminator : $this->discriminator;
+    }
+
+    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace LSBProject\RequestBundle\Request\ParamConverter;
 
-use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Request\Factory\RequestFactoryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -29,6 +28,7 @@ final class RequestAttributeConverter implements ParamConverterInterface
 
     /**
      * {@inheritDoc}
+     *
      * @throws \Exception
      */
     public function apply(Request $request, ParamConverter $configuration)

@@ -2,7 +2,7 @@
 
 namespace LSBProject\RequestBundle\Request\Manager;
 
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\Extraction;
 use Symfony\Component\HttpFoundation\Request;
 
 interface RequestManagerInterface

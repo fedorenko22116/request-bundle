@@ -2,9 +2,8 @@
 
 namespace LSBProject\RequestBundle\Request\Factory\Param;
 
-use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\Extraction;
 use Symfony\Component\HttpFoundation\Request;
 
 final class ScalarParamFactory implements ParamAwareFactoryInterface
@@ -27,9 +26,9 @@ final class ScalarParamFactory implements ParamAwareFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function supports(PropConfigurationInterface $configuration)
+    public function supports(Extraction $data)
     {
-        return $configuration->isBuiltInType();
+        return $data->getConfiguration()->isBuiltInType();
     }
 
     /**

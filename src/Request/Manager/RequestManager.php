@@ -9,7 +9,7 @@ use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Exception\ConfigurationException;
 use LSBProject\RequestBundle\Util\Factory\ParamConverterFactoryInterface;
 use LSBProject\RequestBundle\Util\NamingConversion\NamingConversionInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\Extraction;
 use LSBProject\RequestBundle\Util\Storage\StorageInterface;
 use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager;

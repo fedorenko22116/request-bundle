@@ -2,15 +2,13 @@
 
 namespace LSBProject\RequestBundle\Request\Factory;
 
-use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Exception\BadRequestException;
-use LSBProject\RequestBundle\Request\Factory\Param\DiscriminatedCompositeFactory;
-use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Request\Factory\Param\CompositeFactory;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
+use LSBProject\RequestBundle\Request\RequestInterface;
 use LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface;
-use LSBProject\RequestBundle\Util\ReflectionExtractor\DTO\Extraction;
+use LSBProject\RequestBundle\Util\ReflectionExtractor\Extraction;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\ReflectionExtractorInterface;
 use ReflectionClass;
 use ReflectionException;
@@ -59,7 +57,7 @@ final class RequestFactory implements RequestFactoryInterface
     public function create($class, Request $request, RequestStorage $requestStorage = null)
     {
         $meta = new ReflectionClass($class);
-        $compositeFactory = new DiscriminatedCompositeFactory(new CompositeFactory($this->requestManager, $this));
+        $compositeFactory = new CompositeFactory($this->requestManager, $this);
         $props = $this->reflectionExtractor->extract($meta, $this->filterProps($meta));
 
         /** @var RequestInterface $object */

@@ -2,14 +2,14 @@
 
 namespace LSBProject\RequestBundle\Request\Factory\Param\Collection;
 
-use LSBProject\RequestBundle\Request\Factory\Param\ConverterParamFactory;
+use LSBProject\RequestBundle\Request\Factory\Param\DiscriminatedParamFactory;
 use LSBProject\RequestBundle\Request\Factory\Param\ParamAwareFactoryInterface;
 use LSBProject\RequestBundle\Request\Factory\Param\RequestCopyTrait;
 use LSBProject\RequestBundle\Request\Manager\RequestManagerInterface;
 use LSBProject\RequestBundle\Util\ReflectionExtractor\Extraction;
 use Symfony\Component\HttpFoundation\Request;
 
-final class CollectionConverterParamFactory implements ParamAwareFactoryInterface
+class CollectionDiscriminatedParamFactory implements ParamAwareFactoryInterface
 {
     use RequestCopyTrait;
 
@@ -19,22 +19,22 @@ final class CollectionConverterParamFactory implements ParamAwareFactoryInterfac
     private $requestManager;
 
     /**
-     * @var ConverterParamFactory
+     * @var DiscriminatedParamFactory
      */
-    private $converterParamFactory;
+    private $discriminatedParamFactory;
 
     /**
      * ConverterParamFactory constructor.
      *
-     * @param RequestManagerInterface $requestManager
-     * @param ConverterParamFactory   $converterParamFactory
+     * @param RequestManagerInterface   $requestManager
+     * @param DiscriminatedParamFactory $discriminatedParamFactory
      */
     public function __construct(
         RequestManagerInterface $requestManager,
-        ConverterParamFactory $converterParamFactory
+        DiscriminatedParamFactory $discriminatedParamFactory
     ) {
         $this->requestManager = $requestManager;
-        $this->converterParamFactory = $converterParamFactory;
+        $this->discriminatedParamFactory = $discriminatedParamFactory;
     }
 
     /**
@@ -42,7 +42,7 @@ final class CollectionConverterParamFactory implements ParamAwareFactoryInterfac
      */
     public function supports(Extraction $data)
     {
-        return !$data->getConfiguration()->isDto();
+        return (bool) $data->getDiscriminator();
     }
 
     /**
@@ -53,10 +53,16 @@ final class CollectionConverterParamFactory implements ParamAwareFactoryInterfac
         $params = $this->requestManager->get($data, $request);
         $params = is_array($params) ? $params : [];
 
-        return array_map(function (array $param) use ($request, $data) {
-            return $this->converterParamFactory->create(
+        $name = md5($data->getName());
+
+        $data = clone $data;
+        $data->getConfiguration()->setIsCollection(false);
+        $data->setName($name);
+
+        return array_map(function (array $param) use ($request, $data, $name) {
+            return $this->discriminatedParamFactory->create(
                 $data,
-                $this->cloneRequest($request, $param, $data->getRequestStorage())
+                $this->cloneRequest($request, [$name => $param], $data->getRequestStorage())
             );
         }, $params);
     }

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Request\DTO;
 
-abstract class AbstractDiscriminatorParams implements \JsonSerializable
+use App\Request\Enum\FooEnum;
+
+abstract class AbstractEnumDiscriminatorParams implements \JsonSerializable
 {
-    public string $type;
+    public FooEnum $type;
 
     public function jsonSerialize()
     {

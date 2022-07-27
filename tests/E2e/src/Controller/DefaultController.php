@@ -111,6 +111,6 @@ class DefaultController extends AbstractFOSRestController
      */
     public function testDiscriminatedRequest(TestDiscriminatedRequest $params): array
     {
-        return (array) $params->discriminated;
+        return (array) $params;
     }
 }

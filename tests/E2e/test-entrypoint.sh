@@ -18,7 +18,7 @@ result="$(curl -s $url)"
 
 if [ $result = $expected ];
  then
-   echo 'Attributes tests passed OK!';
+   echo 'Attributes tests passed OK!'
  else
    echo "Unexpected output $result. Expected $expected"
    exit 1;
@@ -32,7 +32,7 @@ result="$(curl -s $url)"
 
 if [ $result = $expected ];
  then
-   echo 'Query tests passed OK!';
+   echo 'Query tests passed OK!'
  else
    echo "Unexpected output $result. Expected $expected"
    exit 1;
@@ -46,7 +46,7 @@ result="$(curl -s $url -d 'foo=123&bar_baz=1')"
 
 if [ $result = $expected ];
  then
-   echo 'Body tests passed OK!';
+   echo 'Body tests passed OK!'
  else
    echo "Unexpected output $result. Expected $expected"
    exit 1;
@@ -60,7 +60,7 @@ result="$(curl -s $url -H 'Content-Type: application/json' -d $expected)"
 
 if [ $result = $expected ];
  then
-   echo 'JsonRpc tests passed OK!';
+   echo 'JsonRpc tests passed OK!'
  else
    echo "Unexpected output $result. Expected $expected"
    exit 1;
@@ -74,7 +74,7 @@ result="$(curl -s $url -H 'foo: 123')"
 
 if [ $result = $expected ];
  then
-   echo 'Head tests passed OK!';
+   echo 'Head tests passed OK!'
  else
    echo "Unexpected output $result. Expected $expected"
    exit 1;
@@ -83,26 +83,13 @@ fi
 ###############################################################################
 
 url="$host/discriminated"
-expected='{"discriminated":{"type":"foo","foo":"test"}}'
-result="$(curl -s $url -H 'Content-Type: application/json' -d $expected)"
+body='{"discriminated":{"type":"bar","bar":"test"},"discriminated_collection":[{"type":"bar","bar":"test"},{"type":"foo","foo":"test"}],"enum_discriminated":{"type":"foo","foo":"test"}}'
+expected='{"discriminated":{"type":"bar","bar":"test"},"discriminatedCollection":[{"type":"bar","bar":"test"},{"type":"foo","foo":"test"}],"enumDiscriminated":{"type":"foo","foo":"test"}}'
+result="$(curl -s $url -H 'Content-Type: application/json' -d $body)"
 
-if [ $result = '{"type":"foo","foo":"test"}' ];
+if [ $result = $expected ];
  then
-   echo 'Discriminated tests #1 passed OK!';
- else
-   echo "Unexpected output $result. Expected $expected"
-   exit 1;
-fi
-
-###############################################################################
-
-url="$host/discriminated"
-expected='{"discriminated":{"type":"bar","bar":"test"}}'
-result="$(curl -s $url -H 'Content-Type: application/json' -d $expected)"
-
-if [ $result = '{"type":"bar","bar":"test"}' ];
- then
-   echo 'Discriminated tests #2 passed OK!';
+   echo 'Discriminated tests passed OK!'
  else
    echo "Unexpected output $result. Expected $expected"
    exit 1;

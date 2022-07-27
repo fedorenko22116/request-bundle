@@ -2,7 +2,6 @@
 
 namespace LSBProject\RequestBundle\Request\Factory;
 
-use LSBProject\RequestBundle\Configuration\PropConfigurationInterface;
 use LSBProject\RequestBundle\Configuration\RequestStorage;
 use LSBProject\RequestBundle\Request\RequestInterface;
 use Symfony\Component\HttpFoundation\Request;

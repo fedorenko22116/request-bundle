@@ -17,15 +17,22 @@ trait RequestCopyTrait
     private function cloneRequest(Request $request, array $params, RequestStorage $storage = null)
     {
         $request = clone $request;
+        $storage = $storage ?: new RequestStorage(RequestStorage::TYPES);
 
-        if (!$storage) {
+        if (in_array(RequestStorage::QUERY, $storage->getSources())) {
             $request->query->replace($params);
-        } elseif (in_array(RequestStorage::QUERY, $storage->getSources())) {
-            $request->query->replace($params);
-        } elseif (in_array(RequestStorage::BODY, $storage->getSources())) {
+        }
+
+        if (in_array(RequestStorage::BODY, $storage->getSources())) {
             $request->request->replace($params);
-        } else {
-            $request->query->replace($params);
+        }
+
+        if (in_array(RequestStorage::HEAD, $storage->getSources())) {
+            $request->headers->replace($params);
+        }
+
+        if (in_array(RequestStorage::COOKIE, $storage->getSources())) {
+            $request->cookies->replace($params);
         }
 
         return $request;
