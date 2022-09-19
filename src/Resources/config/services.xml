@@ -54,42 +54,6 @@
             <argument type="service" id="LSBProject\RequestBundle\Request\Validator\RequestValidatorInterface" />
         </service>
         <service
-                id="lsbproject.request.property_info.phpdocextractor"
-                class="Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor"
-                public="false"
-        />
-        <service
-                id="lsbproject.request.property_info.reflectionextractor"
-                class="Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor"
-                public="true"
-        />
-        <service
-                id="lsbproject.request.property_info"
-                class="Symfony\Component\PropertyInfo\PropertyInfoExtractor"
-                public="false"
-        >
-            <argument type="collection">
-                <argument type="service" id="lsbproject.request.property_info.phpdocextractor" />
-                <argument type="service" id="lsbproject.request.property_info.reflectionextractor" />
-            </argument>
-            <argument type="collection">
-                <argument type="service" id="lsbproject.request.property_info.phpdocextractor" />
-                <argument type="service" id="lsbproject.request.property_info.reflectionextractor" />
-            </argument>
-            <argument type="collection">
-                <argument type="service" id="lsbproject.request.property_info.phpdocextractor" />
-                <argument type="service" id="lsbproject.request.property_info.reflectionextractor" />
-            </argument>
-            <argument type="collection">
-                <argument type="service" id="lsbproject.request.property_info.phpdocextractor" />
-                <argument type="service" id="lsbproject.request.property_info.reflectionextractor" />
-            </argument>
-            <argument type="collection">
-                <argument type="service" id="lsbproject.request.property_info.phpdocextractor" />
-                <argument type="service" id="lsbproject.request.property_info.reflectionextractor" />
-            </argument>
-        </service>
-        <service
             id="LSBProject\RequestBundle\Util\ReflectionExtractor\AnnotationReader"
             class="LSBProject\RequestBundle\Util\ReflectionExtractor\AnnotationReader"
             public="false"
@@ -102,7 +66,7 @@
                 public="false"
         >
             <argument type="service" id="LSBProject\RequestBundle\Util\ReflectionExtractor\AnnotationReader" />
-            <argument type="service" id="lsbproject.request.property_info" />
+            <argument type="service" id="property_info" />
         </service>
         <service
                 id="lsbproject.request.param_converter.request_converter"
