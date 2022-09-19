@@ -8,6 +8,8 @@ use LSBProject\RequestBundle\Configuration\RequestStorage;
 
 final class Extraction
 {
+    const DEFAULT_VALUE = '__lsbproject_extraction_default_none 😀 😃 😄';
+
     /**
      * @var string
      */
@@ -44,7 +46,7 @@ final class Extraction
         $name,
         PropConfigurationInterface $configuration,
         $requestStorage,
-        $default = null,
+        $default = self::DEFAULT_VALUE,
         Discriminator $discriminator = null
     ) {
         $this->name = $name;
@@ -121,7 +123,7 @@ final class Extraction
      */
     public function isDefault()
     {
-        return null === $this->default;
+        return $this->default !== self::DEFAULT_VALUE;
     }
 
     /**

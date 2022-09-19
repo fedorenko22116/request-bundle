@@ -71,16 +71,8 @@ final class RequestFactory implements RequestFactoryInterface
 
             $var = $compositeFactory->create($prop, $request);
 
-            if (null === $var) {
-                if ($prop->isDefault()) {
-                    continue;
-                }
-
-                if (!$prop->getConfiguration()->isOptional()) {
-                    throw new BadRequestException(
-                        sprintf("Property '%s' cannot be empty", $prop->getName())
-                    );
-                }
+            if (null === $var && ($prop->isDefault() || !$prop->getConfiguration()->isOptional())) {
+                continue;
             }
 
             if ($meta->hasMethod($method = 'set' . ucfirst($prop->getName()))) {
