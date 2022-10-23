@@ -75,10 +75,22 @@ final class RequestFactory implements RequestFactoryInterface
                 continue;
             }
 
-            if ($meta->hasMethod($method = 'set' . ucfirst($prop->getName()))) {
-                $object->$method($var);
+            if (PHP_VERSION_ID >= 70000) {
+                try {
+                    $this->setObjectVariable($object, $var, $meta, $prop);
+                } catch (\TypeError $error) {
+                    // phpcs:ignore
+                    throw new BadRequestException(
+                        sprintf(
+                            'Type mismatch for property "%s". Expected value of type %s, "%s" given',
+                            $prop->getName(),
+                            $prop->getConfiguration()->getType(),
+                            $var === null ? 'null' : $var
+                        )
+                    );
+                }
             } else {
-                $object->{$prop->getName()} = $var;
+                $this->setObjectVariable($object, $var, $meta, $prop);
             }
         }
 
@@ -89,5 +101,26 @@ final class RequestFactory implements RequestFactoryInterface
         }
 
         return $object;
+    }
+
+    /**
+     * @template T of object
+     *
+     * @param T                  $object
+     * @param mixed              $var
+     * @param ReflectionClass<T> $meta
+     * @param Extraction         $prop
+     *
+     * @return void
+     *
+     * @throws \TypeError
+     */
+    private function setObjectVariable($object, $var, ReflectionClass $meta, Extraction $prop)
+    {
+        if ($meta->hasMethod($method = 'set' . ucfirst($prop->getName()))) {
+            $object->$method($var);
+        } else {
+            $object->{$prop->getName()} = $var;
+        }
     }
 }
