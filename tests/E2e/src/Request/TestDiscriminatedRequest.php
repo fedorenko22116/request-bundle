@@ -9,7 +9,7 @@ use App\Request\DTO\DiscriminatorParamsFoo;
 use App\Request\DTO\EnumDiscriminatorParamsFoo;
 use App\Request\DTO\EnumDiscriminatorParamsBar;
 use LSBProject\RequestBundle\Configuration as LSB;
-use LSBProject\RequestBundle\Request\RequestInterface;
+use LSBProject\RequestBundle\Contract\RequestInterface;
 
 final class TestDiscriminatedRequest implements RequestInterface
 {

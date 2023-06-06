@@ -4,7 +4,7 @@ namespace App\Request;
 
 use App\Entity\DTO\TestDTO;
 use LSBProject\RequestBundle\Configuration as LSB;
-use LSBProject\RequestBundle\Request\RequestInterface;
+use LSBProject\RequestBundle\Contract\RequestInterface;
 
 /**
  * @LSB\RequestStorage({LSB\RequestStorage::BODY})

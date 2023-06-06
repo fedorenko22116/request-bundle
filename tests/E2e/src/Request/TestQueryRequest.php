@@ -5,7 +5,7 @@ namespace App\Request;
 use LSBProject\RequestBundle\Configuration as LSB;
 use App\Entity\DTO\TestDTO;
 use App\Request\Enum\FooEnum;
-use LSBProject\RequestBundle\Request\RequestInterface;
+use LSBProject\RequestBundle\Contract\RequestInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

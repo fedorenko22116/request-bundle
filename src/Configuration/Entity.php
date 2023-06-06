@@ -5,7 +5,7 @@ namespace LSBProject\RequestBundle\Configuration;
 /**
  * @Annotation
  */
-#[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_PROPERTY)]
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 final class Entity extends PropConverter
 {
     /**
@@ -51,7 +51,7 @@ final class Entity extends PropConverter
         $values['expr'] = isset($values['expr']) ? $values['expr'] : $expr;
         $values['mapping'] = isset($values['mapping']) ? $values['mapping'] : $mapping;
 
-        parent::__construct($values, $name, $options, $isOptional, $converter, $isCollection, $isDto);
+//        parent::__construct($values, $name, $options, $isOptional, $converter, $isCollection, $isDto);
     }
 
     /**

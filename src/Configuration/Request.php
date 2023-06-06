@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
  * @Annotation
  */
 #[\Attribute(\Attribute::TARGET_METHOD)]
-final class Request extends ConfigurationAnnotation
+final class Request
 {
     const ALIAS = '_lsbproject_request';
 
@@ -39,7 +39,7 @@ final class Request extends ConfigurationAnnotation
 
         $values['storage'] = isset($values['storage']) ? $values['storage'] : $storage;
 
-        parent::__construct($values);
+//        parent::__construct($values);
     }
 
     /**

@@ -1,8 +1,10 @@
 <?php
 
-namespace LSBProject\RequestBundle\Request\Factory;
+declare(strict_types=1);
 
-use LSBProject\RequestBundle\Request\RequestInterface;
+namespace LSBProject\RequestBundle\Serializer;
+
+use LSBProject\RequestBundle\Contract\RequestInterface;
 use ReflectionClass;
 use ReflectionProperty;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,8 +15,9 @@ trait RequestPropertyHelperTrait
      * @param ReflectionClass<RequestInterface> $meta
      *
      * @return string[]
+     * @throws \ReflectionException
      */
-    private function filterProps(ReflectionClass $meta)
+    private function filterProps(ReflectionClass $meta): array
     {
         $props = array_filter(
             $meta->getProperties(),

@@ -4,13 +4,12 @@ namespace LSBProject\RequestBundle\Configuration;
 
 use Exception;
 use LSBProject\RequestBundle\Exception\ConfigurationException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
 
 /**
  * @Annotation
  */
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_PROPERTY)]
-final class RequestStorage extends ConfigurationAnnotation
+final class RequestStorage
 {
     const BODY  = 'body';
     const QUERY = 'query';
@@ -52,7 +51,7 @@ final class RequestStorage extends ConfigurationAnnotation
 
         $values['converter'] = isset($values['converter']) ? $values['converter'] : $converter;
 
-        parent::__construct($values);
+//        parent::__construct($values);
     }
 
     /**

@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
  * @Annotation
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-class Discriminator extends ConfigurationAnnotation
+class Discriminator
 {
     /**
      * Discriminator field name
@@ -38,7 +38,7 @@ class Discriminator extends ConfigurationAnnotation
 
         $values['mapping'] = isset($values['mapping']) ? $values['mapping'] : $mapping;
 
-        parent::__construct($values);
+//        parent::__construct($values);
     }
 
     /**

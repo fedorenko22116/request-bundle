@@ -92,7 +92,7 @@ class PropConverter extends AbstractPropConfiguration
         $values['isCollection'] = isset($values['isCollection']) ? $values['isCollection'] : $isCollection;
         $values['isDto'] = isset($values['isDto']) ? $values['isDto'] : $isDto;
 
-        parent::__construct($values);
+//        parent::__construct($values);
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace LSBProject\RequestBundle\Request\Validator;
+namespace LSBProject\RequestBundle\Validator;
 
-use LSBProject\RequestBundle\Request\RequestInterface;
+use LSBProject\RequestBundle\Contract\RequestInterface;
 
 interface RequestValidatorInterface
 {
@@ -13,5 +13,5 @@ interface RequestValidatorInterface
      *
      * @return string[]
      */
-    public function validate($object);
+    public function validate(object $object): array;
 }

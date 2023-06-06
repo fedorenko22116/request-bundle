@@ -1,28 +1,21 @@
 <?php
 
-namespace LSBProject\RequestBundle\Request\Validator;
+declare(strict_types=1);
+
+namespace LSBProject\RequestBundle\Validator;
 
 use Psr\Container\ContainerInterface;
 
 final class RequestValidator implements RequestValidatorInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
+    public function __construct(private ContainerInterface $container)
     {
-        $this->container = $container;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function validate($object)
+    public function validate(object $object): array
     {
         if ($this->container->has('validator')) {
             $result = $this->container->get('validator')->validate($object);
