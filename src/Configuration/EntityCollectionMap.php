@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace LSBProject\RequestBundle\Configuration;
 
-/**
- * @Annotation
- */
 #[\Attribute(\Attribute::TARGET_PARAMETER)]
-final class Request
+final class EntityCollectionMap
 {
-    public function __construct(public ?Storage $storage = null)
-    {
-    }
+
 }

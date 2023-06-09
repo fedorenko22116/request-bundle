@@ -105,14 +105,14 @@ use LSBProject\RequestBundle\Contract\RequestInterface;
 use LSBProject\RequestBundle\Configuration as LSB;
 
 /**
- * @LSB\RequestStorage({LSB\RequestStorage::BODY, LSB\RequestStorage::PATH})
+ * @LSB\Storage({LSB\Storage::BODY, LSB\Storage::PATH})
  */
 class TestRequest implements RequestInterface
 {
     public $fooBaz;
 
     /**
-     * @LSB\RequestStorage({LSB\RequestStorage::BODY})
+     * @LSB\Storage({LSB\Storage::BODY})
      */
     public $fooBar;
 }
@@ -248,7 +248,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Request\DTO\Data;
 
 /**
- * @LSB\RequestStorage({@LSB\RequestStorage::BODY})
+ * @LSB\Storage({@LSB\Storage::BODY})
  */
 class JsonRpcRequest extends Request implements RequestInterface
 {
@@ -281,7 +281,7 @@ use LSBProject\RequestBundle\Configuration as LSB;
 use App\Request\DTO\Data;
 
 /**
- * @LSB\RequestStorage({@LSB\RequestStorage::BODY})
+ * @LSB\Storage({@LSB\Storage::BODY})
  */
 class JsonRpcRequest implements RequestInterface
 {
@@ -315,7 +315,7 @@ use LSBProject\RequestBundle\Contract\RequestInterface;
 final class TestDiscriminatedRequest implements RequestInterface
 {
     #[LSB\PropConverter(isDto: true)]
-    #[LSB\Discriminator(
+    #[LSB\DiscriminatorMap(
         field: 'type',
         mapping: [
             'foo' => new LSB\PropConverter(class: DiscriminatorParamsFoo::class, isDto: false),
@@ -356,7 +356,7 @@ to point out parameter in controller.
 
     /**
      * @Route("/foo")
-     * @LSB\Request("params", storage=@LSB\RequestStorage({@LSB\RequestStorage::HEAD}))
+     * @LSB\Request("params", storage=@LSB\Storage({@LSB\Storage::HEAD}))
      */
     public function testHeadRequest(TestParamsA $params): Response
     {

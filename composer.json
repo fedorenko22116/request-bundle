@@ -19,7 +19,9 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "jetbrains/phpstorm-attributes": "^1.0"
+        "jetbrains/phpstorm-attributes": "^1.0",
+        "symfony/validator": "^6.2",
+        "symfony/doctrine-bridge": "^6.2"
     },
     "autoload": {
         "psr-4": {

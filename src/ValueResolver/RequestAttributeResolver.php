@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace LSBProject\RequestBundle\ValueResolver;
 
-use LSBProject\RequestBundle\Serializer\RequestFactoryInterface;
+use LSBProject\RequestBundle\Mapping\MapperInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 final class RequestAttributeResolver implements ValueResolverInterface
 {
-    public function __construct(private RequestFactoryInterface $requestFactory)
+    public function __construct(private readonly MapperInterface $requestFactory)
     {
     }
 
@@ -31,6 +31,6 @@ final class RequestAttributeResolver implements ValueResolverInterface
 
         $attribute = current($filterAttributes);
 
-        yield $this->requestFactory->create($argument->getType(), $request, $attribute->getStorage());
+        yield $this->requestFactory->map($argument->getType(), $request, $attribute->getStorage());
     }
 }

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace LSBProject\RequestBundle\Validator;
+namespace LSBProject\RequestBundle\Mapping;
 
 use Psr\Container\ContainerInterface;
 
-final class RequestValidator implements RequestValidatorInterface
+final class Validator implements ValidatorInterface
 {
-    public function __construct(private ContainerInterface $container)
+    public function __construct(private readonly ContainerInterface $container)
     {
     }
 
